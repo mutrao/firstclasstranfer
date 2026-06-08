@@ -94,18 +94,18 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#fleet">Flotte</a></li>
-        <li><a href="#pricing">Tarifs</a></li>
-        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#fleet" data-i18n="nav_fleet">Flotte</a></li>
+        <li><a href="#pricing" data-i18n="nav_pricing">Tarifs</a></li>
+        <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
       </ul>
 
       <div class="nav-cta">
         <a href="tel:+2250700000000" class="btn btn-outline btn-sm" aria-label="Appeler">
-          <i class="fas fa-phone"></i> Appel
+          <i class="fas fa-phone"></i> <span data-i18n="nav_call">Appel</span>
         </a>
         <a href="booking.html" class="btn btn-primary btn-sm">
-          <i class="fas fa-calendar-check"></i> Réserver
+          <i class="fas fa-calendar-check"></i> <span data-i18n="nav_book">Réserver</span>
         </a>
       </div>
 
@@ -136,15 +136,15 @@
       <div class="hero-text">
         <div class="hero-badge">
           <i class="fas fa-star"></i>
-          Service Premium · Ponctuel · Fiable
+          <span data-i18n="hero_badge">Service Premium · Ponctuel · Fiable</span>
         </div>
 
         <h1 class="hero-title" id="hero-title">
-          Votre Transfert Aéroport,<br>
-          <em>Simplement Parfait</em>
+          <span data-i18n="hero_title_line1">Votre Transfert Aéroport,</span><br>
+          <em data-i18n="hero_title_em">Simplement Parfait</em>
         </h1>
 
-        <p class="hero-description">
+        <p class="hero-description" data-i18n="hero_desc">
           Réservez votre transfert vers l'Aéroport Félix-Houphouët-Boigny en 2 minutes — départ ou arrivée.
           Confirmation immédiate. Votre chauffeur vous contacte sur WhatsApp le jour J.
         </p>
@@ -152,7 +152,7 @@
         <div class="hero-actions">
           <a href="booking.html" class="btn btn-primary btn-lg">
             <i class="fas fa-calendar-check"></i>
-            Réserver Maintenant
+            <span data-i18n="hero_book_btn">Réserver Maintenant</span>
           </a>
           <button class="btn btn-outline btn-lg" data-whatsapp="Bonjour, je souhaite réserver un transfert aéroport depuis Abidjan. Pouvez-vous m'aider ?">
             <i class="fab fa-whatsapp"></i>
@@ -163,42 +163,43 @@
         <div class="hero-stats">
           <div class="hero-stat">
             <span class="num" data-target="500" data-suffix="+">500+</span>
-            <span class="label">Transferts réalisés</span>
+            <span class="label" data-i18n="hero_stat_transfers">Transferts réalisés</span>
           </div>
           <div class="hero-stat">
             <span class="num" data-target="98" data-suffix="%">98%</span>
-            <span class="label">Clients satisfaits</span>
+            <span class="label" data-i18n="hero_stat_satisfied">Clients satisfaits</span>
           </div>
           <div class="hero-stat">
             <span class="num" data-target="24" data-suffix="h/7">24h/7</span>
-            <span class="label">Disponibilité</span>
+            <span class="label" data-i18n="hero_stat_avail">Disponibilité</span>
           </div>
         </div>
       </div>
 
       <!-- Right column: Quick Booking Card -->
       <div class="hero-booking-card glass-card">
-        <h3>Estimation instantanée</h3>
-        <p>Obtenez votre tarif en quelques secondes</p>
+        <h3 data-i18n="hero_card_title">Estimation instantanée</h3>
+        <p data-i18n="hero_card_sub">Obtenez votre tarif en quelques secondes</p>
 
         <form id="hero-booking-form" novalidate>
           <!-- Hero method toggle -->
           <div class="pickup-method-toggle" style="margin-bottom:16px;">
             <button type="button" class="hero-method-btn method-btn active" data-method="neighborhood">
-              <i class="fa-solid fa-map-pin"></i> Par quartier
+              <i class="fa-solid fa-map-pin"></i> <span data-i18n="hero_by_nb">Par quartier</span>
             </button>
             <button type="button" class="hero-method-btn method-btn" data-method="address">
-              <i class="fa-solid fa-location-dot"></i> Par zone
+              <i class="fa-solid fa-location-dot"></i> <span data-i18n="hero_by_zone">Par zone</span>
             </button>
           </div>
 
           <!-- Neighborhood field -->
           <div id="hero-neighborhood-field" class="form-group">
-            <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> Votre quartier de départ</label>
+            <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> <span data-i18n="hero_nb_label">Votre quartier de départ</span></label>
             <input
               type="text"
               id="hero-neighborhood"
               list="hero-neighborhoods-list"
+              data-i18n-ph="hero_nb_ph"
               placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
               autocomplete="off"
               aria-label="Quartier de départ"
@@ -249,14 +250,14 @@
 
           <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;">
             <i class="fas fa-arrow-right"></i>
-            Voir les Disponibilités
+            <span data-i18n="hero_cta">Voir les Disponibilités</span>
           </button>
         </form>
 
         <div class="trust-strip">
-          <div class="trust-item"><i class="fas fa-check-circle"></i> Confirmation immédiate</div>
-          <div class="trust-item"><i class="fas fa-undo"></i> Annulation flexible</div>
-          <div class="trust-item"><i class="fab fa-whatsapp"></i> Suivi WhatsApp</div>
+          <div class="trust-item"><i class="fas fa-check-circle"></i> <span data-i18n="trust_confirm">Confirmation immédiate</span></div>
+          <div class="trust-item"><i class="fas fa-undo"></i> <span data-i18n="trust_cancel">Annulation flexible</span></div>
+          <div class="trust-item"><i class="fab fa-whatsapp"></i> <span data-i18n="trust_wa">Suivi WhatsApp</span></div>
         </div>
       </div>
     </div>
@@ -266,10 +267,10 @@
   <section class="how-it-works" id="services" aria-labelledby="hiw-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Comment ça marche</span>
-        <h2 class="section-title" id="hiw-title">Simple dans les <em class="gold">2 sens</em></h2>
+        <span class="section-label" data-i18n="hiw_label">Comment ça marche</span>
+        <h2 class="section-title" id="hiw-title" data-i18n-html="hiw_title">Simple dans les <em class="gold">2 sens</em></h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">Que vous partiez à l'aéroport ou que vous arriviez à Abidjan, nous gérons tout en 3 étapes.</p>
+        <p class="section-subtitle" data-i18n="hiw_sub">Que vous partiez à l'aéroport ou que vous arriviez à Abidjan, nous gérons tout en 3 étapes.</p>
       </div>
 
       <!-- Direction tabs for how-it-works -->
@@ -346,10 +347,10 @@
   <section class="fleet" id="fleet" aria-labelledby="fleet-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Notre Flotte</span>
-        <h2 class="section-title" id="fleet-title">Des Véhicules <em class="gold">Premium</em><br>pour Chaque Besoin</h2>
+        <span class="section-label" data-i18n="fleet_label">Notre Flotte</span>
+        <h2 class="section-title" id="fleet-title" data-i18n-html="fleet_title">Des Véhicules <em class="gold">Premium</em><br>pour Chaque Besoin</h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">Tous nos véhicules sont climatisés, régulièrement entretenus et conduits par des chauffeurs professionnels.</p>
+        <p class="section-subtitle" data-i18n="fleet_sub">Tous nos véhicules sont climatisés, régulièrement entretenus et conduits par des chauffeurs professionnels.</p>
       </div>
 
       <div class="fleet-grid">
@@ -375,17 +376,17 @@
             <li><i class="fas fa-check"></i> Chargeur USB</li>
           </ul>
           <div class="fleet-price">
-            <span class="amount">12 000</span>
-            <span class="currency">FCFA · Zone 1</span>
+            <span class="amount" data-price-fcfa="12000">12 000</span>
+            <span class="currency fleet-currency">FCFA · Zone 1</span>
           </div>
           <a href="booking.html" class="btn btn-outline" style="width:100%;justify-content:center;">
-            <i class="fas fa-calendar-check"></i> Réserver
+            <i class="fas fa-calendar-check"></i> <span data-i18n="fleet_book">Réserver</span>
           </a>
         </div>
 
         <!-- PREMIUM — Van (featured, most popular) -->
         <div class="fleet-card glass-card featured animate-on-scroll animate-delay-2">
-          <div class="fleet-badge">⭐ Le Plus Populaire</div>
+          <div class="fleet-badge" data-i18n="fleet_popular">⭐ Le Plus Populaire</div>
           <div class="fleet-photo-wrap">
             <img
               src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80"
@@ -405,11 +406,11 @@
             <li><i class="fas fa-check"></i> Chargeurs USB &amp; Wi-Fi</li>
           </ul>
           <div class="fleet-price">
-            <span class="amount">25 000</span>
-            <span class="currency">FCFA · Zone 1</span>
+            <span class="amount" data-price-fcfa="25000">25 000</span>
+            <span class="currency fleet-currency">FCFA · Zone 1</span>
           </div>
           <a href="booking.html" class="btn btn-primary" style="width:100%;justify-content:center;">
-            <i class="fas fa-calendar-check"></i> Réserver
+            <i class="fas fa-calendar-check"></i> <span data-i18n="fleet_book">Réserver</span>
           </a>
         </div>
 
@@ -435,11 +436,11 @@
             <li><i class="fas fa-check"></i> Eau minérale &amp; chargeur inclus</li>
           </ul>
           <div class="fleet-price">
-            <span class="amount">25 000</span>
-            <span class="currency">FCFA · Zone 1</span>
+            <span class="amount" data-price-fcfa="25000">25 000</span>
+            <span class="currency fleet-currency">FCFA · Zone 1</span>
           </div>
           <a href="booking.html" class="btn btn-outline" style="width:100%;justify-content:center;">
-            <i class="fas fa-calendar-check"></i> Réserver
+            <i class="fas fa-calendar-check"></i> <span data-i18n="fleet_book">Réserver</span>
           </a>
         </div>
 
@@ -525,10 +526,10 @@
   <section class="pricing" id="pricing" aria-labelledby="pricing-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Nos Tarifs</span>
-        <h2 class="section-title" id="pricing-title">Tarifs Clairs,<br><em class="gold">Sans Frais Cachés</em></h2>
+        <span class="section-label" data-i18n="pr_label">Nos Tarifs</span>
+        <h2 class="section-title" id="pricing-title" data-i18n-html="pr_title">Tarifs Clairs,<br><em class="gold">Sans Frais Cachés</em></h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">Le prix affiché est le prix payé. Aucun supplément surprise.</p>
+        <p class="section-subtitle" data-i18n="pr_sub">Le prix affiché est le prix payé. Aucun supplément surprise.</p>
       </div>
 
       <div class="animate-on-scroll">
@@ -547,36 +548,36 @@
                 <div class="zone-name">Zone 1</div>
                 <div class="zone-areas">Plateau · Cocody · Riviera · Angré · Marcory · Treichville · Port-Bouët · Adjamé</div>
               </td>
-              <td class="price-cell">12 000 FCFA</td>
-              <td class="price-cell">25 000 FCFA</td>
-              <td class="price-cell">25 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="12000">12 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="25000">25 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="25000">25 000 FCFA</td>
             </tr>
             <tr>
               <td>
                 <div class="zone-name">Zone 2</div>
                 <div class="zone-areas">Yopougon · Abobo · Koumassi · Attécoubé</div>
               </td>
-              <td class="price-cell">15 000 FCFA</td>
-              <td class="price-cell">30 000 FCFA</td>
-              <td class="price-cell">32 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="15000">15 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="30000">30 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="32000">32 000 FCFA</td>
             </tr>
             <tr>
               <td>
                 <div class="zone-name">Zone 3</div>
                 <div class="zone-areas">Bingerville · Anyama · Songon · Abatta · PK 20 · PK 22</div>
               </td>
-              <td class="price-cell">14 000 FCFA</td>
-              <td class="price-cell">28 000 FCFA</td>
-              <td class="price-cell">28 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="14000">14 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="28000">28 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="28000">28 000 FCFA</td>
             </tr>
             <tr>
               <td>
                 <div class="zone-name">Zone 4</div>
                 <div class="zone-areas">Grand-Bassam · Dabou · Assinie · Jacqueville · Bonoua · Azaguié · Alépé</div>
               </td>
-              <td class="price-cell">28 000 FCFA</td>
-              <td class="price-cell">50 000 FCFA</td>
-              <td class="price-cell">50 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="28000">28 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="50000">50 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="50000">50 000 FCFA</td>
             </tr>
           </tbody>
         </table>
@@ -612,7 +613,7 @@
       <div class="text-center" style="margin-top:40px;">
         <a href="booking.html" class="btn btn-primary btn-lg animate-on-scroll">
           <i class="fas fa-calendar-check"></i>
-          Réserver au Meilleur Tarif
+          <span data-i18n="pr_book_btn">Réserver au Meilleur Tarif</span>
         </a>
       </div>
     </div>
@@ -864,6 +865,8 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 
+  <!-- i18n (must load before main.js) -->
+  <script src="assets/js/i18n.js"></script>
   <!-- Main JS -->
   <script src="assets/js/main.js"></script>
 </body>

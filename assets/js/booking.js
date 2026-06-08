@@ -706,6 +706,28 @@ function onNext3() {
   bookingState.notifEmail      = $('#notif-email')?.checked ?? true;
   bookingState.notifWhatsapp   = $('#notif-whatsapp')?.checked ?? true;
 
+  // Collect special request checkboxes
+  const srMap = {
+    sr_child_seat: 'Siège enfant',
+    sr_luggage_help: 'Aide bagages',
+    sr_meet_greet: 'Pancarte nominative',
+    sr_water: 'Eau minérale',
+    sr_silent: 'Trajet silencieux',
+    sr_stop: 'Arrêt intermédiaire',
+    sr_wifi: 'Wi-Fi à bord',
+    sr_accessible: 'Accessibilité PMR',
+  };
+  const checkedSr = Object.entries(srMap)
+    .filter(([id]) => document.getElementById(id)?.checked)
+    .map(([, label]) => label);
+  if (checkedSr.length) {
+    const existing = bookingState.specialRequests;
+    bookingState.specialRequests = [
+      ...checkedSr,
+      ...(existing ? [existing] : []),
+    ].join(', ');
+  }
+
   renderPaymentSummary();
   showStep(4);
 }

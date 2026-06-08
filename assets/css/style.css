@@ -304,6 +304,71 @@ section {
   gap: 12px;
 }
 
+/* ─── i18n Switcher ─────────────────────────────────────── */
+.i18n-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.i18n-lang-group {
+  display: flex;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.i18n-lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  font-family: var(--font-body);
+}
+
+.i18n-lang-btn.active,
+.i18n-lang-btn:hover {
+  background: rgba(201,168,76,0.18);
+  color: var(--gold);
+}
+
+.i18n-currency-select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 6px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.i18n-currency-select:hover,
+.i18n-currency-select:focus {
+  border-color: var(--gold);
+  color: var(--gold);
+  outline: none;
+}
+
+.i18n-currency-select option {
+  background: var(--navy-mid);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .i18n-switcher { gap: 4px; }
+  .i18n-lang-btn { padding: 3px 6px; font-size: 0.68rem; }
+  .i18n-currency-select { font-size: 0.68rem; padding: 3px 4px; }
+}
+/* ────────────────────────────────────────────────────────── */
+
 .nav-hamburger {
   display: none;
   background: none;
@@ -2541,6 +2606,76 @@ section {
   color: var(--gold);
   font-size: 0.9rem;
 }
+
+/* ─── Form section label ─────────────────────────────────── */
+.form-section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 10px 0 8px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Special requests grid ──────────────────────────────── */
+.special-requests-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.sr-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.02);
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
+  user-select: none;
+}
+
+.sr-option:hover {
+  border-color: rgba(201,168,76,0.3);
+  background: rgba(201,168,76,0.05);
+  color: var(--white);
+}
+
+.sr-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sr-option:has(input:checked) {
+  border-color: rgba(201,168,76,0.5);
+  background: rgba(201,168,76,0.08);
+  color: var(--white);
+}
+
+.sr-option span i {
+  color: var(--gold);
+  width: 16px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .special-requests-grid { grid-template-columns: 1fr; }
+}
+/* ────────────────────────────────────────────────────────── */
 
 /* =========================================
    CONFIRMATION — DRIVER MEETING CARD
