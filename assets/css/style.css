@@ -580,6 +580,52 @@ section {
   margin-bottom: 28px;
 }
 
+/* ─── Hero flight block ─────────────────────────── */
+.hero-flight-block {
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.hero-flight-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.hero-flight-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(10,15,30,0.4);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.hero-flight-notice i {
+  color: var(--gold);
+  font-size: 0.9rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.hero-flight-notice strong {
+  color: var(--white);
+}
+/* ─────────────────────────────────────────────── */
+
 .form-group {
   margin-bottom: 16px;
 }

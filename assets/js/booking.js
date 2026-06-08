@@ -936,9 +936,12 @@ window.addEventListener('DOMContentLoaded', () => {
         if (zoneManual) zoneManual.value = data.zone;
         bookingState.zone = data.zone;
       }
-      if ($('#trip-date') && data.date) $('#trip-date').value = data.date;
-      if ($('#trip-time') && data.time) $('#trip-time').value = data.time;
+      if ($('#trip-date') && data.date)         $('#trip-date').value = data.date;
+      if ($('#trip-time') && data.time)         $('#trip-time').value = data.time;
       if ($('#trip-passengers') && data.passengers) $('#trip-passengers').value = data.passengers;
+      if ($('#trip-luggage') && data.luggage)   $('#trip-luggage').value = data.luggage;
+      if (data.flightTime && $('#client-flight-time')) $('#client-flight-time').value = data.flightTime;
+      if (data.direction) switchDirection(data.direction);
     } catch (err) { /* ignore */ }
   }
 

@@ -244,14 +244,31 @@ passengersInput?.addEventListener('input', updateHeroPrice);
 heroForm?.addEventListener('submit', (e) => {
   e.preventDefault();
 
+  const flightDate = document.getElementById('hero-date')?.value || '';
+  const flightTime = document.getElementById('hero-time')?.value || '';
+  const passengers = document.getElementById('hero-passengers')?.value || 1;
+  const luggage    = document.getElementById('hero-luggage')?.value || 1;
+
+  // Suggest pickup time = flight time - 3h30
+  let pickupTime = '';
+  if (flightTime) {
+    const [h, m] = flightTime.split(':').map(Number);
+    const totalMins = h * 60 + m - 210; // 210 min = 3h30
+    const ph = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
+    const pm = ((totalMins % 1440) + 1440) % 1440 % 60;
+    pickupTime = `${String(ph).padStart(2,'0')}:${String(pm).padStart(2,'0')}`;
+  }
+
   const formData = {
     pickupMethod: heroPickupMethod,
     neighborhood: heroPickupMethod === 'neighborhood' ? (heroNbInput?.value || '') : '',
     zone: heroDetectedZone || heroZoneSelect?.value || '',
-    vehicle: vehicleSelect?.value || '',
-    passengers: passengersInput?.value || 1,
-    date: document.getElementById('hero-date')?.value || '',
-    time: document.getElementById('hero-time')?.value || '',
+    passengers,
+    luggage,
+    date: flightDate,
+    time: pickupTime,
+    flightTime,
+    direction: 'departure',
   };
 
   sessionStorage.setItem('bookingInit', JSON.stringify(formData));

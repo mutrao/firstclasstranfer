@@ -219,30 +219,37 @@
             </select>
           </div>
 
+          <!-- Passengers + Luggage -->
           <div class="form-row">
             <div class="form-group">
-              <label for="hero-vehicle"><i class="fas fa-car"></i> Véhicule</label>
-              <select id="hero-vehicle" name="vehicle" aria-label="Type de véhicule">
-                <option value="" disabled selected>Type</option>
-                <option value="economy">Économie</option>
-                <option value="business">Business</option>
-                <option value="van">Van (+6 pax)</option>
-              </select>
+              <label for="hero-passengers"><i class="fas fa-users"></i> Passagers</label>
+              <input type="number" id="hero-passengers" name="passengers" min="1" max="8" value="1" placeholder="1" aria-label="Nombre de passagers" />
             </div>
             <div class="form-group">
-              <label for="hero-passengers"><i class="fas fa-users"></i> Passagers</label>
-              <input type="number" id="hero-passengers" name="passengers" min="1" max="8" value="2" placeholder="2" aria-label="Nombre de passagers" />
+              <label for="hero-luggage"><i class="fas fa-suitcase-rolling"></i> Bagages</label>
+              <input type="number" id="hero-luggage" name="luggage" min="0" max="10" value="1" placeholder="1" aria-label="Nombre de bagages" />
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="hero-date"><i class="fas fa-calendar"></i> Date</label>
-              <input type="date" id="hero-date" name="date" aria-label="Date du transfert" />
+          <!-- Flight info block -->
+          <div class="hero-flight-block">
+            <div class="hero-flight-header">
+              <i class="fas fa-plane-departure"></i>
+              <span>Votre Vol</span>
             </div>
-            <div class="form-group">
-              <label for="hero-time"><i class="fas fa-clock"></i> Heure</label>
-              <input type="time" id="hero-time" name="time" aria-label="Heure du transfert" />
+            <div class="form-row" style="margin-bottom:0;">
+              <div class="form-group">
+                <label for="hero-date"><i class="fas fa-calendar"></i> Date de décollage</label>
+                <input type="date" id="hero-date" name="date" aria-label="Date du vol" />
+              </div>
+              <div class="form-group">
+                <label for="hero-time"><i class="fas fa-clock"></i> Heure de décollage</label>
+                <input type="time" id="hero-time" name="time" aria-label="Heure du vol" />
+              </div>
+            </div>
+            <div class="hero-flight-notice">
+              <i class="fas fa-shield-halved"></i>
+              <span>Votre ponctualité, notre priorité — nous vous prenons en charge <strong>3h30 avant votre décollage</strong>, avec un délai ajusté selon votre zone. Parce qu'un vol raté, ça n'arrive pas avec First Class Transfer.</span>
             </div>
           </div>
 
@@ -355,23 +362,23 @@
 
       <div class="fleet-grid">
 
-        <!-- BASIC -->
+        <!-- ÉCONOMIQUE -->
         <div class="fleet-card glass-card animate-on-scroll animate-delay-1">
-          <div class="fleet-badge">Basic</div>
+          <div class="fleet-badge">Économique</div>
           <div class="fleet-photo-wrap">
             <img
               src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=700&q=80"
-              alt="Toyota Corolla blanc — offre Basic First Class Transfer"
+              alt="Toyota Corolla blanc — offre Économique First Class Transfer"
               loading="lazy"
               class="fleet-photo"
             />
           </div>
-          <h3>Basic</h3>
-          <p class="fleet-model">Toyota Corolla / Hyundai i20</p>
+          <h3>Économique</h3>
+          <p class="fleet-model">Toyota Corolla</p>
           <p class="fleet-tagline">Idéal pour un voyage solo ou en duo</p>
           <ul class="fleet-features">
             <li><i class="fas fa-check"></i> <strong>1–2 passagers max</strong></li>
-            <li><i class="fas fa-check"></i> <strong>2 valises max</strong> (coffre compact)</li>
+            <li><i class="fas fa-check"></i> <strong>4 valises max</strong></li>
             <li><i class="fas fa-check"></i> Climatisation</li>
             <li><i class="fas fa-check"></i> Chargeur USB</li>
           </ul>
@@ -389,18 +396,18 @@
           <div class="fleet-badge" data-i18n="fleet_popular">⭐ Le Plus Populaire</div>
           <div class="fleet-photo-wrap">
             <img
-              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80"
-              alt="Toyota HiAce Van blanc Premium — First Class Transfer Abidjan"
+              src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=700&q=80"
+              alt="Mercedes Sprinter Van blanc Premium — First Class Transfer Abidjan"
               loading="lazy"
               class="fleet-photo"
             />
           </div>
           <h3>Premium</h3>
-          <p class="fleet-model">Toyota HiAce / Mercedes Vito</p>
-          <p class="fleet-tagline">Le choix idéal pour 95% des voyages</p>
+          <p class="fleet-model">Mercedes Sprinter / Van Grand Espace</p>
+          <p class="fleet-tagline">Le choix idéal pour familles et groupes</p>
           <ul class="fleet-features">
             <li><i class="fas fa-check"></i> <strong>Jusqu'à 6 passagers</strong></li>
-            <li><i class="fas fa-check"></i> <strong>8 valises</strong> — tout l'espace nécessaire</li>
+            <li><i class="fas fa-check"></i> <strong>8 à 10 valises</strong> — tout l'espace nécessaire</li>
             <li><i class="fas fa-check"></i> Familles, groupes, gros bagages</li>
             <li><i class="fas fa-check"></i> Climatisation puissante</li>
             <li><i class="fas fa-check"></i> Chargeurs USB &amp; Wi-Fi</li>
@@ -414,23 +421,23 @@
           </a>
         </div>
 
-        <!-- BUSINESS — Luxury sedan -->
+        <!-- BUSINESS — BMW i7 -->
         <div class="fleet-card glass-card animate-on-scroll animate-delay-3">
           <div class="fleet-badge">Business</div>
           <div class="fleet-photo-wrap">
             <img
-              src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=700&q=80"
-              alt="Mercedes Classe E noire — offre Business First Class Transfer"
+              src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=700&q=80"
+              alt="BMW i7 noire — offre Business First Class Transfer"
               loading="lazy"
               class="fleet-photo"
             />
           </div>
           <h3>Business</h3>
-          <p class="fleet-model">Mercedes Classe E / BMW Série 5</p>
+          <p class="fleet-model">BMW i7 / Mercedes Classe S</p>
           <p class="fleet-tagline">Pour les déplacements professionnels exigeants</p>
           <ul class="fleet-features">
             <li><i class="fas fa-check"></i> <strong>1–2 passagers</strong></li>
-            <li><i class="fas fa-check"></i> <strong>2 valises</strong> (coffre berline luxe)</li>
+            <li><i class="fas fa-check"></i> <strong>2–4 valises</strong> (coffre berline luxe)</li>
             <li><i class="fas fa-check"></i> Sièges cuir, silence total</li>
             <li><i class="fas fa-check"></i> Idéal appels &amp; réunions en route</li>
             <li><i class="fas fa-check"></i> Eau minérale &amp; chargeur inclus</li>
@@ -537,7 +544,7 @@
           <thead>
             <tr>
               <th scope="col">Zone</th>
-              <th scope="col"><i class="fas fa-car"></i> Basic<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Corolla · 1–2 pax · 2 valises</small></th>
+              <th scope="col"><i class="fas fa-car"></i> Économique<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Corolla · 1–2 pax · 4 valises</small></th>
               <th scope="col"><i class="fas fa-van-shuttle"></i> Premium ⭐<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Van · 6 pax · 8 valises</small></th>
               <th scope="col"><i class="fas fa-car-side"></i> Business<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Mercedes · 1–2 pax · 2 valises</small></th>
             </tr>
