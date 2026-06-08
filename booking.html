@@ -255,8 +255,64 @@
                 <input type="text" id="client-name" name="name" data-i18n-ph="name_ph" placeholder="Prénom Nom" required aria-required="true" autocomplete="name" />
               </div>
               <div class="form-group">
-                <label for="client-phone"><i class="fab fa-whatsapp"></i> <span data-i18n="phone_label">Téléphone WhatsApp</span> <span style="color:var(--error)">*</span></label>
-                <input type="tel" id="client-phone" name="phone" data-i18n-ph="phone_ph" placeholder="+33 6 14 05 84 84" required aria-required="true" autocomplete="tel" />
+                <label for="client-phone-number"><i class="fab fa-whatsapp"></i> <span data-i18n="phone_label">Téléphone WhatsApp</span> <span style="color:var(--error)">*</span></label>
+                <div style="display:flex;gap:8px;align-items:stretch;">
+                  <select id="client-phone-code" name="phone_code" autocomplete="tel-country-code"
+                    style="flex-shrink:0;width:auto;min-width:130px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:var(--text,#f0ede8);font-size:0.88rem;padding:10px 8px;outline:none;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 10 6%22><path fill=%22%239AA0AD%22 d=%22M0 0l5 6 5-6z%22/></svg>');background-repeat:no-repeat;background-position:right 8px center;background-size:8px;padding-right:24px;">
+                    <option value="+225">🇨🇮 +225</option>
+                    <option value="+33">🇫🇷 +33</option>
+                    <option value="+1">🇺🇸 +1</option>
+                    <option value="+44">🇬🇧 +44</option>
+                    <option value="+32">🇧🇪 +32</option>
+                    <option value="+41">🇨🇭 +41</option>
+                    <option value="+212">🇲🇦 +212</option>
+                    <option value="+213">🇩🇿 +213</option>
+                    <option value="+216">🇹🇳 +216</option>
+                    <option value="+221">🇸🇳 +221</option>
+                    <option value="+223">🇲🇱 +223</option>
+                    <option value="+224">🇬🇳 +224</option>
+                    <option value="+226">🇧🇫 +226</option>
+                    <option value="+227">🇳🇪 +227</option>
+                    <option value="+228">🇹🇬 +228</option>
+                    <option value="+229">🇧🇯 +229</option>
+                    <option value="+230">🇲🇺 +230</option>
+                    <option value="+233">🇬🇭 +233</option>
+                    <option value="+234">🇳🇬 +234</option>
+                    <option value="+237">🇨🇲 +237</option>
+                    <option value="+241">🇬🇦 +241</option>
+                    <option value="+242">🇨🇬 +242</option>
+                    <option value="+243">🇨🇩 +243</option>
+                    <option value="+245">🇬🇼 +245</option>
+                    <option value="+248">🇸🇨 +248</option>
+                    <option value="+249">🇸🇩 +249</option>
+                    <option value="+251">🇪🇹 +251</option>
+                    <option value="+252">🇸🇴 +252</option>
+                    <option value="+253">🇩🇯 +253</option>
+                    <option value="+254">🇰🇪 +254</option>
+                    <option value="+255">🇹🇿 +255</option>
+                    <option value="+256">🇺🇬 +256</option>
+                    <option value="+260">🇿🇲 +260</option>
+                    <option value="+261">🇲🇬 +261</option>
+                    <option value="+263">🇿🇼 +263</option>
+                    <option value="+27">🇿🇦 +27</option>
+                    <option value="+34">🇪🇸 +34</option>
+                    <option value="+49">🇩🇪 +49</option>
+                    <option value="+39">🇮🇹 +39</option>
+                    <option value="+351">🇵🇹 +351</option>
+                    <option value="+90">🇹🇷 +90</option>
+                    <option value="+971">🇦🇪 +971</option>
+                    <option value="+974">🇶🇦 +974</option>
+                    <option value="+966">🇸🇦 +966</option>
+                    <option value="+86">🇨🇳 +86</option>
+                    <option value="+91">🇮🇳 +91</option>
+                    <option value="+55">🇧🇷 +55</option>
+                    <option value="+52">🇲🇽 +52</option>
+                  </select>
+                  <input type="tel" id="client-phone-number" name="phone_number"
+                    placeholder="07 00 00 00 00" required aria-required="true" autocomplete="tel-national"
+                    style="flex:1;min-width:0;" />
+                </div>
+                <input type="hidden" id="client-phone" name="phone" />
               </div>
             </div>
 

@@ -697,7 +697,10 @@ function onNext3() {
   if (!validateStep3()) return;
 
   bookingState.name            = $('#client-name')?.value?.trim() || '';
-  bookingState.phone           = $('#client-phone')?.value?.trim() || '';
+  // Combine country code + number into full E.164-style phone
+  const phoneCode   = $('#client-phone-code')?.value || '';
+  const phoneNumber = $('#client-phone-number')?.value?.trim().replace(/^0/, '') || '';
+  bookingState.phone = phoneCode && phoneNumber ? phoneCode + ' ' + phoneNumber : ($('#client-phone')?.value?.trim() || '');
   bookingState.email           = $('#client-email')?.value?.trim() || '';
   bookingState.airline         = $('#client-airline')?.value?.trim() || '';
   bookingState.flightNumber    = $('#client-flight')?.value?.trim() || '';
@@ -744,8 +747,11 @@ function validateStep3() {
   clearError(airline); clearError(flight);
 
   if (!name?.value?.trim()) { showError(name, 'Veuillez entrer votre nom.'); valid = false; }
-  if (!phone?.value?.trim() || phone.value.trim().length < 8) {
-    showError(phone, 'Numéro de téléphone invalide.'); valid = false;
+  const phoneNumberInput = $('#client-phone-number');
+  clearError(phoneNumberInput);
+  const phoneVal = phoneNumberInput?.value?.trim() || phone?.value?.trim() || '';
+  if (!phoneVal || phoneVal.replace(/\D/g,'').length < 6) {
+    showError(phoneNumberInput || phone, 'Numéro de téléphone invalide.'); valid = false;
   }
   if (!email?.value?.trim() || !isValidEmail(email.value)) {
     showError(email, 'Adresse email invalide.'); valid = false;
