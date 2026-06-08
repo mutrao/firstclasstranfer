@@ -253,6 +253,10 @@
     .detail-value.gold { color: var(--gold); font-family: var(--heading); font-size: 1rem; }
 
     .form-group { margin-bottom: 14px; }
+    .edit-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 4px; }
+    @media (max-width: 600px) { .edit-grid-3 { grid-template-columns: 1fr 1fr; } }
+    .modal-section-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); padding: 14px 0 8px; border-bottom: 1px solid var(--gold-border); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .modal-section-title:first-child { padding-top: 0; }
     label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
     select, input[type=text], input[type=number], textarea {
       width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
@@ -642,60 +646,152 @@
 
 <!-- BOOKING DETAIL MODAL -->
 <div class="modal-overlay" id="booking-modal">
-  <div class="modal">
+  <div class="modal" style="max-width:700px;">
     <div class="modal-header">
-      <h3 id="modal-ref">Détail de la course</h3>
-      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      <div>
+        <h3 id="modal-ref">Détail de la course</h3>
+        <div id="modal-ref-sub" style="font-size:0.75rem;color:var(--muted);margin-top:2px;">Référence non modifiable</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <a id="modal-wa-btn" href="#" target="_blank" class="btn-sm" style="background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);color:#25d366;text-decoration:none;padding:6px 10px;border-radius:8px;font-size:0.78rem;display:inline-flex;align-items:center;gap:4px;">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a id="modal-mail-btn" href="#" class="btn-sm" style="background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);text-decoration:none;padding:6px 10px;border-radius:8px;font-size:0.78rem;display:inline-flex;align-items:center;gap:4px;">
+          <i class="fas fa-envelope"></i> Email
+        </a>
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      </div>
     </div>
     <div class="modal-body">
-      <div class="detail-grid" id="modal-details"></div>
 
-      <div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-          <div class="form-group" style="margin-bottom:0;">
-            <label><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:4px;"></i>Montant (FCFA)</label>
-            <input type="number" id="modal-price-input" min="0" step="500" placeholder="Ex: 25000" />
-            <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;">Ajustable pour zones hors catalogue</div>
-          </div>
-          <div class="form-group" style="margin-bottom:0;">
-            <label><i class="fas fa-traffic-light" style="color:var(--gold);margin-right:4px;"></i>Statut</label>
-            <select id="modal-status-select">
-              <option value="pending">⏳ En attente</option>
-              <option value="validated">✅ Validée</option>
-              <option value="in_progress">🚗 En cours</option>
-              <option value="completed">✔️ Complétée</option>
-              <option value="cancelled">❌ Annulée</option>
-            </select>
-          </div>
+      <!-- SECTION: Trajet -->
+      <div class="modal-section-title"><i class="fas fa-route"></i> Trajet</div>
+      <div class="edit-grid-3">
+        <div class="form-group">
+          <label>Direction</label>
+          <select id="m-direction">
+            <option value="departure">→ Départ vers l'aéroport</option>
+            <option value="arrival">← Arrivée depuis l'aéroport</option>
+          </select>
         </div>
         <div class="form-group">
-          <label><i class="fas fa-id-card" style="color:var(--gold);margin-right:4px;"></i>Assigner un chauffeur</label>
+          <label>Date du trajet</label>
+          <input type="date" id="m-date" />
+        </div>
+        <div class="form-group">
+          <label>Heure prise en charge</label>
+          <input type="time" id="m-time" />
+        </div>
+        <div class="form-group">
+          <label>Zone</label>
+          <select id="m-zone">
+            <option value="zone1">Zone 1 — Plateau / Cocody / Marcory</option>
+            <option value="zone2">Zone 2 — Yopougon / Abobo / Koumassi</option>
+            <option value="zone3">Zone 3 — Bingerville / Anyama / Abatta</option>
+            <option value="zone4">Zone 4 — Grand-Bassam / Dabou / Assinie</option>
+            <option value="unknown">❓ Zone inconnue / hors catalogue</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Quartier / Adresse</label>
+          <input type="text" id="m-neighborhood" placeholder="Ex: Cocody Riviera 2" />
+        </div>
+        <div class="form-group">
+          <label>Véhicule</label>
+          <select id="m-vehicle">
+            <option value="basic">🚗 Économique</option>
+            <option value="premium">🚐 Premium (Van)</option>
+            <option value="business">🚙 Business</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Passagers</label>
+          <input type="number" id="m-passengers" min="1" max="8" />
+        </div>
+        <div class="form-group">
+          <label>Bagages</label>
+          <input type="number" id="m-luggage" min="0" max="12" />
+        </div>
+      </div>
+
+      <!-- SECTION: Vol -->
+      <div class="modal-section-title"><i class="fas fa-plane"></i> Informations de vol</div>
+      <div class="edit-grid-3">
+        <div class="form-group">
+          <label>Heure de vol</label>
+          <input type="time" id="m-flight-time" />
+        </div>
+        <div class="form-group">
+          <label>Compagnie aérienne</label>
+          <input type="text" id="m-airline" placeholder="Air Côte d'Ivoire" />
+        </div>
+        <div class="form-group">
+          <label>N° de vol</label>
+          <input type="text" id="m-flight-number" placeholder="VH 302" />
+        </div>
+      </div>
+
+      <!-- SECTION: Client -->
+      <div class="modal-section-title"><i class="fas fa-user"></i> Informations client</div>
+      <div class="edit-grid-3">
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" id="m-name" placeholder="Prénom Nom" />
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="text" id="m-phone" placeholder="+225 07 00 00 00 00" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="m-email" placeholder="client@email.com" />
+        </div>
+      </div>
+
+      <!-- SECTION: Gestion -->
+      <div class="modal-section-title"><i class="fas fa-sliders"></i> Gestion de la course</div>
+      <div class="edit-grid-3">
+        <div class="form-group">
+          <label><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:4px;"></i>Montant (FCFA)</label>
+          <input type="number" id="modal-price-input" min="0" step="500" placeholder="Ex: 25000" />
+          <div style="font-size:0.68rem;color:var(--dim);margin-top:3px;">Ajustable — zones hors catalogue</div>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-traffic-light" style="color:var(--gold);margin-right:4px;"></i>Statut</label>
+          <select id="modal-status-select">
+            <option value="pending">⏳ En attente</option>
+            <option value="validated">✅ Validée</option>
+            <option value="in_progress">🚗 En cours</option>
+            <option value="completed">✔️ Complétée</option>
+            <option value="cancelled">❌ Annulée</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-id-card" style="color:var(--gold);margin-right:4px;"></i>Chauffeur assigné</label>
           <select id="modal-driver-select">
             <option value="">— Non assigné —</option>
           </select>
         </div>
-        <div class="form-group">
-          <label><i class="fas fa-note-sticky" style="color:var(--gold);margin-right:4px;"></i>Notes admin</label>
-          <textarea id="modal-notes" placeholder="Notes internes sur cette course…"></textarea>
-        </div>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-note-sticky" style="color:var(--gold);margin-right:4px;"></i>Demandes spéciales</label>
+        <input type="text" id="m-special-requests" placeholder="Siège enfant, aide bagages…" />
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-lock" style="color:var(--gold);margin-right:4px;"></i>Notes admin (internes)</label>
+        <textarea id="modal-notes" placeholder="Notes internes sur cette course…" style="min-height:60px;"></textarea>
       </div>
 
-      <div id="modal-audit-trail" style="border-top:1px solid var(--border);padding-top:14px;">
-        <div style="font-size:0.75rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Historique</div>
-        <div id="modal-audit-list"></div>
-      </div>
+      <!-- AUDIT TRAIL -->
+      <div class="modal-section-title" style="margin-top:8px;"><i class="fas fa-history"></i> Historique des modifications</div>
+      <div id="modal-audit-list" style="max-height:180px;overflow-y:auto;padding-right:4px;"></div>
+
     </div>
     <div class="modal-footer" style="flex-wrap:wrap;gap:8px;">
-      <a id="modal-wa-btn" href="#" target="_blank" class="btn-sm" style="background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);color:#25d366;text-decoration:none;">
-        <i class="fab fa-whatsapp"></i> WhatsApp client
-      </a>
-      <a id="modal-mail-btn" href="#" class="btn-sm" style="background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);text-decoration:none;">
-        <i class="fas fa-envelope"></i> Email client
-      </a>
+      <button class="btn-sm btn-danger" onclick="cancelBookingFromModal()"><i class="fas fa-times-circle"></i> Annuler la course</button>
       <div style="flex:1;"></div>
-      <button class="btn-sm btn-danger" onclick="cancelBookingFromModal()"><i class="fas fa-times-circle"></i> Annuler</button>
-      <button class="btn-sm btn-secondary" onclick="closeModal()">Fermer</button>
-      <button class="btn-sm btn-primary" onclick="saveModal()"><i class="fas fa-save"></i> Enregistrer</button>
+      <button class="btn-sm btn-secondary" onclick="closeModal()">Fermer sans sauvegarder</button>
+      <button class="btn-sm btn-primary" onclick="saveModal()"><i class="fas fa-save"></i> Enregistrer les modifications</button>
     </div>
   </div>
 </div>
@@ -933,42 +1029,40 @@
     currentBookingId = id;
 
     document.getElementById('modal-ref').textContent = `Course — ${id}`;
+    document.getElementById('modal-ref-sub').textContent = `Créée le ${formatDateTime(b.createdAt)} — Référence non modifiable`;
 
-    // Details grid
-    document.getElementById('modal-details').innerHTML = `
-      <div class="detail-item"><div class="detail-label">Direction</div><div class="detail-value">${dirLabel(b.direction)}</div></div>
-      <div class="detail-item"><div class="detail-label">Date</div><div class="detail-value">${formatDate(b.date)}</div></div>
-      <div class="detail-item"><div class="detail-label">Heure prise en charge</div><div class="detail-value">${b.time || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Heure de vol</div><div class="detail-value">${b.flightTime || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Client</div><div class="detail-value">${b.name || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Téléphone</div><div class="detail-value">${b.phone || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Email</div><div class="detail-value">${b.email || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Zone</div><div class="detail-value">${zoneLabel(b.zone)}</div></div>
-      <div class="detail-item"><div class="detail-label">Quartier</div><div class="detail-value">${b.neighborhood || b.address || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Véhicule</div><div class="detail-value">${vehicleLabel(b.vehicle)}</div></div>
-      <div class="detail-item"><div class="detail-label">Passagers</div><div class="detail-value">${b.passengers || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Bagages</div><div class="detail-value">${b.luggage || '0'}</div></div>
-      <div class="detail-item"><div class="detail-label">Compagnie</div><div class="detail-value">${b.airline || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">N° de vol</div><div class="detail-value">${b.flightNumber || '—'}</div></div>
-      <div class="detail-item"><div class="detail-label">Montant</div><div class="detail-value gold">${formatPrice(b.totalPrice)}</div></div>
-      <div class="detail-item"><div class="detail-label">Créée le</div><div class="detail-value">${formatDateTime(b.createdAt)}</div></div>
-      ${b.specialRequests ? `<div class="detail-item" style="grid-column:1/-1;"><div class="detail-label">Demandes spéciales</div><div class="detail-value">${b.specialRequests}</div></div>` : ''}
-    `;
+    // Trajet
+    document.getElementById('m-direction').value = b.direction || 'departure';
+    document.getElementById('m-date').value = b.date || '';
+    document.getElementById('m-time').value = b.time || '';
+    document.getElementById('m-zone').value = b.zone || 'zone1';
+    document.getElementById('m-neighborhood').value = b.neighborhood || b.address || '';
+    document.getElementById('m-vehicle').value = b.vehicle || 'basic';
+    document.getElementById('m-passengers').value = b.passengers || 1;
+    document.getElementById('m-luggage').value = b.luggage || 0;
 
-    // Price
-    const priceInput = document.getElementById('modal-price-input');
-    if (priceInput) priceInput.value = b.totalPrice || '';
+    // Vol
+    document.getElementById('m-flight-time').value = b.flightTime || '';
+    document.getElementById('m-airline').value = b.airline || '';
+    document.getElementById('m-flight-number').value = b.flightNumber || '';
 
-    // Status
+    // Client
+    document.getElementById('m-name').value = b.name || '';
+    document.getElementById('m-phone').value = b.phone || '';
+    document.getElementById('m-email').value = b.email || '';
+
+    // Demandes spéciales
+    document.getElementById('m-special-requests').value = b.specialRequests || '';
+
+    // Gestion
+    document.getElementById('modal-price-input').value = b.totalPrice || '';
     document.getElementById('modal-status-select').value = b.status || 'pending';
 
-    // Driver select
     const driverSel = document.getElementById('modal-driver-select');
     const drivers = getDrivers();
     driverSel.innerHTML = '<option value="">— Non assigné —</option>' +
       drivers.map(d => `<option value="${d.id}" ${b.driverId === d.id ? 'selected' : ''}>${d.name} — ${d.vehicle}</option>`).join('');
 
-    // Notes
     document.getElementById('modal-notes').value = b.adminNotes || '';
 
     // Audit trail
@@ -1006,6 +1100,7 @@
       note_added: 'Note ajoutée',
       cancelled: 'Réservation annulée',
       price_updated: `Montant mis à jour : ${Number(a.from).toLocaleString('fr-FR')} → ${Number(a.to).toLocaleString('fr-FR')} FCFA`,
+      field_updated: `${a.label || a.field} modifié : « ${a.from || '—'} » → « ${a.to || '—'} »`,
     };
     return map[a.action] || a.action;
   }
@@ -1022,35 +1117,95 @@
     if (idx === -1) return;
 
     const b = bookings[idx];
-    const newStatus = document.getElementById('modal-status-select').value;
-    const driverSel = document.getElementById('modal-driver-select');
-    const driverId = driverSel.value || null;
-    const driverName = driverId ? driverSel.options[driverSel.selectedIndex].text.split(' — ')[0] : null;
-    const notes = document.getElementById('modal-notes').value.trim();
-
     if (!b.auditLog) b.auditLog = [];
+    const now = new Date().toISOString();
 
-    // Price update
-    const newPrice = parseInt(document.getElementById('modal-price-input')?.value || '0');
+    function logField(field, label, oldVal, newVal) {
+      if ((oldVal || '') !== (newVal || '')) {
+        b.auditLog.unshift({ action: 'field_updated', field, label, from: oldVal || '', to: newVal || '', at: now, by: USERNAME });
+      }
+    }
+
+    // Trajet
+    const newDirection = document.getElementById('m-direction').value;
+    logField('direction', 'Direction', b.direction, newDirection); b.direction = newDirection;
+
+    const newDate = document.getElementById('m-date').value;
+    logField('date', 'Date', b.date, newDate); b.date = newDate;
+
+    const newTime = document.getElementById('m-time').value;
+    logField('time', 'Heure prise en charge', b.time, newTime); b.time = newTime;
+
+    const newZone = document.getElementById('m-zone').value;
+    logField('zone', 'Zone', b.zone, newZone); b.zone = newZone;
+
+    const newNeighborhood = document.getElementById('m-neighborhood').value.trim();
+    logField('neighborhood', 'Quartier', b.neighborhood || b.address, newNeighborhood);
+    b.neighborhood = newNeighborhood;
+
+    const newVehicle = document.getElementById('m-vehicle').value;
+    logField('vehicle', 'Véhicule', b.vehicle, newVehicle); b.vehicle = newVehicle;
+
+    const newPassengers = document.getElementById('m-passengers').value;
+    logField('passengers', 'Passagers', String(b.passengers || ''), newPassengers); b.passengers = parseInt(newPassengers) || b.passengers;
+
+    const newLuggage = document.getElementById('m-luggage').value;
+    logField('luggage', 'Bagages', String(b.luggage || ''), newLuggage); b.luggage = parseInt(newLuggage);
+
+    // Vol
+    const newFlightTime = document.getElementById('m-flight-time').value;
+    logField('flightTime', 'Heure de vol', b.flightTime, newFlightTime); b.flightTime = newFlightTime;
+
+    const newAirline = document.getElementById('m-airline').value.trim();
+    logField('airline', 'Compagnie aérienne', b.airline, newAirline); b.airline = newAirline;
+
+    const newFlightNumber = document.getElementById('m-flight-number').value.trim();
+    logField('flightNumber', 'N° de vol', b.flightNumber, newFlightNumber); b.flightNumber = newFlightNumber;
+
+    // Client
+    const newName = document.getElementById('m-name').value.trim();
+    logField('name', 'Nom', b.name, newName); b.name = newName;
+
+    const newPhone = document.getElementById('m-phone').value.trim();
+    logField('phone', 'Téléphone', b.phone, newPhone); b.phone = newPhone;
+
+    const newEmail = document.getElementById('m-email').value.trim();
+    logField('email', 'Email', b.email, newEmail); b.email = newEmail;
+
+    const newSpecial = document.getElementById('m-special-requests').value.trim();
+    logField('specialRequests', 'Demandes spéciales', b.specialRequests, newSpecial); b.specialRequests = newSpecial;
+
+    // Price
+    const newPrice = parseInt(document.getElementById('modal-price-input').value || '0');
     if (newPrice && newPrice !== (b.totalPrice || 0)) {
-      b.auditLog.unshift({ action: 'price_updated', from: b.totalPrice || 0, to: newPrice, at: new Date().toISOString(), by: USERNAME });
+      b.auditLog.unshift({ action: 'price_updated', from: b.totalPrice || 0, to: newPrice, at: now, by: USERNAME });
       addAuditLog('price_updated', { bookingId: currentBookingId, from: b.totalPrice || 0, to: newPrice });
       b.totalPrice = newPrice;
     }
 
+    // Status
+    const newStatus = document.getElementById('modal-status-select').value;
     if (newStatus !== b.status) {
-      b.auditLog.unshift({ action: 'status_changed', from: b.status, to: newStatus, at: new Date().toISOString(), by: USERNAME });
+      b.auditLog.unshift({ action: 'status_changed', from: b.status, to: newStatus, at: now, by: USERNAME });
       addAuditLog('status_changed', { bookingId: currentBookingId, from: b.status, to: newStatus });
       b.status = newStatus;
     }
+
+    // Driver
+    const driverSel = document.getElementById('modal-driver-select');
+    const driverId = driverSel.value || null;
+    const driverName = driverId ? driverSel.options[driverSel.selectedIndex].text.split(' — ')[0] : null;
     if (driverId !== b.driverId) {
-      b.auditLog.unshift({ action: driverId ? 'driver_assigned' : 'driver_unassigned', driverName, at: new Date().toISOString(), by: USERNAME });
+      b.auditLog.unshift({ action: driverId ? 'driver_assigned' : 'driver_unassigned', driverName, at: now, by: USERNAME });
       addAuditLog('driver_assigned', { bookingId: currentBookingId, driverName });
       b.driverId = driverId;
       b.driverName = driverName;
     }
+
+    // Notes
+    const notes = document.getElementById('modal-notes').value.trim();
     if (notes !== (b.adminNotes || '') && notes) {
-      b.auditLog.unshift({ action: 'note_added', at: new Date().toISOString(), by: USERNAME });
+      b.auditLog.unshift({ action: 'note_added', at: now, by: USERNAME });
       b.adminNotes = notes;
     }
 
