@@ -191,6 +191,7 @@ let bookingState = {
   totalSteps: 4,
 
   // Step 1
+  direction: 'departure', // 'departure' | 'arrival'
   pickupMethod: 'neighborhood', // 'neighborhood' or 'address'
   neighborhood: '',
   address: '',
@@ -209,8 +210,12 @@ let bookingState = {
   name: '',
   phone: '',
   email: '',
+  airline: '',
   flightNumber: '',
+  flightTime: '',
   specialRequests: '',
+  notifEmail: true,
+  notifWhatsapp: true,
 
   // Step 4
   paymentMethod: '',
@@ -243,6 +248,7 @@ function showStep(step) {
 function updateSummary() {
   const zone = bookingState.zone;
   const zoneInfo = ZONES[zone];
+  const isArrival = bookingState.direction === 'arrival';
 
   // Show neighborhood or address in pickup summary
   let pickupLabel = '—';
@@ -255,8 +261,20 @@ function updateSummary() {
     pickupLabel = zoneInfo.label;
   }
 
+  // Direction-aware sidebar labels
+  const pickupLabelEl = $('#summary-pickup-label');
+  const destLabelEl = $('#summary-destination-label');
+  const dirIconEl = $('#summary-dir-icon');
+  if (isArrival) {
+    if (pickupLabelEl) pickupLabelEl.innerHTML = '<i class="fas fa-plane-arrival" id="summary-dir-icon" style="color:var(--gold);margin-right:4px;"></i> Arrivée depuis';
+    if (destLabelEl) destLabelEl.innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> Destination';
+  } else {
+    if (pickupLabelEl) pickupLabelEl.innerHTML = '<i class="fas fa-plane-departure" id="summary-dir-icon" style="color:var(--gold);margin-right:4px;"></i> Départ';
+    if (destLabelEl) destLabelEl.innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> Arrivée';
+  }
+
   $('#summary-pickup').textContent = pickupLabel;
-  $('#summary-destination').textContent = 'Aéroport FHB, Abidjan';
+  $('#summary-destination').textContent = isArrival ? pickupLabel : 'Aéroport FHB, Abidjan';
   $('#summary-date').textContent = bookingState.date ? formatDate(bookingState.date) : '—';
   $('#summary-time').textContent = bookingState.time || '—';
   const luggageLabel = bookingState.luggage === 0 ? 'Aucun bagage'
