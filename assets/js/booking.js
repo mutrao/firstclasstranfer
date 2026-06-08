@@ -353,9 +353,9 @@ function showZoneDetectedCard(zoneKey) {
     <div class="zone-detected-info">
       <div class="zone-detected-label">${z.label}</div>
       <div class="zone-detected-prices">
-        <span class="zd-price"><i class="fas fa-car"></i> Économie : <strong>${z.economy.toLocaleString('fr-FR')} FCFA</strong></span>
+        <span class="zd-price"><i class="fas fa-car"></i> Basic : <strong>${z.basic.toLocaleString('fr-FR')} FCFA</strong></span>
+        <span class="zd-price"><i class="fas fa-van-shuttle"></i> Premium : <strong>${z.premium.toLocaleString('fr-FR')} FCFA</strong></span>
         <span class="zd-price"><i class="fas fa-car-side"></i> Business : <strong>${z.business.toLocaleString('fr-FR')} FCFA</strong></span>
-        <span class="zd-price"><i class="fas fa-van-shuttle"></i> Van : <strong>${z.van.toLocaleString('fr-FR')} FCFA</strong></span>
       </div>
       <div class="zone-detected-note"><i class="fas fa-check-circle"></i> Prix fixe, tout inclus — aucun supplément caché</div>
     </div>`;

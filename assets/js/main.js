@@ -85,10 +85,10 @@ faqItems.forEach(item => {
 // PRICING / NEIGHBORHOODS DATA (shared inline)
 // =============================================
 const PRICING_ZONES = {
-  zone1: { label: 'Zone 1 — Plateau, Cocody, Riviera, Angré, Marcory, Treichville, Port-Bouët', economy: 15000, business: 25000, van: 25000 },
-  zone2: { label: 'Zone 2 — Yopougon, Abobo, Koumassi, Attécoubé', economy: 20000, business: 32000, van: 30000 },
-  zone3: { label: 'Zone 3 — Bingerville, Anyama, Songon, Abatta', economy: 18000, business: 28000, van: 28000 },
-  zone4: { label: 'Zone 4 — Grand-Bassam, Dabou, Assinie, Jacqueville', economy: 35000, business: 50000, van: 50000 },
+  zone1: { label: 'Zone 1 — Plateau, Cocody, Riviera, Angré, Marcory, Treichville, Port-Bouët', basic: 12000, premium: 25000, business: 25000 },
+  zone2: { label: 'Zone 2 — Yopougon, Abobo, Koumassi, Attécoubé', basic: 15000, premium: 30000, business: 32000 },
+  zone3: { label: 'Zone 3 — Bingerville, Anyama, Songon, Abatta', basic: 14000, premium: 28000, business: 28000 },
+  zone4: { label: 'Zone 4 — Grand-Bassam, Dabou, Assinie, Jacqueville', basic: 28000, premium: 50000, business: 50000 },
 };
 
 // Compact neighborhood→zone map for hero use
@@ -182,10 +182,10 @@ function updateHeroPrice() {
   if (!zoneInfo) return;
 
   let price;
-  if (vehicle === 'van' || passengers > 4) {
-    price = zoneInfo.van;
+  if (vehicle === 'premium' || passengers >= 3) {
+    price = zoneInfo.premium;
   } else {
-    price = zoneInfo[vehicle] || zoneInfo.economy;
+    price = zoneInfo[vehicle] || zoneInfo.basic;
   }
 
   if (priceDisplay) {
