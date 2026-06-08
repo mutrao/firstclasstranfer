@@ -198,6 +198,7 @@ let bookingState = {
   date: '',
   time: '',
   passengers: 1,
+  luggage: 1,
 
   // Step 2
   vehicle: '',
@@ -258,7 +259,10 @@ function updateSummary() {
   $('#summary-destination').textContent = 'Aéroport FHB, Abidjan';
   $('#summary-date').textContent = bookingState.date ? formatDate(bookingState.date) : '—';
   $('#summary-time').textContent = bookingState.time || '—';
-  $('#summary-passengers').textContent = bookingState.passengers || '—';
+  const luggageLabel = bookingState.luggage === 0 ? 'Aucun bagage'
+    : bookingState.luggage === 1 ? '1 valise'
+    : `${bookingState.luggage} valises`;
+  $('#summary-passengers').textContent = `${bookingState.passengers || '—'} pax · ${luggageLabel}`;
   $('#summary-vehicle').textContent = getVehicleLabel(bookingState.vehicle) || '—';
 
   const totalEl = $('#summary-total-amount');
@@ -401,6 +405,7 @@ $('#btn-next-1')?.addEventListener('click', () => {
   bookingState.date       = $('#trip-date')?.value || '';
   bookingState.time       = $('#trip-time')?.value || '';
   bookingState.passengers = parseInt($('#trip-passengers')?.value) || 1;
+  bookingState.luggage    = parseInt($('#trip-luggage')?.value) || 0;
 
   renderVehicleOptions();
   showStep(2);
@@ -450,15 +455,58 @@ function validateStep1() {
   return valid;
 }
 
+function updateLuggageHint() {
+  const pax     = parseInt($('#trip-passengers')?.value) || 1;
+  const luggage = parseInt($('#trip-luggage')?.value) || 0;
+  const hint    = $('#luggage-vehicle-hint');
+  if (!hint) return;
+
+  const rec = getRecommendedVehicle(pax, luggage);
+  const labels = { economy: 'Économie', business: 'Business', van: 'Van / Minivan' };
+  const icons  = { economy: 'fa-car', business: 'fa-car-side', van: 'fa-van-shuttle' };
+  const forced = (pax >= 5 || luggage >= 5 || (pax >= 4 && luggage >= 4));
+
+  hint.style.display = 'flex';
+  hint.className = `luggage-hint ${forced ? 'luggage-hint-warn' : 'luggage-hint-info'}`;
+  hint.innerHTML = `
+    <i class="fas ${icons[rec]}"></i>
+    <span>
+      ${forced
+        ? `<strong>Van / Minivan requis</strong> — ${pax} passager(s) + ${luggage} valise(s) dépassent la capacité des berlines.`
+        : `Véhicule recommandé : <strong>${labels[rec]}</strong> pour ${pax} passager(s) + ${luggage} valise(s).`
+      }
+    </span>`;
+}
+
 // =============================================
 // STEP 2 - VEHICLE SELECTION
 // =============================================
+// Returns recommended vehicle type based on passengers + luggage
+function getRecommendedVehicle(pax, luggage) {
+  // Van required: 5+ passengers OR 5+ bags OR (4 pax + 4+ bags)
+  if (pax >= 5 || luggage >= 5 || (pax >= 4 && luggage >= 4)) return 'van';
+  // Economy: small groups with few bags
+  if (pax <= 2 && luggage <= 2) return 'economy';
+  // Business: default recommendation for comfort
+  return 'business';
+}
+
+// Capacity constraints
+function isVehicleViable(vehicleId, pax, luggage) {
+  if (vehicleId === 'economy')  return pax <= 4 && luggage <= 3;
+  if (vehicleId === 'business') return pax <= 4 && luggage <= 4;
+  if (vehicleId === 'van')      return pax <= 8 && luggage <= 9;
+  return false;
+}
+
 function renderVehicleOptions() {
   const zone = bookingState.zone;
   const zoneInfo = ZONES[zone];
   if (!zoneInfo) return;
 
-  const pax = bookingState.passengers;
+  const pax     = bookingState.passengers;
+  const luggage = bookingState.luggage;
+  const recommended = getRecommendedVehicle(pax, luggage);
 
   const vehicles = [
     {
@@ -466,7 +514,7 @@ function renderVehicleOptions() {
       label: 'Économie',
       model: 'Toyota Corolla / Hyundai i10',
       icon: 'fa-car',
-      desc: 'Confortable, jusqu\'à 4 passagers + bagages',
+      capacity: '4 passagers · 3 valises max',
       price: zoneInfo.economy,
     },
     {
@@ -474,16 +522,15 @@ function renderVehicleOptions() {
       label: 'Business',
       model: 'Toyota Camry / Peugeot 508',
       icon: 'fa-car-side',
-      desc: 'Premium, jusqu\'à 4 passagers, confort supérieur',
+      capacity: '4 passagers · 4 valises max',
       price: zoneInfo.business,
-      featured: true,
     },
     {
       id: 'van',
       label: 'Van / Minivan',
       model: 'Toyota HiAce',
       icon: 'fa-van-shuttle',
-      desc: 'Idéal familles et groupes, jusqu\'à 8 passagers',
+      capacity: '8 passagers · 9 valises max',
       price: zoneInfo.van,
     },
   ];
@@ -492,37 +539,46 @@ function renderVehicleOptions() {
   if (!container) return;
 
   container.innerHTML = vehicles.map(v => {
-    const displayPrice = (pax > 4 && v.id !== 'van') ? zoneInfo.van : v.price;
-    const priceLabel = formatPrice(displayPrice);
+    const viable = isVehicleViable(v.id, pax, luggage);
+    const isRec  = v.id === recommended;
+    const badge  = isRec ? '<span class="vehicle-badge-rec">Recommandé</span>' : '';
+    const unavailMsg = !viable
+      ? `<span class="vehicle-unavail"><i class="fas fa-exclamation-triangle"></i> Capacité insuffisante pour ${pax} pax + ${luggage} valise(s)</span>`
+      : '';
+
     return `
-      <div class="vehicle-option ${v.featured ? 'featured' : ''}" data-vehicle="${v.id}" data-price="${v.price}">
+      <div class="vehicle-option ${isRec ? 'featured' : ''} ${!viable ? 'vehicle-unavailable' : ''}"
+           data-vehicle="${v.id}" data-price="${v.price}" ${!viable ? 'data-unavailable="1"' : ''}>
         <div class="vehicle-radio-indicator"></div>
         <div class="vehicle-info">
-          <h4><i class="fas ${v.icon}" style="color:var(--gold);margin-right:8px;"></i>${v.label}</h4>
-          <p>${v.model} — ${v.desc}</p>
+          <h4><i class="fas ${v.icon}" style="color:var(--gold);margin-right:8px;"></i>${v.label} ${badge}</h4>
+          <p>${v.model}</p>
+          <p class="vehicle-capacity"><i class="fas fa-users"></i> ${v.capacity}</p>
+          ${unavailMsg}
         </div>
         <div class="vehicle-price-tag">
-          ${priceLabel}
+          ${formatPrice(v.price)}
           <small>TTC, tout inclus</small>
         </div>
       </div>`;
   }).join('');
 
-  container.querySelectorAll('.vehicle-option').forEach(card => {
+  container.querySelectorAll('.vehicle-option:not([data-unavailable])').forEach(card => {
     card.addEventListener('click', () => {
       container.querySelectorAll('.vehicle-option').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
-      bookingState.vehicle = card.dataset.vehicle;
-
-      let price = parseInt(card.dataset.price);
-      if (bookingState.passengers > 4 && bookingState.vehicle !== 'van') {
-        price = zoneInfo.van;
-      }
-      bookingState.basePrice  = price;
-      bookingState.totalPrice = price;
+      bookingState.vehicle    = card.dataset.vehicle;
+      bookingState.basePrice  = parseInt(card.dataset.price);
+      bookingState.totalPrice = bookingState.basePrice;
       updateSummary();
     });
   });
+
+  // Auto-select recommended
+  const recCard = container.querySelector(`[data-vehicle="${recommended}"]`);
+  if (recCard && !recCard.dataset.unavailable) {
+    recCard.click();
+  }
 }
 
 $('#btn-back-2')?.addEventListener('click', () => showStep(1));
@@ -594,6 +650,8 @@ function renderPaymentSummary() {
   $('#pay-summary-date').textContent    = formatDate(bookingState.date);
   $('#pay-summary-time').textContent    = bookingState.time;
   $('#pay-summary-vehicle').textContent = getVehicleLabel(bookingState.vehicle);
+  const lgLabel = bookingState.luggage === 0 ? 'Aucun' : bookingState.luggage === 1 ? '1 valise' : `${bookingState.luggage} valises`;
+  if ($('#pay-summary-luggage')) $('#pay-summary-luggage').textContent = lgLabel;
   $('#pay-summary-name').textContent    = bookingState.name;
   $('#pay-summary-phone').textContent   = bookingState.phone;
   $('#pay-summary-flight').textContent  = bookingState.flightNumber || 'Non renseigné';
@@ -701,6 +759,12 @@ window.addEventListener('DOMContentLoaded', () => {
       if ($('#trip-passengers') && data.passengers) $('#trip-passengers').value = data.passengers;
     } catch (err) { /* ignore */ }
   }
+
+  // Live luggage/passengers hint
+  ['trip-passengers', 'trip-luggage'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', updateLuggageHint);
+  });
+  updateLuggageHint();
 
   showStep(1);
 });

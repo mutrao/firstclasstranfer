@@ -154,19 +154,35 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="trip-passengers"><i class="fas fa-users"></i> Nombre de passagers <span style="color:var(--error)">*</span></label>
-              <select id="trip-passengers" name="passengers" required aria-required="true">
-                <option value="1">1 passager</option>
-                <option value="2" selected>2 passagers</option>
-                <option value="3">3 passagers</option>
-                <option value="4">4 passagers</option>
-                <option value="5">5 passagers (Van requis)</option>
-                <option value="6">6 passagers (Van requis)</option>
-                <option value="7">7 passagers (Van requis)</option>
-                <option value="8">8 passagers (Van requis)</option>
-              </select>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="trip-passengers"><i class="fas fa-users"></i> Passagers <span style="color:var(--error)">*</span></label>
+                <select id="trip-passengers" name="passengers" required aria-required="true">
+                  <option value="1">1 passager</option>
+                  <option value="2" selected>2 passagers</option>
+                  <option value="3">3 passagers</option>
+                  <option value="4">4 passagers</option>
+                  <option value="5">5 passagers</option>
+                  <option value="6">6 passagers</option>
+                  <option value="7">7 passagers</option>
+                  <option value="8">8 passagers</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="trip-luggage"><i class="fas fa-suitcase-rolling"></i> Bagages <span style="color:var(--error)">*</span></label>
+                <select id="trip-luggage" name="luggage" required aria-required="true">
+                  <option value="0">Aucun bagage</option>
+                  <option value="1" selected>1 valise</option>
+                  <option value="2">2 valises</option>
+                  <option value="3">3 valises</option>
+                  <option value="4">4 valises</option>
+                  <option value="5">5 valises</option>
+                  <option value="6">6+ valises (Van recommandé)</option>
+                </select>
+                <p class="form-hint"><i class="fas fa-info-circle"></i> Bagage cabine (sac à dos, vanity) non compté</p>
+              </div>
             </div>
+            <div id="luggage-vehicle-hint" class="luggage-hint" style="display:none" aria-live="polite"></div>
 
             <div class="form-nav">
               <a href="index.html" class="btn btn-outline">
@@ -257,6 +273,7 @@
                 <div><span style="color:var(--text-muted);">Date :</span><br><strong id="pay-summary-date">—</strong></div>
                 <div><span style="color:var(--text-muted);">Heure :</span><br><strong id="pay-summary-time">—</strong></div>
                 <div><span style="color:var(--text-muted);">Véhicule :</span><br><strong id="pay-summary-vehicle">—</strong></div>
+                <div><span style="color:var(--text-muted);">Bagages :</span><br><strong id="pay-summary-luggage">—</strong></div>
                 <div><span style="color:var(--text-muted);">Passager :</span><br><strong id="pay-summary-name">—</strong></div>
                 <div><span style="color:var(--text-muted);">Téléphone :</span><br><strong id="pay-summary-phone">—</strong></div>
                 <div><span style="color:var(--text-muted);">N° de vol :</span><br><strong id="pay-summary-flight">—</strong></div>

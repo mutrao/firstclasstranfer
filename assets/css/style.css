@@ -2190,3 +2190,70 @@ section {
 .form-group select.error {
   border-color: var(--error);
 }
+
+/* =========================================
+   LUGGAGE & VEHICLE RECOMMENDATION
+   ========================================= */
+.luggage-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+.luggage-hint i {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.luggage-hint-info {
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  color: var(--text-secondary);
+}
+.luggage-hint-info i { color: var(--gold); }
+.luggage-hint-warn {
+  background: rgba(251, 146, 60, 0.1);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  color: var(--text-secondary);
+}
+.luggage-hint-warn i { color: #fb923c; }
+
+/* Vehicle capacity line */
+.vehicle-capacity {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+/* Recommended badge */
+.vehicle-badge-rec {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--navy);
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Unavailable vehicle */
+.vehicle-unavailable {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.vehicle-unavail {
+  font-size: 0.76rem;
+  color: #fb923c;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
