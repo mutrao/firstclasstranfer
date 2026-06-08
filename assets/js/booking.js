@@ -308,7 +308,7 @@ function formatPrice(p) {
 /** Normalize a string for matching (lowercase, no accents, no extra spaces) */
 function normalizeStr(str) {
   return str.toLowerCase()
-    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -500,7 +500,7 @@ function isVehicleViable(vehicleId, pax, luggage) {
 }
 
 function renderVehicleOptions() {
-  const zone = bookingState.zone;
+  const zone = bookingState.zone || 'zone1';
   const zoneInfo = ZONES[zone];
   if (!zoneInfo) return;
 
