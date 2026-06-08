@@ -380,6 +380,77 @@ function showZoneDetectedCard(zoneKey) {
 }
 
 // =============================================
+// DIRECTION TOGGLE
+// =============================================
+function switchDirection(dir) {
+  bookingState.direction = dir;
+
+  // Toggle active class on dir-btn buttons
+  document.querySelectorAll('.dir-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.direction === dir);
+  });
+
+  const banner = document.getElementById('arrival-info-banner');
+  const neighborhoodLabel = document.getElementById('neighborhood-label');
+  const addressLabel = document.getElementById('address-label');
+  const destinationLabel = document.getElementById('destination-label');
+  const originFixedGroup = document.getElementById('origin-fixed-group');
+  const destinationGroup = document.querySelector('#trip-destination')?.closest('.form-group');
+  const step1Title = document.getElementById('step1-title');
+  const step1Desc = document.getElementById('step1-desc');
+  const tripDateLabel = document.getElementById('trip-date-label');
+  const tripTimeLabel = document.getElementById('trip-time-label');
+  const flightTimeLabel = document.getElementById('flight-time-label');
+
+  if (dir === 'arrival') {
+    // Show arrival info banner
+    if (banner) banner.style.display = 'flex';
+
+    // Show fixed origin (airport), hide destination field (or make it show neighborhood)
+    if (originFixedGroup) originFixedGroup.style.display = 'block';
+    if (destinationGroup) destinationGroup.style.display = 'none';
+
+    // Update labels for neighborhood/address = destination
+    if (neighborhoodLabel) neighborhoodLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre quartier / adresse de destination <span style="color:var(--error)">*</span>';
+    if (addressLabel) addressLabel.innerHTML = '<i class="fas fa-home"></i> Adresse complète de destination <span style="color:var(--error)">*</span>';
+
+    // Update date/time labels
+    if (tripDateLabel) tripDateLabel.innerHTML = '<i class="fas fa-calendar"></i> Date d\'atterrissage <span style="color:var(--error)">*</span>';
+    if (tripTimeLabel) tripTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure de prise en charge <span style="color:var(--error)">*</span>';
+    if (flightTimeLabel) flightTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure d\'atterrissage <span style="color:var(--error)">*</span>';
+
+    // Update step title
+    if (step1Title) step1Title.textContent = 'Détails du Trajet — Arrivée';
+    if (step1Desc) step1Desc.textContent = 'Indiquez votre destination, la date et l\'heure d\'atterrissage.';
+  } else {
+    // Hide arrival info banner
+    if (banner) banner.style.display = 'none';
+
+    // Hide fixed origin, show destination field
+    if (originFixedGroup) originFixedGroup.style.display = 'none';
+    if (destinationGroup) destinationGroup.style.display = 'block';
+
+    // Restore departure labels
+    if (neighborhoodLabel) neighborhoodLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre quartier de départ <span style="color:var(--error)">*</span>';
+    if (addressLabel) addressLabel.innerHTML = '<i class="fas fa-home"></i> Adresse complète de départ <span style="color:var(--error)">*</span>';
+
+    // Restore date/time labels
+    if (tripDateLabel) tripDateLabel.innerHTML = '<i class="fas fa-calendar"></i> Date de départ <span style="color:var(--error)">*</span>';
+    if (tripTimeLabel) tripTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure de prise en charge <span style="color:var(--error)">*</span>';
+    if (flightTimeLabel) flightTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure de vol <span style="color:var(--error)">*</span>';
+
+    // Restore step title
+    if (step1Title) step1Title.textContent = 'Détails du Trajet';
+    if (step1Desc) step1Desc.textContent = 'Indiquez votre point de départ, la date et l\'heure souhaitée.';
+  }
+
+  updateSummary();
+}
+
+// Expose globally
+window.switchDirection = switchDirection;
+
+// =============================================
 // METHOD TOGGLE
 // =============================================
 function switchMethod(method) {
@@ -619,11 +690,15 @@ $('#btn-back-3')?.addEventListener('click', () => showStep(2));
 $('#btn-next-3')?.addEventListener('click', () => {
   if (!validateStep3()) return;
 
-  bookingState.name           = $('#client-name')?.value?.trim() || '';
-  bookingState.phone          = $('#client-phone')?.value?.trim() || '';
-  bookingState.email          = $('#client-email')?.value?.trim() || '';
-  bookingState.flightNumber   = $('#client-flight')?.value?.trim() || '';
-  bookingState.specialRequests= $('#client-requests')?.value?.trim() || '';
+  bookingState.name            = $('#client-name')?.value?.trim() || '';
+  bookingState.phone           = $('#client-phone')?.value?.trim() || '';
+  bookingState.email           = $('#client-email')?.value?.trim() || '';
+  bookingState.airline         = $('#client-airline')?.value?.trim() || '';
+  bookingState.flightNumber    = $('#client-flight')?.value?.trim() || '';
+  bookingState.flightTime      = $('#client-flight-time')?.value?.trim() || '';
+  bookingState.specialRequests = $('#client-requests')?.value?.trim() || '';
+  bookingState.notifEmail      = $('#notif-email')?.checked ?? true;
+  bookingState.notifWhatsapp   = $('#notif-whatsapp')?.checked ?? true;
 
   renderPaymentSummary();
   showStep(4);
@@ -631,11 +706,14 @@ $('#btn-next-3')?.addEventListener('click', () => {
 
 function validateStep3() {
   let valid = true;
-  const name  = $('#client-name');
-  const phone = $('#client-phone');
-  const email = $('#client-email');
+  const name    = $('#client-name');
+  const phone   = $('#client-phone');
+  const email   = $('#client-email');
+  const airline = $('#client-airline');
+  const flight  = $('#client-flight');
 
   clearError(name); clearError(phone); clearError(email);
+  clearError(airline); clearError(flight);
 
   if (!name?.value?.trim()) { showError(name, 'Veuillez entrer votre nom.'); valid = false; }
   if (!phone?.value?.trim() || phone.value.trim().length < 8) {
@@ -643,6 +721,12 @@ function validateStep3() {
   }
   if (!email?.value?.trim() || !isValidEmail(email.value)) {
     showError(email, 'Adresse email invalide.'); valid = false;
+  }
+  if (!airline?.value?.trim()) {
+    showError(airline, 'Veuillez indiquer la compagnie aérienne.'); valid = false;
+  }
+  if (!flight?.value?.trim()) {
+    showError(flight, 'Veuillez indiquer le numéro de vol.'); valid = false;
   }
   return valid;
 }
@@ -667,8 +751,16 @@ function renderPaymentSummary() {
     pickupDisplay = zoneInfo.label;
   }
 
-  $('#pay-summary-pickup').textContent  = pickupDisplay;
-  $('#pay-summary-dest').textContent    = 'Aéroport FHB, Abidjan';
+  const isArrival = bookingState.direction === 'arrival';
+
+  // Direction display
+  const dirDisplay = isArrival
+    ? 'Aéroport FHB → ' + (pickupDisplay !== '—' ? pickupDisplay : 'Destination')
+    : (pickupDisplay !== '—' ? pickupDisplay : 'Départ') + ' → Aéroport FHB';
+
+  if ($('#pay-summary-direction')) $('#pay-summary-direction').textContent = isArrival ? 'Arrivée depuis l\'aéroport' : 'Départ vers l\'aéroport';
+  $('#pay-summary-pickup').textContent  = isArrival ? 'Aéroport FHB, Abidjan' : pickupDisplay;
+  $('#pay-summary-dest').textContent    = isArrival ? pickupDisplay : 'Aéroport FHB, Abidjan';
   $('#pay-summary-date').textContent    = formatDate(bookingState.date);
   $('#pay-summary-time').textContent    = bookingState.time;
   $('#pay-summary-vehicle').textContent = getVehicleLabel(bookingState.vehicle);
@@ -676,7 +768,16 @@ function renderPaymentSummary() {
   if ($('#pay-summary-luggage')) $('#pay-summary-luggage').textContent = lgLabel;
   $('#pay-summary-name').textContent    = bookingState.name;
   $('#pay-summary-phone').textContent   = bookingState.phone;
+  if ($('#pay-summary-airline')) $('#pay-summary-airline').textContent = bookingState.airline || 'Non renseigné';
   $('#pay-summary-flight').textContent  = bookingState.flightNumber || 'Non renseigné';
+  if ($('#pay-summary-flight-time')) $('#pay-summary-flight-time').textContent = bookingState.flightTime || 'Non renseigné';
+
+  // Notifications
+  const notifParts = [];
+  if (bookingState.notifEmail) notifParts.push('Email');
+  if (bookingState.notifWhatsapp) notifParts.push('WhatsApp');
+  if ($('#pay-summary-notifs')) $('#pay-summary-notifs').textContent = notifParts.length ? notifParts.join(' + ') : 'Aucune';
+
   $('#pay-summary-total').textContent   = formatPrice(bookingState.totalPrice);
 }
 
@@ -726,6 +827,11 @@ window.addEventListener('DOMContentLoaded', () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateInput.min = tomorrow.toISOString().split('T')[0];
   }
+
+  // Direction toggle buttons
+  $$('.dir-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchDirection(btn.dataset.direction));
+  });
 
   // Method toggle buttons
   $$('.method-btn').forEach(btn => {
