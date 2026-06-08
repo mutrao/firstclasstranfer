@@ -86,22 +86,56 @@
           <!-- STEP 1: TRIP DETAILS -->
           <div class="form-step active" id="step-1" role="form" aria-label="Détails du trajet">
             <h2 class="form-step-title">Détails du Trajet</h2>
-            <p class="form-step-desc">Renseignez votre point de départ, la date et l'heure souhaitée.</p>
+            <p class="form-step-desc">Indiquez votre point de départ, la date et l'heure souhaitée.</p>
 
-            <div class="form-group">
-              <label for="trip-zone"><i class="fas fa-map-marker-alt"></i> Zone de départ <span style="color:var(--error)">*</span></label>
-              <select id="trip-zone" name="zone" required aria-required="true">
-                <option value="" disabled selected>Sélectionnez votre quartier / zone</option>
-                <option value="zone1">Zone 1 — Plateau · Cocody · Marcory · Treichville</option>
-                <option value="zone2">Zone 2 — Yopougon · Adjamé · Abobo · Attécoubé</option>
-                <option value="zone3">Zone 3 — Bingerville · Port-Bouët · Koumassi</option>
-                <option value="zone4">Zone 4 — Grand-Bassam · Braffedon · Assinie</option>
-              </select>
+            <!-- Method toggle -->
+            <div class="pickup-method-toggle">
+              <button type="button" class="method-btn active" data-method="neighborhood">
+                <i class="fa-solid fa-map-pin"></i> Par quartier
+              </button>
+              <button type="button" class="method-btn" data-method="address">
+                <i class="fa-solid fa-location-dot"></i> Par adresse précise
+              </button>
             </div>
 
-            <div class="form-group">
-              <label for="trip-address"><i class="fas fa-home"></i> Adresse précise de prise en charge</label>
-              <input type="text" id="trip-address" name="address" placeholder="Ex: Rue des Jardins, Cocody Riviera 2" />
+            <!-- Neighborhood search (shown by default) -->
+            <div id="neighborhood-field" class="form-group">
+              <label for="trip-neighborhood"><i class="fas fa-map-marker-alt"></i> Votre quartier de départ <span style="color:var(--error)">*</span></label>
+              <input
+                type="text"
+                id="trip-neighborhood"
+                list="neighborhoods-list"
+                placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
+                autocomplete="off"
+                aria-required="true"
+              />
+              <datalist id="neighborhoods-list"><!-- populated by JS --></datalist>
+              <div id="zone-detected" class="zone-detected-card" style="display:none" aria-live="polite"></div>
+            </div>
+
+            <!-- Address input (hidden by default) -->
+            <div id="address-field" class="form-group" style="display:none">
+              <label for="trip-address"><i class="fas fa-home"></i> Adresse complète de départ <span style="color:var(--error)">*</span></label>
+              <input type="text" id="trip-address" placeholder="Ex: Rue des Jardins, Cocody Riviera 2" autocomplete="street-address" />
+              <p class="form-hint">
+                <i class="fa-solid fa-circle-info"></i>
+                Pas d'adresse précise ?
+                <button type="button" class="link-btn" onclick="switchMethod('neighborhood')">Utilisez la recherche par quartier</button>
+                — le tarif sera identique.
+              </p>
+              <!-- Manual zone selector for address method -->
+              <div class="form-group" style="margin-top:12px">
+                <label for="trip-zone-manual">
+                  Votre zone approximative <span class="badge-optional">pour le devis</span>
+                </label>
+                <select id="trip-zone-manual" aria-label="Zone approximative">
+                  <option value="">— Sélectionnez votre zone —</option>
+                  <option value="zone1">Zone 1 — Plateau, Cocody, Marcory (dès 15 000 FCFA)</option>
+                  <option value="zone2">Zone 2 — Yopougon, Abobo, Koumassi (dès 20 000 FCFA)</option>
+                  <option value="zone3">Zone 3 — Bingerville, Anyama, Abatta (dès 18 000 FCFA)</option>
+                  <option value="zone4">Zone 4 — Grand-Bassam, Dabou, Assinie (dès 35 000 FCFA)</option>
+                </select>
+              </div>
             </div>
 
             <div class="form-group">

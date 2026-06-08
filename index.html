@@ -182,14 +182,39 @@
         <p>Obtenez votre tarif en quelques secondes</p>
 
         <form id="hero-booking-form" novalidate>
-          <div class="form-group">
+          <!-- Hero method toggle -->
+          <div class="pickup-method-toggle" style="margin-bottom:16px;">
+            <button type="button" class="hero-method-btn method-btn active" data-method="neighborhood">
+              <i class="fa-solid fa-map-pin"></i> Par quartier
+            </button>
+            <button type="button" class="hero-method-btn method-btn" data-method="address">
+              <i class="fa-solid fa-location-dot"></i> Par zone
+            </button>
+          </div>
+
+          <!-- Neighborhood field -->
+          <div id="hero-neighborhood-field" class="form-group">
+            <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> Votre quartier de départ</label>
+            <input
+              type="text"
+              id="hero-neighborhood"
+              list="hero-neighborhoods-list"
+              placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
+              autocomplete="off"
+              aria-label="Quartier de départ"
+            />
+            <datalist id="hero-neighborhoods-list"></datalist>
+          </div>
+
+          <!-- Zone field (address method) -->
+          <div id="hero-zone-field" class="form-group" style="display:none">
             <label for="hero-zone"><i class="fas fa-map-marker-alt"></i> Zone de départ</label>
-            <select id="hero-zone" name="zone" required aria-label="Sélectionnez votre zone">
+            <select id="hero-zone" name="zone" aria-label="Sélectionnez votre zone">
               <option value="" disabled selected>Sélectionnez votre zone</option>
               <option value="zone1">Zone 1 — Plateau / Cocody / Marcory</option>
-              <option value="zone2">Zone 2 — Yopougon / Adjamé / Abobo</option>
-              <option value="zone3">Zone 3 — Bingerville / Port-Bouët</option>
-              <option value="zone4">Zone 4 — Bassam / Braffedon</option>
+              <option value="zone2">Zone 2 — Yopougon / Abobo / Koumassi</option>
+              <option value="zone3">Zone 3 — Bingerville / Anyama / Abatta</option>
+              <option value="zone4">Zone 4 — Bassam / Dabou / Assinie</option>
             </select>
           </div>
 
@@ -358,9 +383,9 @@
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
         <span class="section-label">Nos Tarifs</span>
-        <h2 class="section-title" id="pricing-title">Tarifs Clairs,<br><em class="gold">Aucune Surprise</em></h2>
+        <h2 class="section-title" id="pricing-title">Tarifs Clairs,<br><em class="gold">Sans Frais Cachés</em></h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">Prix fixes tout inclus, du domicile jusqu'à l'aéroport Félix-Houphouët-Boigny.</p>
+        <p class="section-subtitle">Le prix affiché est le prix payé. Aucun supplément surprise.</p>
       </div>
 
       <div class="animate-on-scroll">
@@ -368,16 +393,16 @@
           <thead>
             <tr>
               <th scope="col">Zone</th>
-              <th scope="col"><i class="fas fa-car"></i> Économie</th>
-              <th scope="col"><i class="fas fa-car-side"></i> Business</th>
-              <th scope="col"><i class="fas fa-van-shuttle"></i> Van (+6 pax)</th>
+              <th scope="col"><i class="fas fa-car"></i> Économie<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Toyota Corolla</small></th>
+              <th scope="col"><i class="fas fa-car-side"></i> Business<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Toyota Camry</small></th>
+              <th scope="col"><i class="fas fa-van-shuttle"></i> Van<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Toyota HiAce</small></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
                 <div class="zone-name">Zone 1</div>
-                <div class="zone-areas">Plateau · Cocody · Marcory · Treichville</div>
+                <div class="zone-areas">Plateau · Cocody · Riviera · Angré · Marcory · Treichville · Port-Bouët · Adjamé</div>
               </td>
               <td class="price-cell">15 000 FCFA</td>
               <td class="price-cell">25 000 FCFA</td>
@@ -386,7 +411,7 @@
             <tr>
               <td>
                 <div class="zone-name">Zone 2</div>
-                <div class="zone-areas">Yopougon · Adjamé · Abobo · Attécoubé</div>
+                <div class="zone-areas">Yopougon · Abobo · Koumassi · Attécoubé</div>
               </td>
               <td class="price-cell">20 000 FCFA</td>
               <td class="price-cell">32 000 FCFA</td>
@@ -395,7 +420,7 @@
             <tr>
               <td>
                 <div class="zone-name">Zone 3</div>
-                <div class="zone-areas">Bingerville · Port-Bouët · Koumassi</div>
+                <div class="zone-areas">Bingerville · Anyama · Songon · Abatta · PK 20 · PK 22</div>
               </td>
               <td class="price-cell">18 000 FCFA</td>
               <td class="price-cell">28 000 FCFA</td>
@@ -404,18 +429,40 @@
             <tr>
               <td>
                 <div class="zone-name">Zone 4</div>
-                <div class="zone-areas">Grand-Bassam · Braffedon · Assinie</div>
+                <div class="zone-areas">Grand-Bassam · Dabou · Assinie · Jacqueville · Bonoua · Azaguié · Alépé</div>
               </td>
               <td class="price-cell">35 000 FCFA</td>
               <td class="price-cell">50 000 FCFA</td>
-              <td class="price-cell">45 000 FCFA</td>
+              <td class="price-cell">50 000 FCFA</td>
             </tr>
           </tbody>
         </table>
 
-        <div class="pricing-note">
-          <i class="fas fa-info-circle"></i>
-          <span>Tous les prix sont <strong>fixes et tout inclus</strong> (carburant, péages, bagages). Aucun supplément caché. Le supplément Van s'applique automatiquement pour les groupes de plus de 4 passagers.</span>
+        <!-- Included / Supplements grid -->
+        <div class="pricing-extras-grid">
+          <!-- What's included -->
+          <div class="pricing-extras-card pricing-included">
+            <h4><i class="fas fa-check-circle" style="color:var(--success);margin-right:8px;"></i>Ce qui est inclus</h4>
+            <ul class="pricing-checklist">
+              <li><i class="fas fa-check"></i> Bagages en soute (quantité raisonnable)</li>
+              <li><i class="fas fa-check"></i> Attente jusqu'à 15 minutes</li>
+              <li><i class="fas fa-check"></i> Péages autoroutiers inclus</li>
+              <li><i class="fas fa-check"></i> Prix garanti à la réservation</li>
+              <li><i class="fas fa-check"></i> Retard de vol : attente gratuite jusqu'à 1h</li>
+            </ul>
+          </div>
+          <!-- Possible supplements -->
+          <div class="pricing-extras-card pricing-supplements">
+            <h4><i class="fas fa-plus-circle" style="color:var(--gold);margin-right:8px;"></i>Suppléments possibles <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted)">(affichés clairement)</span></h4>
+            <ul class="pricing-checklist">
+              <li><i class="fas fa-moon"></i> Trajet de nuit (22h–5h) : <strong>+3 000 FCFA</strong></li>
+              <li><i class="fas fa-clock"></i> Attente &gt; 15 min (hors retard vol) : <strong>+2 000 FCFA / 15 min</strong></li>
+            </ul>
+            <p style="margin-top:12px;font-size:0.82rem;color:var(--text-muted);line-height:1.5;">
+              <i class="fas fa-shield-halved" style="color:var(--gold);margin-right:4px;"></i>
+              Aucun supplément ne peut être ajouté sans accord préalable. Votre tarif est verrouillé à la réservation.
+            </p>
+          </div>
         </div>
       </div>
 

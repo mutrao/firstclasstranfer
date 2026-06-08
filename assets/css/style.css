@@ -1950,6 +1950,232 @@ section {
   box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
 }
 
+/* =========================================
+   PICKUP METHOD TOGGLE
+   ========================================= */
+.pickup-method-toggle {
+  display: flex;
+  gap: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.method-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.method-btn.active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--navy);
+  box-shadow: 0 2px 12px rgba(201, 168, 76, 0.35);
+}
+
+.method-btn:not(.active):hover {
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.08);
+}
+
+/* =========================================
+   ZONE DETECTED CARD
+   ========================================= */
+.zone-detected-card {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: rgba(201, 168, 76, 0.07);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  animation: fadeInUp 0.3s ease;
+}
+
+.zone-detected-icon {
+  color: var(--gold);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.zone-detected-info {
+  flex: 1;
+}
+
+.zone-detected-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.zone-detected-prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.zd-price {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.zd-price i {
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+.zd-price strong {
+  color: var(--gold);
+}
+
+.zone-detected-note {
+  font-size: 0.78rem;
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* =========================================
+   FORM HINT & HELPER ELEMENTS
+   ========================================= */
+.form-hint {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.form-hint i {
+  color: var(--gold);
+  margin-right: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--gold);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0;
+  transition: color var(--transition);
+}
+
+.link-btn:hover {
+  color: var(--gold-light);
+}
+
+.badge-optional {
+  display: inline-block;
+  background: rgba(136, 146, 164, 0.18);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 50px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* =========================================
+   PRICING EXTRAS (included / supplements)
+   ========================================= */
+.pricing-extras-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.pricing-extras-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 22px 24px;
+}
+
+.pricing-extras-card h4 {
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--white);
+}
+
+.pricing-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.pricing-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.pricing-checklist li i {
+  color: var(--gold);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pricing-included .pricing-checklist li i {
+  color: var(--success);
+}
+
+@media (max-width: 768px) {
+  .pricing-extras-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   VEHICLE OPTION FEATURED VARIANT
+   ========================================= */
+.vehicle-option.featured {
+  border-color: rgba(201, 168, 76, 0.35);
+  background: rgba(201, 168, 76, 0.05);
+}
+
 /* Validation */
 .field-error {
   font-size: 0.78rem;
