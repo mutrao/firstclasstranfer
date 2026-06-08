@@ -149,33 +149,33 @@ const NEIGHBORHOODS = {
 const ZONES = {
   zone1: {
     label: 'Zone 1 — Plateau, Cocody, Marcory, Port-Bouët, Treichville',
-    economy: 15000,
+    basic: 12000,
     business: 25000,
-    van: 25000,
+    premium: 25000,
     description: 'Communes proches du centre et de l\'aéroport',
     included: 'Plateau, Cocody, Riviera, Angré, Marcory, Treichville, Port-Bouët, Adjamé'
   },
   zone2: {
     label: 'Zone 2 — Yopougon, Abobo, Koumassi, Attécoubé',
-    economy: 20000,
+    basic: 15000,
     business: 32000,
-    van: 30000,
+    premium: 30000,
     description: 'Communes de la rive nord et ouest',
     included: 'Yopougon, Abobo, Koumassi, Attécoubé'
   },
   zone3: {
     label: 'Zone 3 — Bingerville, Anyama, Songon, Abatta',
-    economy: 18000,
+    basic: 14000,
     business: 28000,
-    van: 28000,
+    premium: 28000,
     description: 'Est et banlieue proche',
     included: 'Bingerville, Anyama, Songon, Abatta, PK 20, PK 22'
   },
   zone4: {
     label: 'Zone 4 — Grand-Bassam, Dabou, Assinie, Jacqueville',
-    economy: 35000,
+    basic: 28000,
     business: 50000,
-    van: 50000,
+    premium: 50000,
     description: 'Périphérie éloignée',
     included: 'Grand-Bassam, Assinie, Dabou, Jacqueville, Bonoua, Azaguié, Alépé'
   },
@@ -275,9 +275,9 @@ function updateSummary() {
 
 function getVehicleLabel(v) {
   switch (v) {
-    case 'economy':  return 'Économie';
-    case 'business': return 'Business';
-    case 'van':      return 'Van (Minivan)';
+    case 'basic':    return 'Basic (Corolla / i20)';
+    case 'premium':  return 'Premium (Van / HiAce)';
+    case 'business': return 'Business (Mercedes / BMW)';
     default:         return '';
   }
 }
@@ -462,9 +462,9 @@ function updateLuggageHint() {
   if (!hint) return;
 
   const rec = getRecommendedVehicle(pax, luggage);
-  const labels = { economy: 'Économie', business: 'Business', van: 'Van / Minivan' };
-  const icons  = { economy: 'fa-car', business: 'fa-car-side', van: 'fa-van-shuttle' };
-  const forced = (pax >= 5 || luggage >= 5 || (pax >= 4 && luggage >= 4));
+  const labels = { basic: 'Basic', premium: 'Premium (Van)', business: 'Business' };
+  const icons  = { basic: 'fa-car', premium: 'fa-van-shuttle', business: 'fa-car-side' };
+  const forced = (pax >= 3 || luggage >= 3);
 
   hint.style.display = 'flex';
   hint.className = `luggage-hint ${forced ? 'luggage-hint-warn' : 'luggage-hint-info'}`;
@@ -472,7 +472,7 @@ function updateLuggageHint() {
     <i class="fas ${icons[rec]}"></i>
     <span>
       ${forced
-        ? `<strong>Van / Minivan requis</strong> — ${pax} passager(s) + ${luggage} valise(s) dépassent la capacité des berlines.`
+        ? `<strong>Premium (Van) recommandé</strong> — à partir de 3 passagers ou 3 valises, le Van est le choix adapté.`
         : `Véhicule recommandé : <strong>${labels[rec]}</strong> pour ${pax} passager(s) + ${luggage} valise(s).`
       }
     </span>`;
@@ -483,19 +483,18 @@ function updateLuggageHint() {
 // =============================================
 // Returns recommended vehicle type based on passengers + luggage
 function getRecommendedVehicle(pax, luggage) {
-  // Van required: 5+ passengers OR 5+ bags OR (4 pax + 4+ bags)
-  if (pax >= 5 || luggage >= 5 || (pax >= 4 && luggage >= 4)) return 'van';
-  // Economy: small groups with few bags
-  if (pax <= 2 && luggage <= 2) return 'economy';
-  // Business: default recommendation for comfort
-  return 'business';
+  // Premium (Van) required: 3+ passengers OR 3+ bags
+  if (pax >= 3 || luggage >= 3) return 'premium';
+  // Basic: 1-2 pax, 1-2 bags
+  if (pax <= 2 && luggage <= 2) return 'basic';
+  return 'premium';
 }
 
-// Capacity constraints
+// Realistic capacity constraints
 function isVehicleViable(vehicleId, pax, luggage) {
-  if (vehicleId === 'economy')  return pax <= 4 && luggage <= 3;
-  if (vehicleId === 'business') return pax <= 4 && luggage <= 4;
-  if (vehicleId === 'van')      return pax <= 8 && luggage <= 9;
+  if (vehicleId === 'basic')    return pax <= 2 && luggage <= 2;
+  if (vehicleId === 'business') return pax <= 2 && luggage <= 2;
+  if (vehicleId === 'premium')  return pax <= 6 && luggage <= 8;
   return false;
 }
 
@@ -510,28 +509,32 @@ function renderVehicleOptions() {
 
   const vehicles = [
     {
-      id: 'economy',
-      label: 'Économie',
-      model: 'Toyota Corolla / Hyundai i10',
+      id: 'basic',
+      label: 'Basic',
+      model: 'Toyota Corolla / Hyundai i20',
       icon: 'fa-car',
-      capacity: '4 passagers · 3 valises max',
-      price: zoneInfo.economy,
+      capacity: '1–2 passagers · 2 valises max',
+      desc: 'Idéal pour un voyageur solo ou un couple léger',
+      price: zoneInfo.basic,
+    },
+    {
+      id: 'premium',
+      label: 'Premium',
+      model: 'Toyota HiAce / Mercedes Vito',
+      icon: 'fa-van-shuttle',
+      capacity: 'Jusqu\'à 6 passagers · 8 valises',
+      desc: 'Le plus polyvalent — familles, groupes, gros bagages',
+      price: zoneInfo.premium,
+      featured: true,
     },
     {
       id: 'business',
       label: 'Business',
-      model: 'Toyota Camry / Peugeot 508',
+      model: 'Mercedes Classe E / BMW Série 5',
       icon: 'fa-car-side',
-      capacity: '4 passagers · 4 valises max',
+      capacity: '1–2 passagers · 2 valises',
+      desc: 'Berline luxe — idéal pour appels & réunions en route',
       price: zoneInfo.business,
-    },
-    {
-      id: 'van',
-      label: 'Van / Minivan',
-      model: 'Toyota HiAce',
-      icon: 'fa-van-shuttle',
-      capacity: '8 passagers · 9 valises max',
-      price: zoneInfo.van,
     },
   ];
 
@@ -553,6 +556,7 @@ function renderVehicleOptions() {
         <div class="vehicle-info">
           <h4><i class="fas ${v.icon}" style="color:var(--gold);margin-right:8px;"></i>${v.label} ${badge}</h4>
           <p>${v.model}</p>
+          <p class="vehicle-desc-short">${v.desc}</p>
           <p class="vehicle-capacity"><i class="fas fa-users"></i> ${v.capacity}</p>
           ${unavailMsg}
         </div>
