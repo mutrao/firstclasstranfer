@@ -301,7 +301,7 @@ function updateSummary() {
 function getVehicleLabel(v) {
   switch (v) {
     case 'basic':    return 'Économique (Corolla / i20)';
-    case 'premium':  return 'Premium (Van / HiAce)';
+    case 'premium':  return 'Premium (Mercedes-Benz Classe V 300d XL)';
     case 'business': return 'Business (Mercedes / BMW)';
     default:         return '';
   }
@@ -615,7 +615,7 @@ function renderVehicleOptions() {
     {
       id: 'premium',
       label: 'Premium',
-      model: 'Toyota HiAce / Mercedes Vito',
+      model: 'Mercedes-Benz Classe V 300d Extra Long',
       icon: 'fa-van-shuttle',
       capacity: 'Jusqu\'à 6 passagers · 8 valises',
       desc: 'Le plus polyvalent — familles, groupes, gros bagages',
