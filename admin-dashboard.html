@@ -333,6 +333,9 @@
       <i class="fas fa-calendar-check"></i> Courses
       <span class="badge" id="pending-badge" style="display:none;">0</span>
     </button>
+    <button class="nav-item" onclick="showPage('clients')" id="nav-clients">
+      <i class="fas fa-users"></i> Clients
+    </button>
     <button class="nav-item" onclick="showPage('drivers')" id="nav-drivers">
       <i class="fas fa-id-card"></i> Chauffeurs
     </button>
@@ -449,8 +452,14 @@
     <!-- ========== BOOKINGS ========== -->
     <div class="page" id="page-bookings">
       <div class="table-card">
-        <div class="table-header">
+        <div class="table-header" style="flex-wrap:wrap;gap:10px;">
           <h3><i class="fas fa-calendar-check" style="color:var(--gold);margin-right:8px;"></i>Toutes les réservations</h3>
+          <div style="position:relative;">
+            <i class="fas fa-search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:0.78rem;pointer-events:none;"></i>
+            <input type="text" id="bookings-search" placeholder="Nom, réf., téléphone…"
+              style="padding:7px 10px 7px 30px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.8rem;outline:none;width:200px;"
+              oninput="renderBookings(currentFilter)" />
+          </div>
           <div class="filter-tabs" id="status-filters">
             <button class="filter-tab active" data-filter="all" onclick="filterBookings('all')">Toutes</button>
             <button class="filter-tab" data-filter="pending" onclick="filterBookings('pending')">En attente</button>
@@ -582,8 +591,54 @@
       </div>
     </div>
 
+    <!-- ========== CLIENTS ========== -->
+    <div class="page" id="page-clients">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:260px;position:relative;">
+          <i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:0.85rem;pointer-events:none;"></i>
+          <input type="text" id="client-search" placeholder="Rechercher par nom, téléphone ou email…"
+            style="width:100%;padding:10px 12px 10px 36px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.88rem;outline:none;"
+            oninput="renderClients()" onfocus="this.style.borderColor='var(--gold-border)'" onblur="this.style.borderColor='var(--border)'" />
+        </div>
+      </div>
+      <div id="clients-list"></div>
+    </div>
+
   </div><!-- /content -->
 </div><!-- /main -->
+
+<!-- CLIENT HISTORY MODAL -->
+<div class="modal-overlay" id="client-modal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <div>
+        <h3 id="client-modal-name">Fiche client</h3>
+        <div id="client-modal-meta" style="font-size:0.78rem;color:var(--muted);margin-top:3px;"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <a id="client-wa-btn" href="#" target="_blank" class="btn-sm" style="background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);color:#25d366;padding:7px 12px;border-radius:8px;font-size:0.8rem;display:inline-flex;align-items:center;gap:5px;text-decoration:none;">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a id="client-mail-btn" href="#" class="btn-sm" style="background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);padding:7px 12px;border-radius:8px;font-size:0.8rem;display:inline-flex;align-items:center;gap:5px;text-decoration:none;">
+          <i class="fas fa-envelope"></i> Email
+        </a>
+        <button class="modal-close" onclick="closeClientModal()"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <!-- Client stats -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;" id="client-stats"></div>
+      <!-- Booking history -->
+      <div style="font-size:0.72rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Historique des réservations</div>
+      <div class="table-card">
+        <table>
+          <thead><tr><th>Réf.</th><th>Date</th><th>Heure</th><th>Direction</th><th>Zone</th><th>Véhicule</th><th>Montant</th><th>Statut</th></tr></thead>
+          <tbody id="client-bookings-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- BOOKING DETAIL MODAL -->
 <div class="modal-overlay" id="booking-modal">
@@ -623,8 +678,15 @@
         <div id="modal-audit-list"></div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-sm btn-danger" onclick="cancelBookingFromModal()"><i class="fas fa-times-circle"></i> Annuler la course</button>
+    <div class="modal-footer" style="flex-wrap:wrap;gap:8px;">
+      <a id="modal-wa-btn" href="#" target="_blank" class="btn-sm" style="background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);color:#25d366;text-decoration:none;">
+        <i class="fab fa-whatsapp"></i> WhatsApp client
+      </a>
+      <a id="modal-mail-btn" href="#" class="btn-sm" style="background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);text-decoration:none;">
+        <i class="fas fa-envelope"></i> Email client
+      </a>
+      <div style="flex:1;"></div>
+      <button class="btn-sm btn-danger" onclick="cancelBookingFromModal()"><i class="fas fa-times-circle"></i> Annuler</button>
       <button class="btn-sm btn-secondary" onclick="closeModal()">Fermer</button>
       <button class="btn-sm btn-primary" onclick="saveModal()"><i class="fas fa-save"></i> Enregistrer</button>
     </div>
@@ -719,8 +781,8 @@
   }
 
   // ---- NAVIGATION ----
-  const pages = ['overview', 'bookings', 'drivers', 'revenue', 'audit', 'settings'];
-  const titles = { overview: 'Vue d\'ensemble', bookings: 'Courses', drivers: 'Chauffeurs', revenue: 'Caisse & Statistiques', audit: 'Journal d\'audit', settings: 'Paramètres' };
+  const pages = ['overview', 'bookings', 'clients', 'drivers', 'revenue', 'audit', 'settings'];
+  const titles = { overview: 'Vue d\'ensemble', bookings: 'Courses', clients: 'Clients', drivers: 'Chauffeurs', revenue: 'Caisse & Statistiques', audit: 'Journal d\'audit', settings: 'Paramètres' };
 
   function showPage(name) {
     pages.forEach(p => {
@@ -733,7 +795,8 @@
 
   function renderPage(name) {
     if (name === 'overview') renderOverview();
-    if (name === 'bookings') renderBookings('all');
+    if (name === 'bookings') renderBookings(currentFilter);
+    if (name === 'clients')  renderClients();
     if (name === 'drivers')  renderDrivers();
     if (name === 'revenue')  renderRevenue();
     if (name === 'audit')    renderAudit();
@@ -820,7 +883,17 @@
 
   function renderBookings(filter) {
     const all = getBookings();
-    const filtered = filter === 'all' ? all : all.filter(b => b.status === filter);
+    const q = (document.getElementById('bookings-search')?.value || '').toLowerCase().trim();
+    let filtered = filter === 'all' ? all : all.filter(b => b.status === filter);
+    if (q) {
+      filtered = filtered.filter(b =>
+        (b.name||'').toLowerCase().includes(q) ||
+        (b.phone||'').toLowerCase().includes(q) ||
+        (b.email||'').toLowerCase().includes(q) ||
+        (b.id||b.bookingRef||'').toLowerCase().includes(q) ||
+        (b.flightNumber||'').toLowerCase().includes(q)
+      );
+    }
     const tbody = document.getElementById('bookings-tbody');
 
     if (filtered.length === 0) {
@@ -901,6 +974,14 @@
     } else {
       auditList.innerHTML = '<div style="font-size:0.82rem;color:var(--dim);">Aucun historique.</div>';
     }
+
+    // Contact buttons
+    const phone = (b.phone || '').replace(/\s+/g, '');
+    const waMsg = encodeURIComponent(`Bonjour ${b.name || ''}, nous vous contactons au sujet de votre réservation First Class Transfer — réf. ${b.id || b.bookingRef}.`);
+    document.getElementById('modal-wa-btn').href = `https://wa.me/${phone.replace(/^\+/, '')}?text=${waMsg}`;
+    document.getElementById('modal-mail-btn').href = b.email
+      ? `mailto:${b.email}?subject=Votre réservation First Class Transfer — ${b.id || b.bookingRef}&body=Bonjour ${b.name || ''},\n\nNous vous contactons au sujet de votre réservation (réf. ${b.id || b.bookingRef}) du ${formatDate(b.date)}.\n\nCordialement,\nFirst Class Transfer Abidjan`
+      : '#';
 
     document.getElementById('booking-modal').classList.add('active');
   }
@@ -1207,12 +1288,146 @@
     URL.revokeObjectURL(url);
   }
 
+  // ---- CLIENTS ----
+  function buildClientMap(bookings) {
+    const map = {};
+    bookings.forEach(b => {
+      const key = (b.phone || '').replace(/\s+/g, '') || b.email || b.name || 'unknown';
+      if (!map[key]) {
+        map[key] = { name: b.name, phone: b.phone, email: b.email, bookings: [] };
+      }
+      map[key].bookings.push(b);
+    });
+    return map;
+  }
+
+  function renderClients() {
+    const all = getBookings();
+    const map = buildClientMap(all);
+    const q = (document.getElementById('client-search')?.value || '').toLowerCase().trim();
+    const container = document.getElementById('clients-list');
+
+    let clients = Object.values(map);
+    if (q) {
+      clients = clients.filter(c =>
+        (c.name||'').toLowerCase().includes(q) ||
+        (c.phone||'').toLowerCase().includes(q) ||
+        (c.email||'').toLowerCase().includes(q)
+      );
+    }
+    clients.sort((a, b) => (b.bookings.length - a.bookings.length));
+
+    if (clients.length === 0) {
+      container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--dim);">Aucun client trouvé.</div>';
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="table-card">
+        <table>
+          <thead><tr><th>Client</th><th>Téléphone</th><th>Email</th><th>Courses</th><th>Total dépensé</th><th>Dernière course</th><th></th></tr></thead>
+          <tbody>
+            ${clients.map(c => {
+              const spent = c.bookings.filter(b => b.status === 'completed').reduce((s, b) => s + (b.totalPrice || 0), 0);
+              const last = c.bookings.sort((a,b) => (b.date||'').localeCompare(a.date||''))[0];
+              const phone = (c.phone||'').replace(/\s+/g,'');
+              const waMsg = encodeURIComponent(`Bonjour ${c.name || ''}, nous vous contactons de la part de First Class Transfer Abidjan.`);
+              return `<tr>
+                <td><div style="font-weight:600;">${c.name || '—'}</div><div style="font-size:0.72rem;color:var(--dim);">${c.bookings.length} réservation(s)</div></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <span>${c.phone || '—'}</span>
+                    ${c.phone ? `<a href="https://wa.me/${phone.replace(/^\+/,'')}?text=${waMsg}" target="_blank" style="color:#25d366;font-size:0.9rem;" title="Contacter sur WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
+                  </div>
+                </td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <span style="font-size:0.82rem;">${c.email || '—'}</span>
+                    ${c.email ? `<a href="mailto:${c.email}?subject=First Class Transfer Abidjan" style="color:var(--gold);font-size:0.85rem;" title="Envoyer un email"><i class="fas fa-envelope"></i></a>` : ''}
+                  </div>
+                </td>
+                <td>${c.bookings.length}</td>
+                <td style="color:var(--gold);font-weight:600;">${spent ? spent.toLocaleString('fr-FR') + ' F' : '—'}</td>
+                <td>${formatDate(last?.date)}</td>
+                <td><button class="btn-action" onclick="openClientModal('${(c.phone||'').replace(/\s+/g,'') || c.email || c.name}')"><i class="fas fa-user"></i> Fiche</button></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  function openClientModal(key) {
+    const all = getBookings();
+    const map = buildClientMap(all);
+    const c = map[key];
+    if (!c) return;
+
+    document.getElementById('client-modal-name').textContent = c.name || '—';
+    document.getElementById('client-modal-meta').textContent = [c.phone, c.email].filter(Boolean).join(' · ');
+
+    // Contact buttons
+    const phone = (c.phone||'').replace(/\s+/g,'');
+    const waMsg = encodeURIComponent(`Bonjour ${c.name || ''}, nous vous contactons de la part de First Class Transfer Abidjan.`);
+    document.getElementById('client-wa-btn').href = phone ? `https://wa.me/${phone.replace(/^\+/,'')}?text=${waMsg}` : '#';
+    document.getElementById('client-mail-btn').href = c.email ? `mailto:${c.email}?subject=First Class Transfer Abidjan` : '#';
+
+    // Stats
+    const completed = c.bookings.filter(b => b.status === 'completed');
+    const cancelled = c.bookings.filter(b => b.status === 'cancelled');
+    const totalSpent = completed.reduce((s, b) => s + (b.totalPrice || 0), 0);
+    const sorted = c.bookings.slice().sort((a,b) => (b.date||'').localeCompare(a.date||''));
+    document.getElementById('client-stats').innerHTML = `
+      <div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Total courses</div>
+        <div style="font-family:var(--heading);font-size:1.4rem;font-weight:700;">${c.bookings.length}</div>
+      </div>
+      <div style="background:var(--green-dim);border:1px solid var(--green-border);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Complétées</div>
+        <div style="font-family:var(--heading);font-size:1.4rem;font-weight:700;color:var(--green);">${completed.length}</div>
+      </div>
+      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Annulées</div>
+        <div style="font-family:var(--heading);font-size:1.4rem;font-weight:700;color:var(--red);">${cancelled.length}</div>
+      </div>
+      <div style="background:rgba(200,169,110,0.06);border:1px solid var(--gold-border);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Total dépensé</div>
+        <div style="font-family:var(--heading);font-size:1rem;font-weight:700;color:var(--gold);">${totalSpent.toLocaleString('fr-FR')} F</div>
+      </div>`;
+
+    // Booking history table
+    document.getElementById('client-bookings-tbody').innerHTML = sorted.length === 0
+      ? '<tr class="empty-row"><td colspan="8">Aucune réservation.</td></tr>'
+      : sorted.map(b => `
+        <tr>
+          <td><code style="font-size:0.72rem;color:var(--gold);">${b.id||b.bookingRef||'—'}</code></td>
+          <td>${formatDate(b.date)}</td>
+          <td>${b.time||'—'}</td>
+          <td>${dirLabel(b.direction)}</td>
+          <td>${zoneLabel(b.zone)}</td>
+          <td>${vehicleLabel(b.vehicle)}</td>
+          <td style="color:var(--gold);font-weight:600;">${formatPrice(b.totalPrice)}</td>
+          <td>${statusBadge(b.status)}</td>
+        </tr>`).join('');
+
+    document.getElementById('client-modal').classList.add('active');
+  }
+
+  function closeClientModal() {
+    document.getElementById('client-modal').classList.remove('active');
+  }
+
   // ---- LOGOUT ----
   function doLogout() {
     addAuditLog('logout', {});
     sessionStorage.removeItem('fct_admin_session');
     window.location.href = 'admin.html';
   }
+
+  // Close modals on overlay click
+  document.getElementById('booking-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+  document.getElementById('client-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeClientModal(); });
+  document.getElementById('driver-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDriverModal(); });
 
   // ---- INIT ----
   renderOverview();
