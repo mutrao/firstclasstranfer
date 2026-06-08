@@ -816,6 +816,23 @@ function onConfirmBooking() {
   bookingState.bookingRef = generateRef();
   localStorage.setItem('lastBooking', JSON.stringify(bookingState));
 
+  // Save to persistent bookings list for admin
+  const allBookings = JSON.parse(localStorage.getItem('fct_bookings') || '[]');
+  const bookingRecord = {
+    ...bookingState,
+    id: bookingState.bookingRef,
+    createdAt: new Date().toISOString(),
+    status: 'pending',
+    driverId: null,
+    driverName: null,
+    adminNotes: '',
+    auditLog: [
+      { action: 'created', at: new Date().toISOString(), by: 'client' }
+    ]
+  };
+  allBookings.unshift(bookingRecord);
+  localStorage.setItem('fct_bookings', JSON.stringify(allBookings));
+
   // Trigger WhatsApp if notifWhatsapp is checked
   if (bookingState.notifWhatsapp) {
     const isArrival = bookingState.direction === 'arrival';

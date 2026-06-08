@@ -275,7 +275,30 @@
 
             <div class="form-group">
               <label for="client-airline"><i class="fas fa-plane-departure"></i> <span data-i18n="airline_label">Compagnie aérienne</span> <span style="color:var(--error)">*</span></label>
-              <input type="text" id="client-airline" name="airline" data-i18n-ph="airline_ph" placeholder="Ex: Air Côte d'Ivoire, Air France, Ethiopian..." required aria-required="true" />
+              <input type="text" id="client-airline" name="airline" list="airlines-list" placeholder="Ex: Air Côte d'Ivoire, Air France..." autocomplete="off" />
+<datalist id="airlines-list">
+  <option value="Air Côte d'Ivoire">
+  <option value="Air France">
+  <option value="Air Sénégal">
+  <option value="Brussels Airlines">
+  <option value="Ethiopian Airlines">
+  <option value="Kenya Airways">
+  <option value="Royal Air Maroc">
+  <option value="Turkish Airlines">
+  <option value="Corsair">
+  <option value="Air Algérie">
+  <option value="Tunisair">
+  <option value="Transair">
+  <option value="Africa World Airlines">
+  <option value="ASKY Airlines">
+  <option value="Emirates">
+  <option value="Qatar Airways">
+  <option value="Lufthansa">
+  <option value="TAP Air Portugal">
+  <option value="Rwandair">
+  <option value="Air Maroc">
+  <option value="Mauritania Airlines">
+</datalist>
             </div>
 
             <div class="form-row">

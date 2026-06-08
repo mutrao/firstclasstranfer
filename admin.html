@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Administration | First Class Transfer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    :root {
+      --bg: #09090E;
+      --card: #13131A;
+      --border: rgba(255,255,255,0.08);
+      --gold: #C8A96E;
+      --gold-dim: rgba(200,169,110,0.12);
+      --gold-border: rgba(200,169,110,0.28);
+      --green: #059669;
+      --error: #ef4444;
+      --text: #F0EDE8;
+      --muted: #9AA0AD;
+      --font: 'Inter', sans-serif;
+      --heading: 'Playfair Display', serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.5);
+    }
+    .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .logo-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--gold), #DFC490); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #09090E; font-size: 1.1rem; }
+    .logo-text { font-family: var(--heading); font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .logo-text small { display: block; font-family: var(--font); font-size: 0.7rem; font-weight: 400; color: var(--muted); margin-top: 2px; }
+    h2 { font-family: var(--heading); font-size: 1.5rem; margin-bottom: 6px; }
+    .subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 28px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+    input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 0.93rem; padding: 12px 14px; outline: none; transition: border-color 0.2s; }
+    input:focus { border-color: var(--gold-border); background: rgba(200,169,110,0.04); }
+    input.error-field { border-color: var(--error); }
+    .error-msg { font-size: 0.78rem; color: var(--error); margin-top: 5px; display: none; }
+    .error-msg.show { display: block; }
+    .btn { width: 100%; padding: 13px; border-radius: 50px; border: none; font-family: var(--font); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-primary { background: var(--green); color: #fff; }
+    .btn-primary:hover { background: #047857; }
+    .btn-gold { background: var(--gold); color: #09090E; }
+    .btn-gold:hover { background: #DFC490; }
+    .divider { text-align: center; font-size: 0.78rem; color: var(--muted); margin: 20px 0; position: relative; }
+    .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--border); }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    .alert { padding: 12px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 16px; display: none; }
+    .alert.show { display: block; }
+    .alert-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+    .alert-success { background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); color: #34d399; }
+    .badge-secure { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--muted); margin-top: 16px; justify-content: center; width: 100%; }
+    .badge-secure i { color: var(--gold); }
+    #setup-section { display: none; }
+    .setup-token-info { background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 10px; padding: 12px 14px; font-size: 0.83rem; color: var(--gold); margin-bottom: 16px; line-height: 1.5; }
+    .strength-bar { height: 4px; border-radius: 2px; margin-top: 6px; background: var(--border); overflow: hidden; }
+    .strength-fill { height: 100%; border-radius: 2px; width: 0; transition: all 0.3s; }
+    .strength-label { font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+    <div class="logo-text">
+      First Class Transfer
+      <small>Administration · Abidjan</small>
+    </div>
+  </div>
+
+  <!-- LOGIN SECTION -->
+  <div id="login-section">
+    <h2>Connexion</h2>
+    <p class="subtitle">Accès réservé à l'équipe First Class Transfer.</p>
+
+    <div class="alert alert-error" id="login-error"></div>
+
+    <div class="form-group">
+      <label>Identifiant</label>
+      <input type="text" id="login-username" placeholder="Votre identifiant" autocomplete="username" />
+      <div class="error-msg" id="err-login-user">Identifiant requis.</div>
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" id="login-password" placeholder="••••••••••" autocomplete="current-password" />
+      <div class="error-msg" id="err-login-pass">Mot de passe requis.</div>
+    </div>
+
+    <button class="btn btn-primary" onclick="doLogin()">
+      <i class="fas fa-lock-open"></i> Se connecter
+    </button>
+
+    <div class="divider">ou</div>
+
+    <button class="btn btn-gold" onclick="showSetup()" style="font-size:0.85rem;">
+      <i class="fas fa-user-gear"></i> Première connexion — Configurer le compte
+    </button>
+
+    <div class="badge-secure"><i class="fas fa-shield-halved"></i> Espace sécurisé · Authentification chiffrée SHA-256</div>
+  </div>
+
+  <!-- SETUP SECTION -->
+  <div id="setup-section">
+    <h2>Configuration initiale</h2>
+    <p class="subtitle">Créez votre compte administrateur. Vous aurez besoin du token de setup fourni lors de l'installation.</p>
+
+    <div class="alert alert-error" id="setup-error"></div>
+    <div class="alert alert-success" id="setup-success"></div>
+
+    <div class="setup-token-info">
+      <i class="fas fa-key" style="margin-right:6px;"></i>
+      <strong>Token requis :</strong> le token de setup vous a été communiqué lors de la création du site. Il commence par <code>FCT-SETUP-</code>.
+    </div>
+
+    <div class="form-group">
+      <label>Token de setup</label>
+      <input type="text" id="setup-token" placeholder="FCT-SETUP-XXXX-XXXX" autocomplete="off" />
+      <div class="error-msg" id="err-setup-token">Token invalide.</div>
+    </div>
+    <div class="form-group">
+      <label>Choisir un identifiant</label>
+      <input type="text" id="setup-username" placeholder="Ex: fct_admin" autocomplete="off" />
+      <div class="error-msg" id="err-setup-user">Identifiant requis (min 4 caractères).</div>
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" id="setup-password" placeholder="Minimum 8 caractères" autocomplete="new-password" oninput="checkStrength(this.value)" />
+      <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+      <div class="strength-label" id="strength-label">Entrez un mot de passe</div>
+      <div class="error-msg" id="err-setup-pass">Minimum 8 caractères.</div>
+    </div>
+    <div class="form-group">
+      <label>Confirmer le mot de passe</label>
+      <input type="password" id="setup-confirm" placeholder="Répétez le mot de passe" autocomplete="new-password" />
+      <div class="error-msg" id="err-setup-confirm">Les mots de passe ne correspondent pas.</div>
+    </div>
+
+    <button class="btn btn-primary" onclick="doSetup()">
+      <i class="fas fa-check"></i> Créer le compte admin
+    </button>
+    <button class="btn" style="background:transparent;border:1px solid var(--border);color:var(--muted);margin-top:8px;" onclick="showLogin()">
+      <i class="fas fa-arrow-left"></i> Retour à la connexion
+    </button>
+  </div>
+</div>
+
+<script>
+  const SETUP_TOKEN = 'FCT-SETUP-2025-INIT';
+  const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 hours
+
+  // ---- SHA-256 via Web Crypto ----
+  async function sha256(message) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(message);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // ---- Check if already logged in ----
+  window.addEventListener('DOMContentLoaded', () => {
+    const session = JSON.parse(sessionStorage.getItem('fct_admin_session') || 'null');
+    if (session && session.expires > Date.now()) {
+      window.location.href = 'admin-dashboard.html';
+    }
+    // Check if admin already configured
+    const adminConfig = localStorage.getItem('fct_admin_config');
+    if (!adminConfig) {
+      // First time: show hint
+      document.getElementById('login-error').textContent = 'Aucun compte administrateur configuré. Utilisez "Première connexion" pour créer votre compte.';
+      document.getElementById('login-error').classList.add('show');
+    }
+
+    // Enter key submits
+    document.getElementById('login-password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+  });
+
+  function showSetup() {
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('setup-section').style.display = 'block';
+  }
+
+  function showLogin() {
+    document.getElementById('setup-section').style.display = 'none';
+    document.getElementById('login-section').style.display = 'block';
+  }
+
+  function clearErrors() {
+    document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
+    document.querySelectorAll('.error-field').forEach(el => el.classList.remove('error-field'));
+  }
+
+  function showFieldError(id, errId) {
+    document.getElementById(id)?.classList.add('error-field');
+    document.getElementById(errId)?.classList.add('show');
+  }
+
+  function checkStrength(password) {
+    const fill = document.getElementById('strength-fill');
+    const label = document.getElementById('strength-label');
+    let score = 0;
+    if (password.length >= 8) score++;
+    if (password.length >= 12) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    const configs = [
+      { pct: '0%',   color: 'transparent', text: 'Entrez un mot de passe' },
+      { pct: '20%',  color: '#ef4444',     text: 'Très faible' },
+      { pct: '40%',  color: '#f97316',     text: 'Faible' },
+      { pct: '60%',  color: '#eab308',     text: 'Moyen' },
+      { pct: '80%',  color: '#22c55e',     text: 'Fort' },
+      { pct: '100%', color: '#059669',     text: 'Très fort' },
+    ];
+    const c = configs[score];
+    if (fill) { fill.style.width = c.pct; fill.style.background = c.color; }
+    if (label) { label.textContent = c.text; label.style.color = c.color; }
+  }
+
+  async function doSetup() {
+    clearErrors();
+    const token    = document.getElementById('setup-token').value.trim();
+    const username = document.getElementById('setup-username').value.trim();
+    const password = document.getElementById('setup-password').value;
+    const confirm  = document.getElementById('setup-confirm').value;
+    let valid = true;
+
+    if (token !== SETUP_TOKEN) { showFieldError('setup-token', 'err-setup-token'); valid = false; }
+    if (username.length < 4)   { showFieldError('setup-username', 'err-setup-user'); valid = false; }
+    if (password.length < 8)   { showFieldError('setup-password', 'err-setup-pass'); valid = false; }
+    if (password !== confirm)  { showFieldError('setup-confirm', 'err-setup-confirm'); valid = false; }
+    if (!valid) return;
+
+    const salt = crypto.randomUUID();
+    const hash = await sha256(password + salt + username);
+
+    localStorage.setItem('fct_admin_config', JSON.stringify({
+      username,
+      hash,
+      salt,
+      createdAt: new Date().toISOString(),
+    }));
+
+    // Initialize drivers list if not exists
+    if (!localStorage.getItem('fct_drivers')) {
+      localStorage.setItem('fct_drivers', JSON.stringify([
+        { id: 'DRV-001', name: 'Koné Moussa',   phone: '+225 07 00 00 001', vehicle: 'Van Premium',   available: true },
+        { id: 'DRV-002', name: 'Bamba Ibrahima', phone: '+225 07 00 00 002', vehicle: 'Toyota Corolla', available: true },
+        { id: 'DRV-003', name: 'Touré Seydou',  phone: '+225 07 00 00 003', vehicle: 'Berline Business', available: true },
+      ]));
+    }
+
+    const successEl = document.getElementById('setup-success');
+    successEl.textContent = 'Compte créé avec succès ! Redirection vers la connexion…';
+    successEl.classList.add('show');
+    setTimeout(() => showLogin(), 2000);
+  }
+
+  async function doLogin() {
+    clearErrors();
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    let valid = true;
+
+    if (!username) { showFieldError('login-username', 'err-login-user'); valid = false; }
+    if (!password) { showFieldError('login-password', 'err-login-pass'); valid = false; }
+    if (!valid) return;
+
+    const config = JSON.parse(localStorage.getItem('fct_admin_config') || 'null');
+    if (!config) {
+      const err = document.getElementById('login-error');
+      err.textContent = 'Aucun compte configuré. Veuillez créer votre compte administrateur d\'abord.';
+      err.classList.add('show');
+      return;
+    }
+
+    const hash = await sha256(password + config.salt + config.username);
+
+    if (username !== config.username || hash !== config.hash) {
+      const err = document.getElementById('login-error');
+      err.textContent = 'Identifiant ou mot de passe incorrect.';
+      err.classList.add('show');
+      return;
+    }
+
+    // Create session
+    sessionStorage.setItem('fct_admin_session', JSON.stringify({
+      username,
+      loginAt: new Date().toISOString(),
+      expires: Date.now() + SESSION_DURATION,
+    }));
+
+    // Audit log
+    const logs = JSON.parse(localStorage.getItem('fct_audit_logs') || '[]');
+    logs.unshift({ type: 'login', username, at: new Date().toISOString() });
+    localStorage.setItem('fct_audit_logs', JSON.stringify(logs.slice(0, 500)));
+
+    window.location.href = 'admin-dashboard.html';
+  }
+</script>
+</body>
+</html>
