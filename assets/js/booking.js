@@ -350,21 +350,163 @@ function detectZoneFromNeighborhood(input) {
   return null;
 }
 
-function populateDatalist() {
-  const datalist = document.getElementById('neighborhoods-list');
-  if (!datalist) return;
-  // Build unique display names per zone, sorted alphabetically
-  const entries = Object.values(NEIGHBORHOODS);
+// ---- CUSTOM NEIGHBORHOOD AUTOCOMPLETE ----
+const NB_ALL_ENTRIES = (() => {
   const seen = new Set();
-  const unique = entries.filter(e => {
-    if (seen.has(e.display)) return false;
-    seen.add(e.display);
-    return true;
+  return Object.entries(NEIGHBORHOODS).reduce((arr, [key, val]) => {
+    if (!seen.has(val.display)) {
+      seen.add(val.display);
+      arr.push({ display: val.display, zone: val.zone, commune: val.commune });
+    }
+    return arr;
+  }, []).sort((a, b) => a.display.localeCompare(b.display, 'fr'));
+})();
+
+function populateDatalist() {
+  // legacy: no-op (datalist replaced by custom autocomplete)
+}
+
+let nbDropdownOpen = false;
+let nbHighlightIdx = -1;
+
+function initNeighborhoodAutocomplete() {
+  const input = document.getElementById('trip-neighborhood');
+  const dropdown = document.getElementById('nb-dropdown');
+  if (!input || !dropdown) return;
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    nbHighlightIdx = -1;
+    renderNbDropdown(q);
+    if (q) {
+      dropdown.style.display = 'block';
+      input.setAttribute('aria-expanded', 'true');
+      nbDropdownOpen = true;
+    }
+    // Update zone detection and unknown notice
+    const match = detectZoneFromNeighborhood(q);
+    if (q && !match) {
+      document.getElementById('unknown-nb-notice').style.display = 'block';
+    } else {
+      document.getElementById('unknown-nb-notice').style.display = 'none';
+    }
+    updateZoneDisplay(q);
   });
-  unique.sort((a, b) => a.display.localeCompare(b.display, 'fr'));
-  datalist.innerHTML = unique.map(e =>
-    `<option value="${e.display}" data-zone="${e.zone}">${e.display} — ${e.commune}</option>`
-  ).join('');
+
+  input.addEventListener('focus', () => {
+    const q = input.value.trim();
+    renderNbDropdown(q);
+    dropdown.style.display = 'block';
+    input.setAttribute('aria-expanded', 'true');
+    nbDropdownOpen = true;
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const items = dropdown.querySelectorAll('.nb-option');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      nbHighlightIdx = Math.min(nbHighlightIdx + 1, items.length - 1);
+      updateNbHighlight(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      nbHighlightIdx = Math.max(nbHighlightIdx - 1, 0);
+      updateNbHighlight(items);
+    } else if (e.key === 'Enter' && nbHighlightIdx >= 0) {
+      e.preventDefault();
+      items[nbHighlightIdx]?.click();
+    } else if (e.key === 'Escape') {
+      closeNbDropdown();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#nb-autocomplete-wrap')) closeNbDropdown();
+  });
+}
+
+function updateNbHighlight(items) {
+  items.forEach((el, i) => el.classList.toggle('highlighted', i === nbHighlightIdx));
+  items[nbHighlightIdx]?.scrollIntoView({ block: 'nearest' });
+}
+
+function renderNbDropdown(q) {
+  const dropdown = document.getElementById('nb-dropdown');
+  const input = document.getElementById('trip-neighborhood');
+  if (!dropdown) return;
+
+  const normalized = normalizeStr(q);
+  let results = [];
+  if (!q) {
+    results = NB_ALL_ENTRIES.slice(0, 60);
+  } else {
+    results = NB_ALL_ENTRIES.filter(e => {
+      const n = normalizeStr(e.display);
+      const c = normalizeStr(e.commune);
+      return n.includes(normalized) || normalized.includes(n) || c.includes(normalized);
+    }).slice(0, 40);
+  }
+
+  const zoneNames = { zone1: 'Zone 1', zone2: 'Zone 2', zone3: 'Zone 3', zone4: 'Zone 4' };
+
+  let html = results.map((e, i) => `
+    <div class="nb-option" role="option" data-value="${e.display}" data-zone="${e.zone}" tabindex="-1">
+      <span>${highlightMatch(e.display, q)}${e.commune !== e.display ? `<small style="color:#8892a4;margin-left:6px;">— ${e.commune}</small>` : ''}</span>
+      <span class="nb-zone-tag">${zoneNames[e.zone] || e.zone}</span>
+    </div>`).join('');
+
+  if (q && results.length === 0) {
+    html = `<div class="nb-no-results">Aucun résultat pour "<strong>${q}</strong>"</div>`;
+  }
+
+  if (q) {
+    html += `<div class="nb-option nb-add-new" role="option" data-value="${q}" data-zone="unknown" tabindex="-1">
+      <span><i class="fas fa-plus-circle"></i>Utiliser "<strong>${q}</strong>" (quartier non répertorié)</span>
+    </div>`;
+  }
+
+  dropdown.innerHTML = html;
+
+  dropdown.querySelectorAll('.nb-option').forEach(el => {
+    el.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      const val = el.dataset.value;
+      const zone = el.dataset.zone;
+      if (input) input.value = val;
+      if (zone === 'unknown') {
+        document.getElementById('unknown-nb-notice').style.display = 'block';
+        bookingState.neighborhoodUnknown = true;
+      } else {
+        document.getElementById('unknown-nb-notice').style.display = 'none';
+        bookingState.neighborhoodUnknown = false;
+      }
+      updateZoneDisplay(val);
+      closeNbDropdown();
+    });
+  });
+}
+
+function highlightMatch(text, q) {
+  if (!q) return text;
+  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<strong style="color:var(--gold,#c9a84c);">$1</strong>');
+}
+
+function updateZoneDisplay(q) {
+  const match = detectZoneFromNeighborhood(q);
+  if (match) {
+    showZoneDetectedCard(match.zone);
+  } else {
+    const zoneCard = document.getElementById('zone-detected');
+    if (zoneCard) zoneCard.style.display = 'none';
+  }
+}
+
+function closeNbDropdown() {
+  const dropdown = document.getElementById('nb-dropdown');
+  const input = document.getElementById('trip-neighborhood');
+  if (dropdown) { dropdown.style.display = 'none'; }
+  if (input) input.setAttribute('aria-expanded', 'false');
+  nbDropdownOpen = false;
 }
 
 function showZoneDetectedCard(zoneKey) {
@@ -491,7 +633,13 @@ function onNext1() {
   if (bookingState.pickupMethod === 'neighborhood') {
     bookingState.neighborhood = $('#trip-neighborhood')?.value?.trim() || '';
     const match = detectZoneFromNeighborhood(bookingState.neighborhood);
-    if (match) bookingState.zone = match.zone;
+    if (match) {
+      bookingState.zone = match.zone;
+      bookingState.neighborhoodUnknown = false;
+    } else {
+      bookingState.zone = 'unknown';
+      bookingState.neighborhoodUnknown = true;
+    }
   } else {
     bookingState.address = $('#trip-address')?.value?.trim() || '';
     bookingState.zone = $('#trip-zone-manual')?.value || '';
@@ -525,8 +673,11 @@ function validateStep1() {
     } else {
       const match = detectZoneFromNeighborhood(val);
       if (!match) {
-        showError(nbInput, 'Quartier non reconnu. Essayez un autre nom ou sélectionnez votre zone manuellement.');
-        valid = false;
+        // Unknown neighborhood — allow to proceed, will be confirmed by admin
+        bookingState.neighborhoodUnknown = true;
+        bookingState.zone = 'unknown';
+      } else {
+        bookingState.neighborhoodUnknown = false;
       }
     }
   } else {
@@ -896,6 +1047,7 @@ function showConfirmModal() {
 window.addEventListener('DOMContentLoaded', () => {
   // Populate datalist
   populateDatalist();
+  initNeighborhoodAutocomplete();
 
   // Date default
   const dateInput = $('#trip-date');

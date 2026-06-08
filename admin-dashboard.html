@@ -254,7 +254,7 @@
 
     .form-group { margin-bottom: 14px; }
     label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
-    select, input[type=text], textarea {
+    select, input[type=text], input[type=number], textarea {
       width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
       border-radius: 8px; color: var(--text); font-family: var(--font); font-size: 0.88rem;
       padding: 9px 12px; outline: none; transition: border-color 0.2s;
@@ -651,15 +651,22 @@
       <div class="detail-grid" id="modal-details"></div>
 
       <div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px;">
-        <div class="form-group">
-          <label><i class="fas fa-traffic-light" style="color:var(--gold);margin-right:4px;"></i>Changer le statut</label>
-          <select id="modal-status-select">
-            <option value="pending">⏳ En attente</option>
-            <option value="validated">✅ Validée</option>
-            <option value="in_progress">🚗 En cours</option>
-            <option value="completed">✔️ Complétée</option>
-            <option value="cancelled">❌ Annulée</option>
-          </select>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:4px;"></i>Montant (FCFA)</label>
+            <input type="number" id="modal-price-input" min="0" step="500" placeholder="Ex: 25000" />
+            <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;">Ajustable pour zones hors catalogue</div>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label><i class="fas fa-traffic-light" style="color:var(--gold);margin-right:4px;"></i>Statut</label>
+            <select id="modal-status-select">
+              <option value="pending">⏳ En attente</option>
+              <option value="validated">✅ Validée</option>
+              <option value="in_progress">🚗 En cours</option>
+              <option value="completed">✔️ Complétée</option>
+              <option value="cancelled">❌ Annulée</option>
+            </select>
+          </div>
         </div>
         <div class="form-group">
           <label><i class="fas fa-id-card" style="color:var(--gold);margin-right:4px;"></i>Assigner un chauffeur</label>
@@ -766,7 +773,7 @@
     return { basic: 'Économique', premium: 'Premium (Van)', business: 'Business' }[v] || v || '—';
   }
   function zoneLabel(z) {
-    return { zone1: 'Zone 1', zone2: 'Zone 2', zone3: 'Zone 3', zone4: 'Zone 4' }[z] || z || '—';
+    return { zone1: 'Zone 1', zone2: 'Zone 2', zone3: 'Zone 3', zone4: 'Zone 4', unknown: '❓ Zone inconnue' }[z] || z || '—';
   }
   function statusBadge(s) {
     const labels = { pending: '⏳ En attente', validated: '✅ Validée', in_progress: '🚗 En cours', completed: '✔️ Complétée', cancelled: '❌ Annulée' };
@@ -948,6 +955,10 @@
       ${b.specialRequests ? `<div class="detail-item" style="grid-column:1/-1;"><div class="detail-label">Demandes spéciales</div><div class="detail-value">${b.specialRequests}</div></div>` : ''}
     `;
 
+    // Price
+    const priceInput = document.getElementById('modal-price-input');
+    if (priceInput) priceInput.value = b.totalPrice || '';
+
     // Status
     document.getElementById('modal-status-select').value = b.status || 'pending';
 
@@ -994,6 +1005,7 @@
       driver_unassigned: 'Chauffeur désassigné',
       note_added: 'Note ajoutée',
       cancelled: 'Réservation annulée',
+      price_updated: `Montant mis à jour : ${Number(a.from).toLocaleString('fr-FR')} → ${Number(a.to).toLocaleString('fr-FR')} FCFA`,
     };
     return map[a.action] || a.action;
   }
@@ -1017,6 +1029,14 @@
     const notes = document.getElementById('modal-notes').value.trim();
 
     if (!b.auditLog) b.auditLog = [];
+
+    // Price update
+    const newPrice = parseInt(document.getElementById('modal-price-input')?.value || '0');
+    if (newPrice && newPrice !== (b.totalPrice || 0)) {
+      b.auditLog.unshift({ action: 'price_updated', from: b.totalPrice || 0, to: newPrice, at: new Date().toISOString(), by: USERNAME });
+      addAuditLog('price_updated', { bookingId: currentBookingId, from: b.totalPrice || 0, to: newPrice });
+      b.totalPrice = newPrice;
+    }
 
     if (newStatus !== b.status) {
       b.auditLog.unshift({ action: 'status_changed', from: b.status, to: newStatus, at: new Date().toISOString(), by: USERNAME });

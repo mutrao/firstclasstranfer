@@ -3131,3 +3131,65 @@ input[type="time"] {
     font-family: var(--font-body);
   }
 }
+
+/* Fix native select dropdown option visibility */
+select option {
+  background: #1a2340;
+  color: #f0ede8;
+}
+select {
+  color-scheme: dark;
+}
+
+/* =============================================
+   NEIGHBORHOOD AUTOCOMPLETE
+   ============================================= */
+.nb-autocomplete-wrap {
+  position: relative;
+}
+.nb-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: #1a2340;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 10px;
+  max-height: 260px;
+  overflow-y: auto;
+  z-index: 200;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.nb-option {
+  padding: 9px 14px;
+  font-size: 0.88rem;
+  color: #f0ede8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+.nb-option:last-child { border-bottom: none; }
+.nb-option:hover, .nb-option.highlighted { background: rgba(201,168,76,0.1); }
+.nb-option .nb-zone-tag {
+  font-size: 0.7rem;
+  color: var(--gold, #c9a84c);
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 20px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+.nb-option.nb-add-new {
+  color: var(--gold, #c9a84c);
+  font-weight: 600;
+  font-style: italic;
+}
+.nb-option.nb-add-new i { margin-right: 6px; }
+.nb-no-results {
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: #8892a4;
+  font-style: italic;
+}

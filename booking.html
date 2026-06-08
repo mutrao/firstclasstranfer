@@ -125,16 +125,35 @@
             <!-- Neighborhood search (shown by default) -->
             <div id="neighborhood-field" class="form-group">
               <label for="trip-neighborhood" id="neighborhood-label"><i class="fas fa-map-marker-alt"></i> Votre quartier de départ <span style="color:var(--error)">*</span></label>
-              <input
-                type="text"
-                id="trip-neighborhood"
-                list="neighborhoods-list"
-                placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
-                autocomplete="off"
-                aria-required="true"
-              />
-              <datalist id="neighborhoods-list"><!-- populated by JS --></datalist>
+              <div class="nb-autocomplete-wrap" id="nb-autocomplete-wrap">
+                <input
+                  type="text"
+                  id="trip-neighborhood"
+                  placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
+                  autocomplete="off"
+                  aria-required="true"
+                  aria-autocomplete="list"
+                  aria-controls="nb-dropdown"
+                  role="combobox"
+                  aria-expanded="false"
+                />
+                <div id="nb-dropdown" class="nb-dropdown" role="listbox" style="display:none;"></div>
+              </div>
               <div id="zone-detected" class="zone-detected-card" style="display:none" aria-live="polite"></div>
+              <!-- Unknown neighborhood message -->
+              <div id="unknown-nb-notice" style="display:none;margin-top:12px;padding:14px 16px;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.25);border-radius:10px;">
+                <div style="display:flex;gap:10px;align-items:flex-start;">
+                  <i class="fas fa-map-pin" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+                  <div>
+                    <strong style="color:var(--gold);display:block;margin-bottom:4px;">Quartier non répertorié — pas d'inquiétude !</strong>
+                    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin:0;">
+                      Votre quartier ne fait pas encore partie de notre base, mais vous pouvez continuer votre réservation.
+                      <strong style="color:var(--white);">Nos conseillers vous recontacteront dans moins de 5 minutes</strong> pour vous proposer la meilleure offre et confirmer le tarif.
+                      Vous serez contacté sur <strong style="color:#25d366;">WhatsApp</strong>, par email ou directement par téléphone.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Address input (hidden by default) -->
@@ -258,7 +277,7 @@
                 <label for="client-phone-number"><i class="fab fa-whatsapp"></i> <span data-i18n="phone_label">Téléphone WhatsApp</span> <span style="color:var(--error)">*</span></label>
                 <div style="display:flex;gap:8px;align-items:stretch;">
                   <select id="client-phone-code" name="phone_code" autocomplete="tel-country-code"
-                    style="flex-shrink:0;width:auto;min-width:130px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:var(--text,#f0ede8);font-size:0.88rem;padding:10px 8px;outline:none;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 10 6%22><path fill=%22%239AA0AD%22 d=%22M0 0l5 6 5-6z%22/></svg>');background-repeat:no-repeat;background-position:right 8px center;background-size:8px;padding-right:24px;">
+                    style="flex-shrink:0;width:auto;min-width:138px;color-scheme:dark;background:#1a2340;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:#f0ede8;font-size:0.88rem;padding:10px 8px;outline:none;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 10 6%22><path fill=%22%239AA0AD%22 d=%22M0 0l5 6 5-6z%22/></svg>');background-repeat:no-repeat;background-position:right 8px center;background-size:8px;padding-right:24px;">
                     <option value="+225">🇨🇮 +225</option>
                     <option value="+33">🇫🇷 +33</option>
                     <option value="+1">🇺🇸 +1</option>
