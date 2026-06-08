@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PREVIEW — Nouvelle Charte Graphique "Prestige Neutre"</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    /* ============================================================
+       PREVIEW BANNER
+    ============================================================ */
+    .preview-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      background: #059669;
+      color: #fff;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      letter-spacing: 0.04em;
+    }
+    .preview-banner span { opacity: 0.8; font-weight: 400; margin-left: 12px; }
+
+    /* ============================================================
+       NEW DESIGN SYSTEM — "PRESTIGE NEUTRE"
+    ============================================================ */
+    :root {
+      /* Background layers */
+      --bg-deep:        #09090E;
+      --bg-surface:     #111118;
+      --bg-card:        #13131A;
+      --bg-card-hover:  #1A1A24;
+
+      /* Gold — champagne chaud */
+      --gold:           #C8A96E;
+      --gold-light:     #DFC490;
+      --gold-dim:       rgba(200,169,110,0.15);
+      --gold-border:    rgba(200,169,110,0.25);
+
+      /* Text */
+      --text-primary:   #F0EDE8;
+      --text-secondary: #9AA0AD;
+      --text-muted:     #616A7A;
+
+      /* Trust / CTA green */
+      --green:          #059669;
+      --green-hover:    #047857;
+      --green-dim:      rgba(5,150,105,0.12);
+
+      /* Glass */
+      --glass-bg:       rgba(19,19,26,0.80);
+      --glass-border:   rgba(255,255,255,0.07);
+
+      /* Radius */
+      --r-sm: 10px;
+      --r-md: 16px;
+      --r-lg: 24px;
+
+      /* Shadows */
+      --shadow-card: 0 4px 32px rgba(0,0,0,0.45), 0 1px 0 rgba(255,255,255,0.04) inset;
+      --shadow-glow: 0 0 40px rgba(200,169,110,0.08);
+
+      /* Fonts */
+      --font-body:    'Inter', sans-serif;
+      --font-heading: 'Playfair Display', serif;
+
+      /* Spacing (25% more than before) */
+      --section-py:   110px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      background-color: var(--bg-deep);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .text-center { text-align: center; }
+
+    .gold { color: var(--gold); font-style: italic; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .gold-line {
+      width: 56px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 18px auto 24px;
+    }
+    .section-subtitle {
+      max-width: 580px;
+      margin: 0 auto;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+    .section-header { margin-bottom: 60px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.22s ease;
+    }
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--green-hover); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(5,150,105,0.35); }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #09090E;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(200,169,110,0.35); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+    }
+    .btn-outline:hover { border-color: var(--gold-border); color: var(--gold); }
+
+    .btn-lg { padding: 16px 34px; font-size: 1rem; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 36px; /* offset for preview banner */
+      left: 0; right: 0;
+      z-index: 900;
+      padding: 18px 0;
+      transition: background 0.3s, padding 0.3s;
+    }
+    .navbar.scrolled {
+      background: rgba(9,9,14,0.95);
+      backdrop-filter: blur(16px);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #09090E;
+      font-size: 1rem;
+    }
+    .nav-logo span {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+      letter-spacing: 0.06em;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      margin-left: auto;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { display: flex; gap: 10px; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 60% 40%, rgba(200,169,110,0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(5,150,105,0.04) 0%, transparent 60%),
+        linear-gradient(160deg, #09090E 0%, #0D0D16 60%, #09090E 100%);
+    }
+    /* Subtle grid texture */
+    .hero-grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 60px 28px;
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 22px;
+    }
+    .hero-title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .hero-description {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 38px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      padding-top: 36px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .hero-stat .num {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .hero-stat .label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Booking card */
+    .hero-booking-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-lg);
+      padding: 34px 30px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-card);
+    }
+    .hero-booking-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .hero-booking-card > p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .form-group label i { color: var(--gold); font-size: 0.75rem; }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: var(--r-sm);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      padding: 11px 14px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--gold-border);
+      background: rgba(200,169,110,0.04);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .method-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .method-btn {
+      flex: 1;
+      padding: 9px 12px;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--glass-border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .method-btn.active {
+      background: var(--gold-dim);
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
+
+    .flight-block {
+      background: rgba(200,169,110,0.04);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--r-sm);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .flight-block-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .flight-notice {
+      display: flex;
+      gap: 8px;
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+    .flight-notice i { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+
+    .trust-strip {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid var(--glass-border);
+      margin-top: 18px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .trust-item i { color: var(--green); font-size: 0.75rem; }
+
+    /* ============================================================
+       HOW IT WORKS
+    ============================================================ */
+    .how-it-works {
+      padding: var(--section-py) 0;
+      background: var(--bg-surface);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .step-card:hover {
+      border-color: var(--gold-border);
+      transform: translateY(-4px);
+    }
+    .step-number {
+      width: 60px; height: 60px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+    }
+    .step-icon { color: var(--gold); font-size: 1.3rem; }
+    .step-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .step-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* ============================================================
+       FLEET
+    ============================================================ */
+    .fleet {
+      padding: var(--section-py) 0;
+      background: var(--bg-deep);
+    }
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .fleet-card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .fleet-card:hover { border-color: var(--gold-border); transform: translateY(-4px); }
+    .fleet-card.featured {
+      border-color: var(--gold-border);
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+    }
+    .fleet-photo-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .fleet-photo {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .fleet-badge {
+      position: absolute;
+      top: 14px; left: 14px;
+      z-index: 3;
+      background: var(--gold);
+      color: #09090E;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .fleet-card-body { padding: 26px 24px; }
+    .fleet-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .fleet-tagline {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .fleet-features {
+      list-style: none;
+      margin-bottom: 22px;
+    }
+    .fleet-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .fleet-features li:last-child { border-bottom: none; }
+    .fleet-features i { color: var(--green); margin-top: 3px; font-size: 0.75rem; flex-shrink: 0; }
+    .fleet-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .fleet-price .amount {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .fleet-price .currency {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       PRICING TABLE
+    ============================================================ */
+    .pricing {
+      padding: var(--section-py) 0;
+      background: var(--bg-surface);
+    }
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .pricing-table thead tr {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .pricing-table th {
+      padding: 18px 20px;
+      text-align: left;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+    }
+    .pricing-table th:first-child { color: var(--text-secondary); }
+    .pricing-table th small { display: block; font-weight: 400; font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
+    .pricing-table tbody tr {
+      border-bottom: 1px solid var(--glass-border);
+      transition: background 0.2s;
+    }
+    .pricing-table tbody tr:last-child { border-bottom: none; }
+    .pricing-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .pricing-table td {
+      padding: 18px 20px;
+      vertical-align: middle;
+    }
+    .zone-name {
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 0.92rem;
+    }
+    .zone-areas {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .price-cell {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--gold);
+    }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    .testimonials {
+      padding: var(--section-py) 0;
+      background: var(--bg-deep);
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+    .testimonial-card.highlight {
+      border-color: var(--gold-border);
+    }
+    .testimonial-card:hover { border-color: var(--gold-border); }
+    .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 14px; }
+    .testimonial-text {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .author-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .author-detail {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       FOOTER PREVIEW
+    ============================================================ */
+    .footer-preview {
+      background: var(--bg-card);
+      border-top: 1px solid var(--glass-border);
+      padding: 60px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+      line-height: 1.65;
+      max-width: 320px;
+    }
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid var(--glass-border);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       DESIGN DIFF SECTION
+    ============================================================ */
+    .design-diff {
+      padding: 56px 0;
+      background: #0C0C13;
+      border-top: 1px dashed rgba(255,255,255,0.08);
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .diff-card {
+      border-radius: var(--r-md);
+      padding: 28px 24px;
+      font-size: 0.88rem;
+    }
+    .diff-card.before { background: #0D1320; border: 1px solid rgba(131,107,60,0.3); }
+    .diff-card.after  { background: #0D130D; border: 1px solid rgba(5,150,105,0.3); }
+    .diff-card h4 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; }
+    .diff-card.before h4 { color: #c9a84c; }
+    .diff-card.after h4  { color: #059669; }
+    .diff-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .diff-row:last-child { border-bottom: none; }
+    .diff-key { color: var(--text-muted); }
+    .diff-val { font-weight: 600; font-family: monospace; font-size: 0.82rem; }
+    .diff-card.before .diff-val { color: #c9a84c; }
+    .diff-card.after .diff-val  { color: #059669; }
+    .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 6px; vertical-align: middle; border: 1px solid rgba(255,255,255,0.12); }
+
+  </style>
+</head>
+<body>
+
+<div class="preview-banner">
+  👁 APERÇU UNIQUEMENT — Nouvelle charte "Prestige Neutre" — Non commitée
+  <span>Donnez votre accord pour que ce design soit appliqué au vrai site.</span>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar scrolled" style="top:36px;">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+      <div>
+        First Class Transfer
+        <span>Abidjan · Côte d'Ivoire</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Flotte</a></li>
+      <li><a href="#">Tarifs</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-outline" style="padding:10px 18px;font-size:0.85rem;">
+        <i class="fas fa-phone"></i> Appel
+      </a>
+      <a href="#" class="btn btn-gold" style="padding:10px 18px;font-size:0.85rem;">
+        <i class="fas fa-calendar-check"></i> Réserver
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="margin-top:36px;">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+
+  <div class="hero-content">
+    <!-- Left: Copy -->
+    <div class="hero-text">
+      <div class="hero-badge">
+        <i class="fas fa-star"></i>
+        Service Premium · Ponctuel · Fiable
+      </div>
+
+      <h1 class="hero-title">
+        Votre Transfert Aéroport,<br>
+        <em>Simplement Parfait</em>
+      </h1>
+
+      <p class="hero-description">
+        Réservez votre transfert vers l'Aéroport Félix-Houphouët-Boigny en 2 minutes — départ ou arrivée.
+        Confirmation immédiate. Votre chauffeur vous contacte sur WhatsApp le jour J.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary btn-lg">
+          <i class="fas fa-calendar-check"></i> Réserver Maintenant
+        </a>
+        <a href="#" class="btn btn-outline btn-lg">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="num">500+</span>
+          <span class="label">Transferts réalisés</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">98%</span>
+          <span class="label">Clients satisfaits</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">24h/7</span>
+          <span class="label">Disponibilité</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Booking Card -->
+    <div class="hero-booking-card">
+      <h3>Estimation instantanée</h3>
+      <p>Obtenez votre tarif en quelques secondes</p>
+
+      <div class="method-toggle">
+        <button class="method-btn active"><i class="fa-solid fa-map-pin"></i> Par quartier</button>
+        <button class="method-btn"><i class="fa-solid fa-location-dot"></i> Par zone</button>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-map-marker-alt"></i> Votre quartier de départ</label>
+        <input type="text" placeholder="Ex: Cocody Riviera 2, Angré…" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label><i class="fas fa-users"></i> Passagers</label>
+          <input type="number" value="2" />
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-suitcase-rolling"></i> Bagages</label>
+          <input type="number" value="2" />
+        </div>
+      </div>
+
+      <div class="flight-block">
+        <div class="flight-block-header">
+          <i class="fas fa-plane-departure"></i> Votre Vol
+        </div>
+        <div class="form-row" style="margin-bottom:0">
+          <div class="form-group" style="margin-bottom:0">
+            <label><i class="fas fa-calendar"></i> Date de décollage</label>
+            <input type="date" />
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label><i class="fas fa-clock"></i> Heure de décollage</label>
+            <input type="time" />
+          </div>
+        </div>
+        <div class="flight-notice">
+          <i class="fas fa-shield-halved"></i>
+          <span>Prise en charge <strong style="color:var(--text-primary)">3h30 avant le décollage</strong>, délai ajusté selon votre zone. Un vol raté n'arrive pas avec First Class Transfer.</span>
+        </div>
+      </div>
+
+      <!-- Price estimate preview -->
+      <div style="background:rgba(200,169,110,0.07);border:1px solid var(--gold-border);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:0.82rem;color:var(--text-muted);"><i class="fa-solid fa-map-pin" style="color:var(--gold);margin-right:4px;"></i> Zone 1 détectée →</span>
+        <span style="font-family:var(--font-heading);font-weight:700;color:var(--gold);font-size:1.1rem;">25 000 FCFA</span>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%;justify-content:center;">
+        <i class="fas fa-arrow-right"></i> Voir les Disponibilités
+      </button>
+
+      <div class="trust-strip">
+        <div class="trust-item"><i class="fas fa-check-circle"></i> Confirmation immédiate</div>
+        <div class="trust-item"><i class="fas fa-undo"></i> Annulation flexible</div>
+        <div class="trust-item"><i class="fab fa-whatsapp"></i> Suivi WhatsApp</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="text-center section-header">
+      <span class="section-label">Comment ça marche</span>
+      <h2 class="section-title">Simple dans les <em class="gold">2 sens</em></h2>
+      <div class="gold-line"></div>
+      <p class="section-subtitle">Que vous partiez à l'aéroport ou que vous arriviez à Abidjan, nous gérons tout en 3 étapes.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number"><i class="fas fa-mouse-pointer step-icon"></i></div>
+        <h3>Réservez en ligne</h3>
+        <p>Indiquez votre adresse de départ, la date, l'heure et votre numéro de vol. Notre formulaire prend moins de 2 minutes.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number"><i class="fas fa-shield-halved step-icon"></i></div>
+        <h3>Choisissez votre véhicule</h3>
+        <p>Sélectionnez Économique, Premium (Van) ou Business selon votre groupe et vos bagages. Tarif affiché clairement, sans frais cachés.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number"><i class="fab fa-whatsapp step-icon"></i></div>
+        <h3>Le chauffeur vous contacte</h3>
+        <p>Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées. Il arrive à l'heure exacte convenue, sans exception.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="fleet">
+  <div class="container">
+    <div class="text-center section-header">
+      <span class="section-label">Notre Flotte</span>
+      <h2 class="section-title">Des Véhicules <em class="gold">Premium</em><br>pour Chaque Besoin</h2>
+      <div class="gold-line"></div>
+      <p class="section-subtitle">Tous nos véhicules sont climatisés, régulièrement entretenus et conduits par des chauffeurs professionnels.</p>
+    </div>
+    <div class="fleet-grid">
+
+      <!-- ÉCONOMIQUE -->
+      <div class="fleet-card">
+        <div class="fleet-photo-wrap">
+          <div class="fleet-badge">Économique</div>
+          <img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=700&q=80" alt="Hyundai i20" class="fleet-photo" />
+        </div>
+        <div class="fleet-card-body">
+          <h3>Économique</h3>
+          <p class="fleet-tagline">Idéal pour un voyage solo ou en duo</p>
+          <ul class="fleet-features">
+            <li><i class="fas fa-check"></i> <strong>1–2 passagers max</strong></li>
+            <li><i class="fas fa-check"></i> 4 valises taille M <small style="color:var(--text-muted)">· 65×44×26 cm</small></li>
+            <li><i class="fas fa-check"></i> Climatisation</li>
+            <li><i class="fas fa-check"></i> Chargeur USB</li>
+          </ul>
+          <div class="fleet-price">
+            <span class="amount">20 000</span>
+            <span class="currency">FCFA · Zone 1</span>
+          </div>
+          <a href="#" class="btn btn-outline" style="width:100%;justify-content:center;"><i class="fas fa-calendar-check"></i> Réserver</a>
+        </div>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="fleet-card featured">
+        <div class="fleet-photo-wrap">
+          <div class="fleet-badge">⭐ Le Plus Populaire</div>
+          <img src="https://img.leboncoin.fr/api/v1/lbcpb1/images/d9/4c/0e/d94c0e624e51c3136153d92f99536a78b66e298a.jpg?rule=classified-1200x800-webp" alt="Van Premium" class="fleet-photo" style="object-position:center 70%;" />
+        </div>
+        <div class="fleet-card-body">
+          <h3>Premium</h3>
+          <p class="fleet-tagline">Le choix idéal pour familles et groupes</p>
+          <ul class="fleet-features">
+            <li><i class="fas fa-check"></i> <strong>Jusqu'à 6 passagers</strong></li>
+            <li><i class="fas fa-check"></i> 8–10 valises M/L <small style="color:var(--text-muted)">· jusqu'à 75×53×29 cm</small></li>
+            <li><i class="fas fa-check"></i> Climatisation puissante</li>
+            <li><i class="fas fa-check"></i> Chargeurs USB &amp; Wi-Fi</li>
+          </ul>
+          <div class="fleet-price">
+            <span class="amount">25 000</span>
+            <span class="currency">FCFA · Zone 1</span>
+          </div>
+          <a href="#" class="btn btn-gold" style="width:100%;justify-content:center;"><i class="fas fa-calendar-check"></i> Réserver</a>
+        </div>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="fleet-card">
+        <div class="fleet-photo-wrap">
+          <div class="fleet-badge">Business</div>
+          <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=700&q=80" alt="BMW Business" class="fleet-photo" />
+        </div>
+        <div class="fleet-card-body">
+          <h3>Business</h3>
+          <p class="fleet-tagline">Pour les déplacements professionnels exigeants</p>
+          <ul class="fleet-features">
+            <li><i class="fas fa-check"></i> <strong>1–2 passagers</strong></li>
+            <li><i class="fas fa-check"></i> 2–4 valises M <small style="color:var(--text-muted)">· coffre berline</small></li>
+            <li><i class="fas fa-check"></i> Sièges cuir, silence total</li>
+            <li><i class="fas fa-check"></i> Eau minérale &amp; chargeur</li>
+          </ul>
+          <div class="fleet-price">
+            <span class="amount">45 000</span>
+            <span class="currency">FCFA · Zone 1</span>
+          </div>
+          <a href="#" class="btn btn-outline" style="width:100%;justify-content:center;"><i class="fas fa-calendar-check"></i> Réserver</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING TABLE -->
+<section class="pricing">
+  <div class="container">
+    <div class="text-center section-header">
+      <span class="section-label">Nos Tarifs</span>
+      <h2 class="section-title">Tarifs Clairs,<br><em class="gold">Sans Frais Cachés</em></h2>
+      <div class="gold-line"></div>
+      <p class="section-subtitle">Le prix affiché est le prix payé. Aucun supplément surprise.</p>
+    </div>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Zone</th>
+          <th><i class="fas fa-car"></i> Économique<br><small>Corolla · 1–2 pax · 4 val. M</small></th>
+          <th><i class="fas fa-van-shuttle"></i> Premium ⭐<br><small>Van · 6 pax · 8 val. M/L</small></th>
+          <th><i class="fas fa-car-side"></i> Business<br><small>Mercedes · 1–2 pax · 2 valises</small></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="zone-name">Zone 1</div><div class="zone-areas">Plateau · Cocody · Riviera · Angré · Marcory · Treichville · Port-Bouët</div></td>
+          <td class="price-cell">20 000 FCFA</td>
+          <td class="price-cell">25 000 FCFA</td>
+          <td class="price-cell">45 000 FCFA</td>
+        </tr>
+        <tr>
+          <td><div class="zone-name">Zone 2</div><div class="zone-areas">Yopougon · Abobo · Koumassi · Attécoubé</div></td>
+          <td class="price-cell">25 000 FCFA</td>
+          <td class="price-cell">32 000 FCFA</td>
+          <td class="price-cell">55 000 FCFA</td>
+        </tr>
+        <tr>
+          <td><div class="zone-name">Zone 3</div><div class="zone-areas">Bingerville · Anyama · Songon · Abatta · PK 20</div></td>
+          <td class="price-cell">22 000 FCFA</td>
+          <td class="price-cell">28 000 FCFA</td>
+          <td class="price-cell">50 000 FCFA</td>
+        </tr>
+        <tr>
+          <td><div class="zone-name">Zone 4</div><div class="zone-areas">Grand-Bassam · Dabou · Assinie · Jacqueville · Azaguié</div></td>
+          <td class="price-cell">45 000 FCFA</td>
+          <td class="price-cell">55 000 FCFA</td>
+          <td class="price-cell">80 000 FCFA</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="text-center section-header">
+      <span class="section-label">Avis Clients</span>
+      <h2 class="section-title">Ils Nous Font <em class="gold">Confiance</em></h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card highlight">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Service impeccable. Chauffeur ponctuel et très professionnel. Je recommande vivement pour tous mes transferts aéroport."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">K</div>
+          <div>
+            <div class="author-name">Kouassi M.</div>
+            <div class="author-detail">Cocody · Juillet 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Arrivée de l'aéroport très bien organisée. Le chauffeur attendait avec une pancarte. Bagages pris en charge immédiatement."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div>
+            <div class="author-name">Sophie L.</div>
+            <div class="author-detail">Paris · Août 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Réservation simple, prix transparent, véhicule propre. Exactement ce qu'on attend d'un service premium. Merci !"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div>
+            <div class="author-name">Ama D.</div>
+            <div class="author-detail">Angré · Septembre 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER PREVIEW -->
+<footer class="footer-preview">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="text-decoration:none;">
+          <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+          <div style="font-family:var(--font-heading);font-size:1.05rem;font-weight:700;color:var(--text-primary);">
+            First Class Transfer
+            <span style="display:block;font-family:var(--font-body);font-size:0.72rem;font-weight:400;color:var(--text-muted);letter-spacing:0.06em;">Abidjan · Côte d'Ivoire</span>
+          </div>
+        </a>
+        <p>Service premium de transfert aéroport à Abidjan. Ponctualité, confort et transparence à chaque trajet.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Notre Flotte</a></li>
+          <li><a href="#">Tarifs</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#"><i class="fab fa-whatsapp" style="color:var(--gold);margin-right:6px;"></i> WhatsApp</a></li>
+          <li><a href="#"><i class="fas fa-phone" style="color:var(--gold);margin-right:6px;"></i> +33 6 14 05 84 84</a></li>
+          <li><a href="#"><i class="fas fa-envelope" style="color:var(--gold);margin-right:6px;"></i> contact@...</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 First Class Transfer Abidjan</span>
+      <span>Politique de confidentialité · CGV</span>
+    </div>
+  </div>
+</footer>
+
+<!-- DESIGN DIFF REFERENCE -->
+<section class="design-diff">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:40px;">
+      <span class="section-label">Résumé des changements</span>
+      <h2 class="section-title" style="font-size:1.5rem;">Avant → Après</h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card before">
+        <h4>Avant (actuel)</h4>
+        <div class="diff-row"><span class="diff-key">Background</span><span class="diff-val"><span class="swatch" style="background:#0a0f1e;"></span>#0a0f1e</span></div>
+        <div class="diff-row"><span class="diff-key">Cards</span><span class="diff-val"><span class="swatch" style="background:#131b2e;"></span>#131b2e</span></div>
+        <div class="diff-row"><span class="diff-key">Gold</span><span class="diff-val"><span class="swatch" style="background:#c9a84c;"></span>#c9a84c</span></div>
+        <div class="diff-row"><span class="diff-key">Texte principal</span><span class="diff-val"><span class="swatch" style="background:#ffffff;"></span>#ffffff</span></div>
+        <div class="diff-row"><span class="diff-key">Texte secondaire</span><span class="diff-val"><span class="swatch" style="background:#8892a4;"></span>#8892a4</span></div>
+        <div class="diff-row"><span class="diff-key">CTA / Bouton principal</span><span class="diff-val"><span class="swatch" style="background:#c9a84c;"></span>Gold</span></div>
+        <div class="diff-row"><span class="diff-key">Font size base</span><span class="diff-val">15px</span></div>
+        <div class="diff-row"><span class="diff-key">Section padding</span><span class="diff-val">88px</span></div>
+      </div>
+      <div class="diff-card after">
+        <h4>Après (Prestige Neutre)</h4>
+        <div class="diff-row"><span class="diff-key">Background</span><span class="diff-val"><span class="swatch" style="background:#09090E;"></span>#09090E</span></div>
+        <div class="diff-row"><span class="diff-key">Cards</span><span class="diff-val"><span class="swatch" style="background:#13131A;"></span>#13131A</span></div>
+        <div class="diff-row"><span class="diff-key">Gold</span><span class="diff-val"><span class="swatch" style="background:#C8A96E;"></span>#C8A96E (champagne)</span></div>
+        <div class="diff-row"><span class="diff-key">Texte principal</span><span class="diff-val"><span class="swatch" style="background:#F0EDE8;border:1px solid #444;"></span>#F0EDE8 (ivoire)</span></div>
+        <div class="diff-key" style="display:none;"></div>
+        <div class="diff-row"><span class="diff-key">Texte secondaire</span><span class="diff-val"><span class="swatch" style="background:#9AA0AD;"></span>#9AA0AD</span></div>
+        <div class="diff-row"><span class="diff-key">CTA / Bouton principal</span><span class="diff-val"><span class="swatch" style="background:#059669;"></span>#059669 (vert confiance)</span></div>
+        <div class="diff-row"><span class="diff-key">Font size base</span><span class="diff-val">16px (+1px)</span></div>
+        <div class="diff-row"><span class="diff-key">Section padding</span><span class="diff-val">110px (+25%)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.querySelector('.navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  });
+</script>
+</body>
+</html>
