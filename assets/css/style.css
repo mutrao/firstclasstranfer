@@ -645,6 +645,8 @@ section {
 .form-group select,
 .form-group textarea {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: var(--radius-sm);
@@ -654,6 +656,8 @@ section {
   font-size: 0.95rem;
   transition: border-color var(--transition);
   outline: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .form-group input::placeholder,
@@ -673,10 +677,40 @@ section {
   color: var(--white);
 }
 
+/* ── Date & time inputs: force contain on iOS/Safari ── */
+.form-group input[type="date"],
+.form-group input[type="time"],
+input[type="date"],
+input[type="time"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  /* Safari adds padding-right for the native picker chevron —
+     offset with padding so text doesn't collide */
+  padding-right: 40px;
+  /* Clip any overflow from the browser control */
+  overflow: hidden;
+}
+
+/* Contain the parent */
+.form-group {
+  width: 100%;
+  min-width: 0;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  min-width: 0;
+}
+
+/* Ensure grid children never overflow their cell */
+.form-row > * {
+  min-width: 0;
 }
 
 /* =========================================
