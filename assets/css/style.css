@@ -2098,27 +2098,43 @@ input[type="time"] {
   /* Section titles */
   .section-title { font-size: clamp(1.5rem, 5.5vw, 2rem); }
 
-  /* Pricing table: card layout */
+  /* Pricing table: card layout with labeled price rows */
   .pricing-table-wrap { overflow-x: visible; }
-  .pricing-table { display: flex; flex-direction: column; width: 100%; min-width: 0; }
+  .pricing-table { display: block; width: 100%; min-width: 0; border: none; }
   .pricing-table thead { display: none; }
   .pricing-table tbody { display: flex; flex-direction: column; gap: 12px; }
   .pricing-table tbody tr {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    align-items: center;
+    display: block;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
-    padding: 12px 8px;
+    padding: 14px 16px;
   }
-  .pricing-table td { padding: 6px 8px; font-size: 0.8rem; text-align: center; }
-  .pricing-table td:first-child {
-    text-align: left;
+  /* Zone name row */
+  .pricing-table tbody tr td:first-child {
+    display: block;
+    padding: 0 0 10px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.9rem;
+  }
+  /* Price cells: label left, price right */
+  .pricing-table .price-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.92rem;
     font-weight: 600;
-    color: var(--white);
-    font-size: 0.76rem;
-    border-right: 1px solid rgba(255,255,255,0.06);
+    color: var(--gold);
+  }
+  .pricing-table .price-cell:last-child { border-bottom: none; }
+  .pricing-table .price-cell::before {
+    content: attr(data-label);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
   }
 
   /* Special requests */
