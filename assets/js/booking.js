@@ -273,7 +273,14 @@ function updateSummary() {
     if (destLabelEl) destLabelEl.innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> Arrivée';
   }
 
-  $('#summary-pickup').textContent = pickupLabel;
+  // Direction badge
+  const dirBadge = $('#summary-direction-badge');
+  if (dirBadge) {
+    dirBadge.style.display = 'block';
+    dirBadge.textContent = isArrival ? '← Depuis l\'Aéroport' : '→ Vers l\'Aéroport';
+  }
+
+  $('#summary-pickup').textContent = isArrival ? 'Aéroport FHB, Abidjan' : pickupLabel;
   $('#summary-destination').textContent = isArrival ? pickupLabel : 'Aéroport FHB, Abidjan';
   $('#summary-date').textContent = bookingState.date ? formatDate(bookingState.date) : '—';
   $('#summary-time').textContent = bookingState.time || '—';
@@ -736,7 +743,7 @@ function isValidEmail(email) {
 }
 
 // =============================================
-// STEP 4 - PAYMENT
+// STEP 4 - CONFIRMATION
 // =============================================
 function renderPaymentSummary() {
   const zone = bookingState.zone;
@@ -764,6 +771,7 @@ function renderPaymentSummary() {
   $('#pay-summary-date').textContent    = formatDate(bookingState.date);
   $('#pay-summary-time').textContent    = bookingState.time;
   $('#pay-summary-vehicle').textContent = getVehicleLabel(bookingState.vehicle);
+  if ($('#pay-summary-passengers')) $('#pay-summary-passengers').textContent = bookingState.passengers + ' passager(s)';
   const lgLabel = bookingState.luggage === 0 ? 'Aucun' : bookingState.luggage === 1 ? '1 valise' : `${bookingState.luggage} valises`;
   if ($('#pay-summary-luggage')) $('#pay-summary-luggage').textContent = lgLabel;
   $('#pay-summary-name').textContent    = bookingState.name;
@@ -783,22 +791,47 @@ function renderPaymentSummary() {
 
 $('#btn-back-4')?.addEventListener('click', () => showStep(3));
 
-$$('.payment-option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    $$('.payment-option').forEach(o => o.classList.remove('selected'));
-    opt.classList.add('selected');
-    bookingState.paymentMethod = opt.dataset.method;
-  });
-});
-
-$('#btn-confirm-payment')?.addEventListener('click', () => {
-  if (!bookingState.paymentMethod) {
-    showToast('Veuillez sélectionner un mode de paiement.', 'error');
-    return;
-  }
-
+$('#btn-confirm-booking')?.addEventListener('click', () => {
   bookingState.bookingRef = generateRef();
   localStorage.setItem('lastBooking', JSON.stringify(bookingState));
+
+  // Trigger WhatsApp if notifWhatsapp is checked
+  if (bookingState.notifWhatsapp) {
+    const isArrival = bookingState.direction === 'arrival';
+    const dirLabel = isArrival ? 'Arrivée depuis l\'aéroport' : 'Départ vers l\'aéroport';
+    const pickup = bookingState.pickupMethod === 'neighborhood' && bookingState.neighborhood
+      ? bookingState.neighborhood
+      : bookingState.address || (ZONES[bookingState.zone] ? ZONES[bookingState.zone].label : '—');
+    const departure = isArrival ? 'Aéroport FHB, Abidjan' : pickup;
+    const destination = isArrival ? pickup : 'Aéroport FHB, Abidjan';
+
+    const waMsg = [
+      'Bonjour First Class Transfer 👋',
+      '',
+      'Nouvelle réservation confirmée :',
+      `📋 Réf : ${bookingState.bookingRef}`,
+      `↔️ Direction : ${dirLabel}`,
+      `📍 Départ : ${departure}`,
+      `🏁 Destination : ${destination}`,
+      `📅 Date : ${formatDate(bookingState.date)}`,
+      `🕐 Heure : ${bookingState.time}`,
+      `🚗 Véhicule : ${getVehicleLabel(bookingState.vehicle)}`,
+      `👥 Passagers : ${bookingState.passengers}`,
+      `🧳 Bagages : ${bookingState.luggage}`,
+      `👤 Nom : ${bookingState.name}`,
+      `📱 Téléphone : ${bookingState.phone}`,
+      `✉️ Email : ${bookingState.email}`,
+      `✈️ Compagnie : ${bookingState.airline || 'Non renseigné'}`,
+      `🔢 Vol : ${bookingState.flightNumber || 'Non renseigné'}`,
+      `⏰ Heure vol : ${bookingState.flightTime || 'Non renseigné'}`,
+      `💰 Total : ${formatPrice(bookingState.totalPrice)}`,
+      '',
+      'Merci !',
+    ].join('\n');
+
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
+  }
+
   showConfirmModal();
 });
 

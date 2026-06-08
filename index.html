@@ -267,36 +267,78 @@
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
         <span class="section-label">Comment ça marche</span>
-        <h2 class="section-title" id="hiw-title">3 Étapes pour un<br><em class="gold">Transfert Sans Souci</em></h2>
+        <h2 class="section-title" id="hiw-title">Simple dans les <em class="gold">2 sens</em></h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">De la réservation à l'aéroport, nous gérons tout. Vous n'avez qu'à monter dans le véhicule.</p>
+        <p class="section-subtitle">Que vous partiez à l'aéroport ou que vous arriviez à Abidjan, nous gérons tout en 3 étapes.</p>
       </div>
 
-      <div class="steps-grid">
+      <!-- Direction tabs for how-it-works -->
+      <div class="hiw-direction-tabs">
+        <button class="hiw-tab active" data-hiw="departure" onclick="switchHiwTab('departure')">
+          <i class="fas fa-plane-departure"></i> Départ vers l'aéroport
+        </button>
+        <button class="hiw-tab" data-hiw="arrival" onclick="switchHiwTab('arrival')">
+          <i class="fas fa-plane-arrival"></i> Arrivée depuis l'aéroport
+        </button>
+      </div>
+
+      <!-- Departure steps -->
+      <div class="steps-grid hiw-panel" id="hiw-departure">
         <div class="step-card glass-card animate-on-scroll animate-delay-1">
           <div class="step-number">
             <i class="fas fa-mouse-pointer step-icon"></i>
           </div>
           <h3>Réservez en ligne</h3>
-          <p>Choisissez votre zone, votre véhicule, la date et l'heure. Notre formulaire simple prend moins de 2 minutes. Disponible 24h/7j.</p>
+          <p>Indiquez votre adresse de départ, la date, l'heure et votre numéro de vol. Notre formulaire prend moins de 2 minutes.</p>
         </div>
-
         <div class="step-card glass-card animate-on-scroll animate-delay-2">
           <div class="step-number">
             <i class="fas fa-shield-halved step-icon"></i>
           </div>
           <h3>Payez en sécurité</h3>
-          <p>Réglez via CinetPay, Orange Money ou Wave. Votre paiement est 100% sécurisé. Vous recevez une confirmation immédiate par email.</p>
+          <p>Réglez via Orange Money, Wave ou carte bancaire. Paiement 100% sécurisé. Confirmation immédiate par email et WhatsApp.</p>
         </div>
-
         <div class="step-card glass-card animate-on-scroll animate-delay-3">
           <div class="step-number">
             <i class="fab fa-whatsapp step-icon"></i>
           </div>
           <h3>Le chauffeur vous contacte</h3>
-          <p>Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées et sa position. Il arrive à l'heure convenue, sans exception.</p>
+          <p>Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées. Il arrive à l'heure exacte convenue, sans exception.</p>
         </div>
       </div>
+
+      <!-- Arrival steps -->
+      <div class="steps-grid hiw-panel" id="hiw-arrival" style="display:none;">
+        <div class="step-card glass-card animate-on-scroll animate-delay-1">
+          <div class="step-number">
+            <i class="fas fa-mouse-pointer step-icon"></i>
+          </div>
+          <h3>Réservez en ligne</h3>
+          <p>Indiquez votre numéro de vol, l'heure d'atterrissage et votre adresse de destination à Abidjan. Rapide et simple.</p>
+        </div>
+        <div class="step-card glass-card animate-on-scroll animate-delay-2">
+          <div class="step-number">
+            <i class="fas fa-shield-halved step-icon"></i>
+          </div>
+          <h3>Payez en sécurité</h3>
+          <p>Réglez en ligne avant votre vol. Paiement 100% sécurisé. Votre chauffeur est automatiquement informé de votre arrivée.</p>
+        </div>
+        <div class="step-card glass-card animate-on-scroll animate-delay-3">
+          <div class="step-number">
+            <i class="fas fa-id-card step-icon"></i>
+          </div>
+          <h3>Votre chauffeur vous attend</h3>
+          <p>Dans le hall d'arrivée, votre chauffeur vous attend avec une pancarte à votre nom et le logo First Class Transfer. Il s'occupe de vos bagages.</p>
+        </div>
+      </div>
+
+      <script>
+        function switchHiwTab(dir) {
+          document.querySelectorAll('.hiw-tab').forEach(t => t.classList.toggle('active', t.dataset.hiw === dir));
+          document.getElementById('hiw-departure').style.display = dir === 'departure' ? '' : 'none';
+          document.getElementById('hiw-arrival').style.display = dir === 'arrival' ? '' : 'none';
+        }
+      </script>
     </div>
   </section>
 

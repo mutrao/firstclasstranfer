@@ -70,7 +70,7 @@
       </div>
       <div class="progress-step" id="progress-4">
         <div class="step-circle">4</div>
-        <span class="step-label">Paiement</span>
+        <span class="step-label">Confirmation</span>
       </div>
     </div>
   </div>
@@ -312,21 +312,22 @@
             </div>
           </div>
 
-          <!-- STEP 4: PAYMENT -->
-          <div class="form-step" id="step-4" role="form" aria-label="Paiement">
-            <h2 class="form-step-title">Récapitulatif &amp; Paiement</h2>
-            <p class="form-step-desc">Vérifiez vos informations et choisissez votre mode de paiement.</p>
+          <!-- STEP 4: CONFIRMATION (no payment) -->
+          <div class="form-step" id="step-4" role="form" aria-label="Confirmer la réservation">
+            <h2 class="form-step-title">Récapitulatif &amp; Confirmation</h2>
+            <p class="form-step-desc">Vérifiez vos informations et confirmez votre réservation.</p>
 
-            <!-- Payment Summary -->
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-sm);padding:20px;margin-bottom:24px;">
+            <!-- Full Trip Summary -->
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;">
               <h4 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Récapitulatif du trajet</h4>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.88rem;">
                 <div><span style="color:var(--text-muted);">Direction :</span><br><strong id="pay-summary-direction">—</strong></div>
-                <div><span style="color:var(--text-muted);">Trajet :</span><br><strong id="pay-summary-pickup">—</strong></div>
+                <div><span style="color:var(--text-muted);">Départ :</span><br><strong id="pay-summary-pickup">—</strong></div>
                 <div><span style="color:var(--text-muted);">Destination :</span><br><strong id="pay-summary-dest">—</strong></div>
                 <div><span style="color:var(--text-muted);">Date :</span><br><strong id="pay-summary-date">—</strong></div>
                 <div><span style="color:var(--text-muted);">Heure :</span><br><strong id="pay-summary-time">—</strong></div>
                 <div><span style="color:var(--text-muted);">Véhicule :</span><br><strong id="pay-summary-vehicle">—</strong></div>
+                <div><span style="color:var(--text-muted);">Passagers :</span><br><strong id="pay-summary-passengers">—</strong></div>
                 <div><span style="color:var(--text-muted);">Bagages :</span><br><strong id="pay-summary-luggage">—</strong></div>
                 <div><span style="color:var(--text-muted);">Passager :</span><br><strong id="pay-summary-name">—</strong></div>
                 <div><span style="color:var(--text-muted);">Téléphone :</span><br><strong id="pay-summary-phone">—</strong></div>
@@ -336,57 +337,23 @@
                 <div><span style="color:var(--text-muted);">Notifications :</span><br><strong id="pay-summary-notifs">—</strong></div>
               </div>
               <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-weight:700;">Total à payer</span>
+                <span style="font-weight:700;">Total</span>
                 <span style="font-family:var(--font-heading);font-size:1.8rem;color:var(--gold);font-weight:700;" id="pay-summary-total">—</span>
               </div>
             </div>
 
-            <!-- Payment methods -->
-            <h4 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Mode de paiement</h4>
-
-            <div class="payment-option" data-method="orange-money">
-              <div class="payment-option-icon" style="background:rgba(255,140,0,0.15);color:#ff8c00;"><i class="fas fa-mobile-alt"></i></div>
-              <div class="payment-option-info">
-                <h4>Orange Money</h4>
-                <p>Paiement mobile Orange — disponible 24h/7j</p>
-              </div>
+            <!-- Payment note -->
+            <div style="padding:14px 16px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.2);border-radius:8px;font-size:0.87rem;color:var(--text-muted);line-height:1.6;margin-bottom:24px;">
+              <i class="fas fa-info-circle" style="color:var(--gold);margin-right:6px;"></i>
+              <strong style="color:var(--white);">Paiement :</strong> Le paiement s'effectuera directement avec le chauffeur (espèces) ou via un lien de paiement mobile qui vous sera envoyé par WhatsApp.
             </div>
 
-            <div class="payment-option" data-method="wave">
-              <div class="payment-option-icon" style="background:rgba(0,180,255,0.12);color:#00b4ff;"><i class="fas fa-wave-square"></i></div>
-              <div class="payment-option-info">
-                <h4>Wave</h4>
-                <p>Paiement rapide via Wave CI</p>
-              </div>
-            </div>
-
-            <div class="payment-option" data-method="mtn">
-              <div class="payment-option-icon" style="background:rgba(255,200,0,0.12);color:#ffc800;"><i class="fas fa-mobile-alt"></i></div>
-              <div class="payment-option-info">
-                <h4>MTN Mobile Money</h4>
-                <p>Paiement mobile MTN — simple et rapide</p>
-              </div>
-            </div>
-
-            <div class="payment-option" data-method="card">
-              <div class="payment-option-icon" style="background:rgba(201,168,76,0.12);color:var(--gold);"><i class="fas fa-credit-card"></i></div>
-              <div class="payment-option-info">
-                <h4>Carte Bancaire (Visa / Mastercard)</h4>
-                <p>Via CinetPay — paiement sécurisé SSL</p>
-              </div>
-            </div>
-
-            <div class="secure-badge">
-              <i class="fas fa-lock"></i>
-              Paiement 100% sécurisé — Vos données sont chiffrées et protégées
-            </div>
-
-            <div class="form-nav" style="margin-top:24px;">
+            <div class="form-nav" style="margin-top:8px;">
               <button class="btn btn-outline" id="btn-back-4">
                 <i class="fas fa-arrow-left"></i> Retour
               </button>
-              <button class="btn btn-primary btn-lg" id="btn-confirm-payment">
-                <i class="fas fa-lock"></i> Confirmer &amp; Payer
+              <button class="btn btn-primary btn-lg" id="btn-confirm-booking" style="background:var(--gold);color:#0a0d14;">
+                <i class="fas fa-check-circle"></i> Confirmer ma réservation
               </button>
             </div>
           </div>
@@ -428,14 +395,11 @@
               <span class="amount" id="summary-total-amount">—</span>
             </div>
 
-            <div class="payment-methods">
-              <h4>Paiements acceptés</h4>
-              <div class="payment-logos">
-                <div class="payment-logo">Orange Money</div>
-                <div class="payment-logo">Wave</div>
-                <div class="payment-logo">MTN MoMo</div>
-                <div class="payment-logo">Visa/MC</div>
-              </div>
+            <div id="summary-direction-badge" style="display:none;margin-top:4px;padding:6px 10px;border-radius:6px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);font-size:0.8rem;color:var(--gold);text-align:center;"></div>
+
+            <div style="margin-top:12px;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:6px;font-size:0.78rem;color:var(--text-muted);">
+              <i class="fas fa-info-circle" style="color:var(--gold);margin-right:4px;"></i>
+              Paiement sur place (espèces) ou via lien WhatsApp
             </div>
 
             <div style="margin-top:20px;padding:14px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.15);border-radius:8px;font-size:0.82rem;color:var(--text-muted);line-height:1.55;">

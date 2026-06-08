@@ -90,8 +90,18 @@
           </div>
         </div>
 
+        <!-- Driver meeting card — direction-aware -->
+        <div class="driver-meeting-card" id="driver-meeting-card" style="display:none;">
+          <div class="driver-icon"><i class="fas fa-id-card"></i></div>
+          <div>
+            <h4>Votre chauffeur vous attendra</h4>
+            <p>Il sera dans le hall d'arrivée avec une pancarte <strong id="driver-sign-name">"VOTRE NOM"</strong> et le logo <strong>First Class Transfer Abidjan</strong>.</p>
+            <p>Il vous aidera avec tous vos bagages et vous contactera sur WhatsApp à l'atterrissage.</p>
+          </div>
+        </div>
+
         <!-- WhatsApp Note -->
-        <div class="whatsapp-note" role="note">
+        <div class="whatsapp-note" role="note" id="departure-whatsapp-note">
           <i class="fab fa-whatsapp"></i>
           <div>
             <h4>Le chauffeur vous contactera via WhatsApp</h4>
@@ -100,6 +110,9 @@
             </p>
           </div>
         </div>
+
+        <!-- Notifications sent strip -->
+        <div class="notif-sent-strip" id="notif-sent-strip"></div>
 
         <!-- Actions -->
         <div class="confirmation-actions">
@@ -157,10 +170,10 @@
 
     function getVehicleLabel(v) {
       switch (v) {
-        case 'economy':  return 'Économie (Toyota Corolla / Hyundai i10)';
-        case 'business': return 'Business (Toyota Camry / Peugeot 508)';
-        case 'van':      return 'Van / Minivan (Toyota HiAce)';
-        default:         return '—';
+        case 'basic':    return 'Basic (Toyota Corolla / Hyundai i20)';
+        case 'premium':  return 'Premium (Toyota HiAce / Mercedes Vito)';
+        case 'business': return 'Business (Mercedes Classe E / BMW Série 5)';
+        default:         return v || '—';
       }
     }
 
@@ -173,29 +186,88 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const booking = JSON.parse(localStorage.getItem('lastBooking') || '{}');
+      const isArrival = booking.direction === 'arrival';
 
-      document.getElementById('conf-ref').textContent     = booking.bookingRef || 'FCT-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-      document.getElementById('conf-zone').textContent    = ZONE_LABELS[booking.zone] || booking.zone || '—';
+      const ref = booking.bookingRef || 'FCT-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+      document.getElementById('conf-ref').textContent = ref;
+
+      // Zone / location display
+      let locationDisplay = '—';
+      if (booking.pickupMethod === 'neighborhood' && booking.neighborhood) {
+        locationDisplay = booking.neighborhood;
+      } else if (booking.pickupMethod === 'address' && booking.address) {
+        locationDisplay = booking.address;
+      } else {
+        locationDisplay = ZONE_LABELS[booking.zone] || booking.zone || '—';
+      }
+
+      // Update details grid for direction
+      const zoneEl = document.getElementById('conf-zone');
+      const destEl = document.querySelector('[id="details-grid"] .detail-item:nth-child(2) .detail-value');
+      if (isArrival) {
+        if (zoneEl) { zoneEl.closest('.detail-item').querySelector('.detail-label').innerHTML = '<i class="fas fa-map-marker-alt"></i> Destination'; }
+        if (zoneEl) zoneEl.textContent = locationDisplay;
+        if (destEl) { destEl.closest('.detail-item').querySelector('.detail-label').innerHTML = '<i class="fas fa-plane-arrival"></i> Origine'; destEl.textContent = 'Aéroport FHB, Abidjan'; }
+      } else {
+        if (zoneEl) zoneEl.textContent = locationDisplay;
+      }
+
       document.getElementById('conf-date').textContent    = formatDate(booking.date);
       document.getElementById('conf-time').textContent    = booking.time || '—';
       document.getElementById('conf-vehicle').textContent = getVehicleLabel(booking.vehicle);
-      document.getElementById('conf-flight').textContent  = booking.flightNumber || 'Non renseigné';
+      document.getElementById('conf-flight').textContent  = (booking.airline ? booking.airline + ' ' : '') + (booking.flightNumber || 'Non renseigné');
       document.getElementById('conf-name').textContent    = booking.name || '—';
       document.getElementById('conf-amount').textContent  = booking.totalPrice
         ? booking.totalPrice.toLocaleString('fr-FR') + ' FCFA'
         : '—';
 
-      // Build WhatsApp message
-      const ref     = document.getElementById('conf-ref').textContent;
-      const zone    = document.getElementById('conf-zone').textContent;
+      // Direction-aware driver meeting section
+      if (isArrival) {
+        const meetingCard = document.getElementById('driver-meeting-card');
+        if (meetingCard) meetingCard.style.display = 'flex';
+        const signName = document.getElementById('driver-sign-name');
+        if (signName) signName.textContent = '"' + (booking.name || 'VOTRE NOM').toUpperCase() + '"';
+        // Hide the departure whatsapp note
+        const departureNote = document.getElementById('departure-whatsapp-note');
+        if (departureNote) departureNote.style.display = 'none';
+      }
+
+      // Notifications sent strip
+      const notifStrip = document.getElementById('notif-sent-strip');
+      if (notifStrip) {
+        const parts = [];
+        if (booking.notifEmail !== false) {
+          parts.push('<span><i class="fas fa-envelope-circle-check"></i> Confirmation envoyée par email</span>');
+        }
+        if (booking.notifWhatsapp !== false) {
+          parts.push('<span><i class="fab fa-whatsapp"></i> Confirmation envoyée sur WhatsApp</span>');
+        }
+        if (parts.length) {
+          notifStrip.innerHTML = parts.join('');
+          notifStrip.style.display = 'flex';
+        }
+      }
+
+      // Build WhatsApp message — direction-aware
+      const ref2    = ref;
       const date    = document.getElementById('conf-date').textContent;
       const time    = booking.time || '';
       const vehicle = document.getElementById('conf-vehicle').textContent;
       const name    = booking.name || '';
+      const airline = booking.airline || '';
       const flight  = booking.flightNumber || 'Non renseigné';
+      const flightTime = booking.flightTime || '';
+      const pax     = booking.passengers || 1;
+      const luggage = booking.luggage || 0;
+      const luggageStr = luggage === 0 ? '0 valise' : luggage === 1 ? '1 valise' : `${luggage} valises`;
       const amount  = document.getElementById('conf-amount').textContent;
 
-      const waMsg = `Bonjour First Class Transfer 👋\n\nJ'ai une réservation confirmée :\n📋 Réf : ${ref}\n👤 Nom : ${name}\n📍 Départ : ${zone}\n📅 Date : ${date} à ${time}\n🚗 Véhicule : ${vehicle}\n✈️ Vol : ${flight}\n💰 Montant : ${amount}\n\nMerci !`;
+      let waMsg;
+      if (isArrival) {
+        waMsg = `Bonjour First Class Transfer 👋\n\nMa réservation FCT — Arrivée 🛬\n📋 Réf : ${ref2}\n👤 Nom : ${name}\n✈️ Vol ${airline} ${flight}${flightTime ? ' — atterrissage ' + flightTime : ''}\n📅 Date : ${date}\n📍 Destination : ${locationDisplay}\n🚗 Véhicule : ${vehicle}\n👥 ${pax} passager(s), ${luggageStr}\n💰 Montant : ${amount}\n\nMerci !`;
+      } else {
+        waMsg = `Bonjour First Class Transfer 👋\n\nMa réservation FCT — Départ 🛫\n📋 Réf : ${ref2}\n👤 Nom : ${name}\n📍 Départ depuis : ${locationDisplay}\n📅 Date : ${date} à ${time}\n✈️ Vol ${airline} ${flight}\n🚗 Véhicule : ${vehicle}\n👥 ${pax} passager(s), ${luggageStr}\n💰 Montant : ${amount}\n\nMerci !`;
+      }
 
       const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
       document.getElementById('btn-whatsapp-support').href = waUrl;
