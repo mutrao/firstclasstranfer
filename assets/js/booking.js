@@ -149,33 +149,33 @@ const NEIGHBORHOODS = {
 const ZONES = {
   zone1: {
     label: 'Zone 1 — Plateau, Cocody, Marcory, Port-Bouët, Treichville',
-    basic: 12000,
-    business: 25000,
+    basic: 20000,
     premium: 25000,
+    business: 45000,
     description: 'Communes proches du centre et de l\'aéroport',
     included: 'Plateau, Cocody, Riviera, Angré, Marcory, Treichville, Port-Bouët, Adjamé'
   },
   zone2: {
     label: 'Zone 2 — Yopougon, Abobo, Koumassi, Attécoubé',
-    basic: 15000,
-    business: 32000,
-    premium: 30000,
+    basic: 25000,
+    premium: 32000,
+    business: 55000,
     description: 'Communes de la rive nord et ouest',
     included: 'Yopougon, Abobo, Koumassi, Attécoubé'
   },
   zone3: {
     label: 'Zone 3 — Bingerville, Anyama, Songon, Abatta',
-    basic: 14000,
-    business: 28000,
+    basic: 22000,
     premium: 28000,
+    business: 50000,
     description: 'Est et banlieue proche',
     included: 'Bingerville, Anyama, Songon, Abatta, PK 20, PK 22'
   },
   zone4: {
     label: 'Zone 4 — Grand-Bassam, Dabou, Assinie, Jacqueville',
-    basic: 28000,
-    business: 50000,
-    premium: 50000,
+    basic: 45000,
+    premium: 55000,
+    business: 80000,
     description: 'Périphérie éloignée',
     included: 'Grand-Bassam, Assinie, Dabou, Jacqueville, Bonoua, Azaguié, Alépé'
   },
