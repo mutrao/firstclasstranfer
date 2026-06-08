@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Dashboard Admin | First Class Transfer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    :root {
+      --bg: #09090E;
+      --surface: #111118;
+      --card: #13131A;
+      --card-hover: #1A1A24;
+      --border: rgba(255,255,255,0.07);
+      --gold: #C8A96E;
+      --gold-dim: rgba(200,169,110,0.12);
+      --gold-border: rgba(200,169,110,0.25);
+      --green: #059669;
+      --green-dim: rgba(5,150,105,0.12);
+      --green-border: rgba(5,150,105,0.3);
+      --yellow: #eab308;
+      --orange: #f97316;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --text: #F0EDE8;
+      --muted: #9AA0AD;
+      --dim: #616A7A;
+      --font: 'Inter', sans-serif;
+      --heading: 'Playfair Display', serif;
+      --sidebar-w: 240px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); display: flex; font-size: 14px; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: var(--font); }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold), #DFC490); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #09090E; font-size: 0.9rem; flex-shrink: 0; }
+    .logo-text { font-family: var(--heading); font-size: 0.88rem; font-weight: 700; line-height: 1.2; }
+    .logo-text small { display: block; font-family: var(--font); font-size: 0.65rem; font-weight: 400; color: var(--dim); }
+    .sidebar-nav { padding: 12px 10px; flex: 1; }
+    .nav-section-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); padding: 10px 10px 4px; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 2px;
+    }
+    .nav-item i { width: 16px; text-align: center; font-size: 0.85rem; }
+    .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+    .nav-item.active { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
+    .nav-item .badge { margin-left: auto; background: var(--red); color: #fff; font-size: 0.62rem; font-weight: 700; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
+    .sidebar-footer {
+      padding: 12px 10px;
+      border-top: 1px solid var(--border);
+    }
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      margin-bottom: 8px;
+    }
+    .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--gold-dim); border: 1px solid var(--gold-border); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+    .user-name { font-size: 0.8rem; font-weight: 600; }
+    .user-role { font-size: 0.68rem; color: var(--dim); }
+    .btn-logout { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; }
+    .btn-logout:hover { border-color: rgba(239,68,68,0.4); color: #f87171; }
+
+    /* MAIN CONTENT */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .topbar-title { font-family: var(--heading); font-size: 1.2rem; font-weight: 700; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .topbar-date { font-size: 0.78rem; color: var(--muted); }
+    .btn-refresh { padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 0.8rem; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+    .btn-refresh:hover { border-color: var(--gold-border); color: var(--gold); }
+
+    .content { padding: 24px 28px; flex: 1; }
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* STATS CARDS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--gold-border); }
+    .stat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .stat-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .stat-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+    .stat-icon.gold { background: var(--gold-dim); color: var(--gold); }
+    .stat-icon.green { background: var(--green-dim); color: var(--green); }
+    .stat-icon.blue { background: rgba(59,130,246,0.12); color: var(--blue); }
+    .stat-icon.orange { background: rgba(249,115,22,0.12); color: var(--orange); }
+    .stat-value { font-family: var(--heading); font-size: 1.8rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-sub { font-size: 0.72rem; color: var(--dim); margin-top: 4px; }
+
+    /* SECTION TITLES */
+    .section-title { font-family: var(--heading); font-size: 1rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .section-title i { color: var(--gold); font-size: 0.85rem; }
+
+    /* TABLES */
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .table-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .table-header h3 { font-size: 0.9rem; font-weight: 700; flex: 1; }
+    table { width: 100%; border-collapse: collapse; }
+    th { padding: 10px 14px; text-align: left; font-size: 0.72rem; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); }
+    td { padding: 11px 14px; font-size: 0.83rem; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .empty-row td { text-align: center; color: var(--dim); padding: 32px; font-size: 0.85rem; }
+
+    /* STATUS BADGES */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .status-pending     { background: rgba(234,179,8,0.12);  border: 1px solid rgba(234,179,8,0.3);  color: var(--yellow); }
+    .status-validated   { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); }
+    .status-in_progress { background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.3); color: var(--orange); }
+    .status-completed   { background: var(--green-dim);      border: 1px solid var(--green-border);  color: var(--green); }
+    .status-cancelled   { background: rgba(239,68,68,0.1);   border: 1px solid rgba(239,68,68,0.25); color: var(--red); }
+
+    /* FILTER TABS */
+    .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-tab { padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .filter-tab.active { background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold); }
+    .filter-tab:hover { border-color: var(--gold-border); color: var(--gold); }
+
+    /* ACTION BUTTONS */
+    .btn-action { padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 0.75rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px; }
+    .btn-action:hover { border-color: var(--gold-border); color: var(--gold); }
+    .btn-action.danger:hover { border-color: rgba(239,68,68,0.4); color: var(--red); }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+    }
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h3 { font-family: var(--heading); font-size: 1.1rem; }
+    .modal-close { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .modal-close:hover { border-color: rgba(239,68,68,0.4); color: var(--red); }
+    .modal-body { padding: 20px 24px; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .detail-item { background: rgba(255,255,255,0.02); border-radius: 8px; padding: 10px 12px; }
+    .detail-label { font-size: 0.68rem; font-weight: 600; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+    .detail-value { font-size: 0.85rem; color: var(--text); font-weight: 500; }
+    .detail-value.gold { color: var(--gold); font-family: var(--heading); font-size: 1rem; }
+
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
+    select, input[type=text], textarea {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-family: var(--font); font-size: 0.88rem;
+      padding: 9px 12px; outline: none; transition: border-color 0.2s;
+    }
+    select:focus, input[type=text]:focus, textarea:focus { border-color: var(--gold-border); }
+    textarea { resize: vertical; min-height: 70px; }
+    select option { background: var(--card); }
+
+    .btn-sm { padding: 8px 16px; border-radius: 8px; border: none; font-family: var(--font); font-size: 0.82rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+    .btn-primary { background: var(--green); color: #fff; }
+    .btn-primary:hover { background: #047857; }
+    .btn-gold { background: var(--gold); color: #09090E; }
+    .btn-gold:hover { background: #DFC490; }
+    .btn-secondary { background: rgba(255,255,255,0.06); color: var(--muted); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .btn-danger { background: rgba(239,68,68,0.12); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+    .btn-danger:hover { background: rgba(239,68,68,0.2); }
+
+    /* AUDIT LOG */
+    .audit-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .audit-item:last-child { border-bottom: none; }
+    .audit-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 5px; }
+    .audit-dot.green { background: var(--green); }
+    .audit-dot.red { background: var(--red); }
+    .audit-dot.blue { background: var(--blue); }
+    .audit-text { font-size: 0.83rem; color: var(--text); line-height: 1.5; }
+    .audit-time { font-size: 0.72rem; color: var(--dim); margin-top: 2px; }
+
+    /* DRIVER CARD */
+    .driver-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .driver-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: border-color 0.2s; }
+    .driver-card.available { border-color: var(--green-border); }
+    .driver-card:hover { border-color: var(--gold-border); }
+    .driver-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+    .driver-detail { font-size: 0.78rem; color: var(--muted); margin-bottom: 3px; }
+    .driver-status { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; font-weight: 700; margin-top: 8px; }
+    .driver-status.avail { color: var(--green); }
+    .driver-status.busy { color: var(--orange); }
+
+    /* CHART BARS (CSS only) */
+    .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+    .bar-item { display: flex; align-items: center; gap: 10px; }
+    .bar-label { font-size: 0.78rem; color: var(--muted); width: 140px; flex-shrink: 0; }
+    .bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; background: var(--gold); transition: width 0.6s ease; }
+    .bar-fill.green { background: var(--green); }
+    .bar-value { font-size: 0.78rem; font-weight: 600; color: var(--text); width: 80px; text-align: right; flex-shrink: 0; }
+
+    /* GRID LAYOUTS */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+    .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+    .mini-card h4 { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+    <div class="logo-text">First Class Transfer <small>Admin · Abidjan</small></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <button class="nav-item active" onclick="showPage('overview')" id="nav-overview">
+      <i class="fas fa-gauge-high"></i> Vue d'ensemble
+    </button>
+    <button class="nav-item" onclick="showPage('bookings')" id="nav-bookings">
+      <i class="fas fa-calendar-check"></i> Courses
+      <span class="badge" id="pending-badge" style="display:none;">0</span>
+    </button>
+    <button class="nav-item" onclick="showPage('drivers')" id="nav-drivers">
+      <i class="fas fa-id-card"></i> Chauffeurs
+    </button>
+    <div class="nav-section-label">Finance</div>
+    <button class="nav-item" onclick="showPage('revenue')" id="nav-revenue">
+      <i class="fas fa-chart-bar"></i> Caisse &amp; Stats
+    </button>
+    <div class="nav-section-label">Système</div>
+    <button class="nav-item" onclick="showPage('audit')" id="nav-audit">
+      <i class="fas fa-scroll"></i> Logs d'audit
+    </button>
+    <button class="nav-item" onclick="showPage('settings')" id="nav-settings">
+      <i class="fas fa-gear"></i> Paramètres
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar" id="user-avatar-initials">A</div>
+      <div>
+        <div class="user-name" id="sidebar-username">Admin</div>
+        <div class="user-role">Administrateur</div>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">
+      <i class="fas fa-sign-out-alt"></i> Déconnexion
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-title" id="topbar-title">Vue d'ensemble</div>
+    <div class="topbar-right">
+      <span class="topbar-date" id="topbar-date"></span>
+      <button class="btn-refresh" onclick="renderAll()"><i class="fas fa-sync-alt"></i> Actualiser</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ========== OVERVIEW ========== -->
+    <div class="page active" id="page-overview">
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Courses aujourd'hui</div>
+            <div class="stat-icon gold"><i class="fas fa-car"></i></div>
+          </div>
+          <div class="stat-value" id="stat-today">0</div>
+          <div class="stat-sub" id="stat-today-sub">0 départ · 0 arrivée</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Revenus aujourd'hui</div>
+            <div class="stat-icon green"><i class="fas fa-money-bill-wave"></i></div>
+          </div>
+          <div class="stat-value" id="stat-revenue-today">0</div>
+          <div class="stat-sub">FCFA — courses complétées</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">En attente</div>
+            <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+          </div>
+          <div class="stat-value" id="stat-pending">0</div>
+          <div class="stat-sub">Courses à valider</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Total réservations</div>
+            <div class="stat-icon blue"><i class="fas fa-list-check"></i></div>
+          </div>
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-sub" id="stat-completed-sub">0 complétées</div>
+        </div>
+      </div>
+
+      <!-- Today's bookings -->
+      <div class="section-title"><i class="fas fa-calendar-day"></i> Courses du jour</div>
+      <div class="table-card" style="margin-bottom:20px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Réf.</th>
+              <th>Client</th>
+              <th>Heure</th>
+              <th>Zone</th>
+              <th>Véhicule</th>
+              <th>Statut</th>
+              <th>Chauffeur</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="today-tbody">
+            <tr class="empty-row"><td colspan="8"><i class="fas fa-moon" style="margin-right:8px;"></i>Aucune course prévue aujourd'hui.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Quick stats row -->
+      <div class="two-col">
+        <div class="mini-card">
+          <h4><i class="fas fa-map-pin" style="color:var(--gold);margin-right:6px;"></i>Répartition par zone</h4>
+          <div class="bar-chart" id="zone-chart"></div>
+        </div>
+        <div class="mini-card">
+          <h4><i class="fas fa-car" style="color:var(--gold);margin-right:6px;"></i>Répartition par véhicule</h4>
+          <div class="bar-chart" id="vehicle-chart"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== BOOKINGS ========== -->
+    <div class="page" id="page-bookings">
+      <div class="table-card">
+        <div class="table-header">
+          <h3><i class="fas fa-calendar-check" style="color:var(--gold);margin-right:8px;"></i>Toutes les réservations</h3>
+          <div class="filter-tabs" id="status-filters">
+            <button class="filter-tab active" data-filter="all" onclick="filterBookings('all')">Toutes</button>
+            <button class="filter-tab" data-filter="pending" onclick="filterBookings('pending')">En attente</button>
+            <button class="filter-tab" data-filter="validated" onclick="filterBookings('validated')">Validées</button>
+            <button class="filter-tab" data-filter="in_progress" onclick="filterBookings('in_progress')">En cours</button>
+            <button class="filter-tab" data-filter="completed" onclick="filterBookings('completed')">Complétées</button>
+            <button class="filter-tab" data-filter="cancelled" onclick="filterBookings('cancelled')">Annulées</button>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Réf.</th>
+              <th>Date trajet</th>
+              <th>Client</th>
+              <th>Direction</th>
+              <th>Zone</th>
+              <th>Véhicule</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th>Chauffeur</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="bookings-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ========== DRIVERS ========== -->
+    <div class="page" id="page-drivers">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div class="section-title" style="margin-bottom:0;"><i class="fas fa-id-card"></i> Chauffeurs</div>
+        <button class="btn-sm btn-gold" onclick="openAddDriver()"><i class="fas fa-plus"></i> Ajouter un chauffeur</button>
+      </div>
+      <div class="driver-grid" id="driver-grid"></div>
+
+      <div class="section-title" style="margin-top:8px;"><i class="fas fa-calendar"></i> Courses assignées aujourd'hui</div>
+      <div class="table-card">
+        <table>
+          <thead><tr><th>Chauffeur</th><th>Réservation</th><th>Client</th><th>Heure</th><th>Véhicule</th><th>Statut</th></tr></thead>
+          <tbody id="assigned-tbody">
+            <tr class="empty-row"><td colspan="6">Aucune course assignée aujourd'hui.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ========== REVENUE ========== -->
+    <div class="page" id="page-revenue">
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card">
+          <div class="stat-header"><div class="stat-label">Revenu total</div><div class="stat-icon green"><i class="fas fa-coins"></i></div></div>
+          <div class="stat-value" id="rev-total">0</div>
+          <div class="stat-sub">FCFA — toutes courses</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header"><div class="stat-label">Ce mois-ci</div><div class="stat-icon gold"><i class="fas fa-calendar-alt"></i></div></div>
+          <div class="stat-value" id="rev-month">0</div>
+          <div class="stat-sub">FCFA — mois en cours</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header"><div class="stat-label">Panier moyen</div><div class="stat-icon blue"><i class="fas fa-receipt"></i></div></div>
+          <div class="stat-value" id="rev-avg">0</div>
+          <div class="stat-sub">FCFA par course</div>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:16px;">
+        <div class="mini-card">
+          <h4>Revenus par zone</h4>
+          <div class="bar-chart" id="rev-zone-chart"></div>
+        </div>
+        <div class="mini-card">
+          <h4>Revenus par véhicule</h4>
+          <div class="bar-chart" id="rev-vehicle-chart"></div>
+        </div>
+      </div>
+
+      <div class="section-title"><i class="fas fa-list"></i> Courses complétées</div>
+      <div class="table-card">
+        <table>
+          <thead><tr><th>Réf.</th><th>Date</th><th>Client</th><th>Zone</th><th>Véhicule</th><th>Montant</th></tr></thead>
+          <tbody id="completed-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ========== AUDIT ========== -->
+    <div class="page" id="page-audit">
+      <div class="table-card">
+        <div class="table-header">
+          <h3><i class="fas fa-scroll" style="color:var(--gold);margin-right:8px;"></i>Journal d'audit</h3>
+          <button class="btn-sm btn-secondary" onclick="clearAuditLogs()" style="font-size:0.75rem;"><i class="fas fa-trash"></i> Vider les logs</button>
+        </div>
+        <div style="padding:16px 18px;" id="audit-list"></div>
+      </div>
+    </div>
+
+    <!-- ========== SETTINGS ========== -->
+    <div class="page" id="page-settings">
+      <div style="max-width:480px;">
+        <div class="mini-card" style="margin-bottom:16px;">
+          <h4 style="margin-bottom:16px;"><i class="fas fa-lock" style="color:var(--gold);margin-right:6px;"></i>Changer le mot de passe</h4>
+          <div class="form-group">
+            <label>Mot de passe actuel</label>
+            <input type="password" id="settings-old-pass" placeholder="Mot de passe actuel" />
+          </div>
+          <div class="form-group">
+            <label>Nouveau mot de passe</label>
+            <input type="password" id="settings-new-pass" placeholder="Minimum 8 caractères" />
+          </div>
+          <div class="form-group">
+            <label>Confirmer le nouveau mot de passe</label>
+            <input type="password" id="settings-confirm-pass" placeholder="Répétez le nouveau mot de passe" />
+          </div>
+          <div class="alert" id="settings-alert" style="padding:10px 12px;border-radius:8px;font-size:0.82rem;display:none;margin-bottom:10px;"></div>
+          <button class="btn-sm btn-primary" onclick="changePassword()"><i class="fas fa-key"></i> Mettre à jour le mot de passe</button>
+        </div>
+
+        <div class="mini-card">
+          <h4 style="margin-bottom:16px;"><i class="fas fa-download" style="color:var(--gold);margin-right:6px;"></i>Export des données</h4>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:14px;">Exportez toutes les réservations au format JSON pour sauvegarde ou migration.</p>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-sm btn-gold" onclick="exportBookings()"><i class="fas fa-file-export"></i> Exporter réservations (JSON)</button>
+            <button class="btn-sm btn-secondary" onclick="exportBookingsCSV()"><i class="fas fa-file-csv"></i> Export CSV</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- BOOKING DETAIL MODAL -->
+<div class="modal-overlay" id="booking-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-ref">Détail de la course</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid" id="modal-details"></div>
+
+      <div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px;">
+        <div class="form-group">
+          <label><i class="fas fa-traffic-light" style="color:var(--gold);margin-right:4px;"></i>Changer le statut</label>
+          <select id="modal-status-select">
+            <option value="pending">⏳ En attente</option>
+            <option value="validated">✅ Validée</option>
+            <option value="in_progress">🚗 En cours</option>
+            <option value="completed">✔️ Complétée</option>
+            <option value="cancelled">❌ Annulée</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-id-card" style="color:var(--gold);margin-right:4px;"></i>Assigner un chauffeur</label>
+          <select id="modal-driver-select">
+            <option value="">— Non assigné —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-note-sticky" style="color:var(--gold);margin-right:4px;"></i>Notes admin</label>
+          <textarea id="modal-notes" placeholder="Notes internes sur cette course…"></textarea>
+        </div>
+      </div>
+
+      <div id="modal-audit-trail" style="border-top:1px solid var(--border);padding-top:14px;">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Historique</div>
+        <div id="modal-audit-list"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm btn-danger" onclick="cancelBookingFromModal()"><i class="fas fa-times-circle"></i> Annuler la course</button>
+      <button class="btn-sm btn-secondary" onclick="closeModal()">Fermer</button>
+      <button class="btn-sm btn-primary" onclick="saveModal()"><i class="fas fa-save"></i> Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD DRIVER MODAL -->
+<div class="modal-overlay" id="driver-modal">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header">
+      <h3>Ajouter un chauffeur</h3>
+      <button class="modal-close" onclick="closeDriverModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Nom complet</label><input type="text" id="drv-name" placeholder="Koné Moussa" /></div>
+      <div class="form-group"><label>Téléphone</label><input type="text" id="drv-phone" placeholder="+225 07 00 00 000" /></div>
+      <div class="form-group"><label>Véhicule assigné</label>
+        <select id="drv-vehicle">
+          <option value="Van Premium">Van Premium</option>
+          <option value="Toyota Corolla">Toyota Corolla (Économique)</option>
+          <option value="Berline Business">Berline Business</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm btn-secondary" onclick="closeDriverModal()">Annuler</button>
+      <button class="btn-sm btn-primary" onclick="saveDriver()"><i class="fas fa-plus"></i> Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  'use strict';
+
+  // ---- AUTH CHECK ----
+  const session = JSON.parse(sessionStorage.getItem('fct_admin_session') || 'null');
+  if (!session || session.expires <= Date.now()) {
+    window.location.href = 'admin.html';
+  }
+
+  const USERNAME = session?.username || 'Admin';
+  document.getElementById('sidebar-username').textContent = USERNAME;
+  document.getElementById('user-avatar-initials').textContent = USERNAME.charAt(0).toUpperCase();
+
+  // Date display
+  document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('fr-FR', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+
+  // ---- DATA ACCESS ----
+  function getBookings() { return JSON.parse(localStorage.getItem('fct_bookings') || '[]'); }
+  function saveBookings(arr) { localStorage.setItem('fct_bookings', JSON.stringify(arr)); }
+  function getDrivers() { return JSON.parse(localStorage.getItem('fct_drivers') || '[]'); }
+  function saveDrivers(arr) { localStorage.setItem('fct_drivers', JSON.stringify(arr)); }
+  function getAuditLogs() { return JSON.parse(localStorage.getItem('fct_audit_logs') || '[]'); }
+  function saveAuditLogs(arr) { localStorage.setItem('fct_audit_logs', JSON.stringify(arr)); }
+
+  function addAuditLog(action, details = {}) {
+    const logs = getAuditLogs();
+    logs.unshift({ action, details, by: USERNAME, at: new Date().toISOString() });
+    saveAuditLogs(logs.slice(0, 500));
+  }
+
+  // ---- HELPERS ----
+  function formatDate(d) {
+    if (!d) return '—';
+    return new Date(d + (d.includes('T') ? '' : 'T00:00:00')).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  function formatDateTime(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function formatPrice(n) {
+    return n ? Number(n).toLocaleString('fr-FR') + ' FCFA' : '—';
+  }
+  function vehicleLabel(v) {
+    return { basic: 'Économique', premium: 'Premium (Van)', business: 'Business' }[v] || v || '—';
+  }
+  function zoneLabel(z) {
+    return { zone1: 'Zone 1', zone2: 'Zone 2', zone3: 'Zone 3', zone4: 'Zone 4' }[z] || z || '—';
+  }
+  function statusBadge(s) {
+    const labels = { pending: '⏳ En attente', validated: '✅ Validée', in_progress: '🚗 En cours', completed: '✔️ Complétée', cancelled: '❌ Annulée' };
+    return `<span class="status-badge status-${s}">${labels[s] || s}</span>`;
+  }
+  function dirLabel(d) {
+    return d === 'arrival' ? '← Arrivée' : '→ Départ';
+  }
+
+  function todayStr() {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  // ---- NAVIGATION ----
+  const pages = ['overview', 'bookings', 'drivers', 'revenue', 'audit', 'settings'];
+  const titles = { overview: 'Vue d\'ensemble', bookings: 'Courses', drivers: 'Chauffeurs', revenue: 'Caisse & Statistiques', audit: 'Journal d\'audit', settings: 'Paramètres' };
+
+  function showPage(name) {
+    pages.forEach(p => {
+      document.getElementById('page-' + p)?.classList.toggle('active', p === name);
+      document.getElementById('nav-' + p)?.classList.toggle('active', p === name);
+    });
+    document.getElementById('topbar-title').textContent = titles[name] || name;
+    renderPage(name);
+  }
+
+  function renderPage(name) {
+    if (name === 'overview') renderOverview();
+    if (name === 'bookings') renderBookings('all');
+    if (name === 'drivers')  renderDrivers();
+    if (name === 'revenue')  renderRevenue();
+    if (name === 'audit')    renderAudit();
+  }
+
+  function renderAll() { renderPage(pages.find(p => document.getElementById('page-' + p)?.classList.contains('active')) || 'overview'); }
+
+  // ---- OVERVIEW ----
+  function renderOverview() {
+    const all = getBookings();
+    const today = todayStr();
+    const todayBookings = all.filter(b => b.date === today);
+    const pending = all.filter(b => b.status === 'pending');
+    const completed = all.filter(b => b.status === 'completed');
+    const todayRevenue = todayBookings.filter(b => b.status === 'completed').reduce((s, b) => s + (b.totalPrice || 0), 0);
+
+    document.getElementById('stat-today').textContent = todayBookings.length;
+    document.getElementById('stat-today-sub').textContent = `${todayBookings.filter(b=>b.direction==='departure').length} départ · ${todayBookings.filter(b=>b.direction==='arrival').length} arrivée`;
+    document.getElementById('stat-revenue-today').textContent = todayRevenue.toLocaleString('fr-FR');
+    document.getElementById('stat-pending').textContent = pending.length;
+    document.getElementById('stat-total').textContent = all.length;
+    document.getElementById('stat-completed-sub').textContent = `${completed.length} complétées`;
+
+    // Pending badge
+    const badge = document.getElementById('pending-badge');
+    if (pending.length > 0) { badge.textContent = pending.length; badge.style.display = 'inline-block'; }
+    else badge.style.display = 'none';
+
+    // Today's bookings table
+    const tbody = document.getElementById('today-tbody');
+    if (todayBookings.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="8"><i class="fas fa-moon" style="margin-right:8px;"></i>Aucune course prévue aujourd\'hui.</td></tr>';
+    } else {
+      tbody.innerHTML = todayBookings.sort((a,b) => (a.time||'').localeCompare(b.time||'')).map(b => `
+        <tr>
+          <td><code style="font-size:0.75rem;color:var(--gold);">${b.id || b.bookingRef || '—'}</code></td>
+          <td>${b.name || '—'}</td>
+          <td>${b.time || '—'}</td>
+          <td>${zoneLabel(b.zone)}</td>
+          <td>${vehicleLabel(b.vehicle)}</td>
+          <td>${statusBadge(b.status)}</td>
+          <td>${b.driverName || '<span style="color:var(--dim);font-size:0.78rem;">Non assigné</span>'}</td>
+          <td><button class="btn-action" onclick="openBookingModal('${b.id || b.bookingRef}')"><i class="fas fa-eye"></i></button></td>
+        </tr>`).join('');
+    }
+
+    // Zone chart
+    renderBarChart('zone-chart', computeZoneCounts(all), false);
+    renderBarChart('vehicle-chart', computeVehicleCounts(all), false);
+  }
+
+  function computeZoneCounts(bookings) {
+    const counts = { 'Zone 1': 0, 'Zone 2': 0, 'Zone 3': 0, 'Zone 4': 0 };
+    bookings.forEach(b => { const k = zoneLabel(b.zone); if (counts[k] !== undefined) counts[k]++; });
+    return counts;
+  }
+
+  function computeVehicleCounts(bookings) {
+    const counts = { 'Économique': 0, 'Premium (Van)': 0, 'Business': 0 };
+    bookings.forEach(b => { const k = vehicleLabel(b.vehicle); if (counts[k] !== undefined) counts[k]++; });
+    return counts;
+  }
+
+  function renderBarChart(elId, data, isRevenue) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const max = Math.max(...Object.values(data), 1);
+    el.innerHTML = Object.entries(data).map(([label, val]) => `
+      <div class="bar-item">
+        <div class="bar-label">${label}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round((val/max)*100)}%"></div></div>
+        <div class="bar-value">${isRevenue ? val.toLocaleString('fr-FR') + ' F' : val}</div>
+      </div>`).join('');
+  }
+
+  // ---- BOOKINGS ----
+  let currentFilter = 'all';
+
+  function filterBookings(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.toggle('active', t.dataset.filter === filter));
+    renderBookings(filter);
+  }
+
+  function renderBookings(filter) {
+    const all = getBookings();
+    const filtered = filter === 'all' ? all : all.filter(b => b.status === filter);
+    const tbody = document.getElementById('bookings-tbody');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="10">Aucune réservation dans cette catégorie.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(b => `
+      <tr>
+        <td><code style="font-size:0.75rem;color:var(--gold);">${b.id || b.bookingRef || '—'}</code></td>
+        <td>${formatDate(b.date)}</td>
+        <td><div style="font-weight:600;">${b.name || '—'}</div><div style="font-size:0.72rem;color:var(--dim);">${b.phone || ''}</div></td>
+        <td>${dirLabel(b.direction)}</td>
+        <td>${zoneLabel(b.zone)}</td>
+        <td>${vehicleLabel(b.vehicle)}</td>
+        <td style="color:var(--gold);font-weight:600;">${formatPrice(b.totalPrice)}</td>
+        <td>${statusBadge(b.status)}</td>
+        <td>${b.driverName || '<span style="color:var(--dim);font-size:0.78rem;">—</span>'}</td>
+        <td><button class="btn-action" onclick="openBookingModal('${b.id || b.bookingRef}')"><i class="fas fa-edit"></i> Gérer</button></td>
+      </tr>`).join('');
+  }
+
+  // ---- BOOKING MODAL ----
+  let currentBookingId = null;
+
+  function openBookingModal(id) {
+    const bookings = getBookings();
+    const b = bookings.find(x => (x.id || x.bookingRef) === id);
+    if (!b) return;
+    currentBookingId = id;
+
+    document.getElementById('modal-ref').textContent = `Course — ${id}`;
+
+    // Details grid
+    document.getElementById('modal-details').innerHTML = `
+      <div class="detail-item"><div class="detail-label">Direction</div><div class="detail-value">${dirLabel(b.direction)}</div></div>
+      <div class="detail-item"><div class="detail-label">Date</div><div class="detail-value">${formatDate(b.date)}</div></div>
+      <div class="detail-item"><div class="detail-label">Heure prise en charge</div><div class="detail-value">${b.time || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Heure de vol</div><div class="detail-value">${b.flightTime || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Client</div><div class="detail-value">${b.name || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Téléphone</div><div class="detail-value">${b.phone || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Email</div><div class="detail-value">${b.email || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Zone</div><div class="detail-value">${zoneLabel(b.zone)}</div></div>
+      <div class="detail-item"><div class="detail-label">Quartier</div><div class="detail-value">${b.neighborhood || b.address || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Véhicule</div><div class="detail-value">${vehicleLabel(b.vehicle)}</div></div>
+      <div class="detail-item"><div class="detail-label">Passagers</div><div class="detail-value">${b.passengers || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Bagages</div><div class="detail-value">${b.luggage || '0'}</div></div>
+      <div class="detail-item"><div class="detail-label">Compagnie</div><div class="detail-value">${b.airline || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">N° de vol</div><div class="detail-value">${b.flightNumber || '—'}</div></div>
+      <div class="detail-item"><div class="detail-label">Montant</div><div class="detail-value gold">${formatPrice(b.totalPrice)}</div></div>
+      <div class="detail-item"><div class="detail-label">Créée le</div><div class="detail-value">${formatDateTime(b.createdAt)}</div></div>
+      ${b.specialRequests ? `<div class="detail-item" style="grid-column:1/-1;"><div class="detail-label">Demandes spéciales</div><div class="detail-value">${b.specialRequests}</div></div>` : ''}
+    `;
+
+    // Status
+    document.getElementById('modal-status-select').value = b.status || 'pending';
+
+    // Driver select
+    const driverSel = document.getElementById('modal-driver-select');
+    const drivers = getDrivers();
+    driverSel.innerHTML = '<option value="">— Non assigné —</option>' +
+      drivers.map(d => `<option value="${d.id}" ${b.driverId === d.id ? 'selected' : ''}>${d.name} — ${d.vehicle}</option>`).join('');
+
+    // Notes
+    document.getElementById('modal-notes').value = b.adminNotes || '';
+
+    // Audit trail
+    const auditList = document.getElementById('modal-audit-list');
+    if (b.auditLog && b.auditLog.length) {
+      auditList.innerHTML = b.auditLog.map(a => `
+        <div class="audit-item">
+          <div class="audit-dot ${a.action === 'created' ? 'green' : a.action === 'cancelled' ? 'red' : 'blue'}"></div>
+          <div>
+            <div class="audit-text">${formatAuditAction(a)}</div>
+            <div class="audit-time">${formatDateTime(a.at)} — par ${a.by}</div>
+          </div>
+        </div>`).join('');
+    } else {
+      auditList.innerHTML = '<div style="font-size:0.82rem;color:var(--dim);">Aucun historique.</div>';
+    }
+
+    document.getElementById('booking-modal').classList.add('active');
+  }
+
+  function formatAuditAction(a) {
+    const map = {
+      created: 'Réservation créée',
+      status_changed: `Statut changé : ${a.from} → ${a.to}`,
+      driver_assigned: `Chauffeur assigné : ${a.driverName}`,
+      driver_unassigned: 'Chauffeur désassigné',
+      note_added: 'Note ajoutée',
+      cancelled: 'Réservation annulée',
+    };
+    return map[a.action] || a.action;
+  }
+
+  function closeModal() {
+    document.getElementById('booking-modal').classList.remove('active');
+    currentBookingId = null;
+  }
+
+  function saveModal() {
+    if (!currentBookingId) return;
+    const bookings = getBookings();
+    const idx = bookings.findIndex(x => (x.id || x.bookingRef) === currentBookingId);
+    if (idx === -1) return;
+
+    const b = bookings[idx];
+    const newStatus = document.getElementById('modal-status-select').value;
+    const driverSel = document.getElementById('modal-driver-select');
+    const driverId = driverSel.value || null;
+    const driverName = driverId ? driverSel.options[driverSel.selectedIndex].text.split(' — ')[0] : null;
+    const notes = document.getElementById('modal-notes').value.trim();
+
+    if (!b.auditLog) b.auditLog = [];
+
+    if (newStatus !== b.status) {
+      b.auditLog.unshift({ action: 'status_changed', from: b.status, to: newStatus, at: new Date().toISOString(), by: USERNAME });
+      addAuditLog('status_changed', { bookingId: currentBookingId, from: b.status, to: newStatus });
+      b.status = newStatus;
+    }
+    if (driverId !== b.driverId) {
+      b.auditLog.unshift({ action: driverId ? 'driver_assigned' : 'driver_unassigned', driverName, at: new Date().toISOString(), by: USERNAME });
+      addAuditLog('driver_assigned', { bookingId: currentBookingId, driverName });
+      b.driverId = driverId;
+      b.driverName = driverName;
+    }
+    if (notes !== (b.adminNotes || '') && notes) {
+      b.auditLog.unshift({ action: 'note_added', at: new Date().toISOString(), by: USERNAME });
+      b.adminNotes = notes;
+    }
+
+    bookings[idx] = b;
+    saveBookings(bookings);
+    closeModal();
+    renderAll();
+  }
+
+  function cancelBookingFromModal() {
+    if (!currentBookingId) return;
+    document.getElementById('modal-status-select').value = 'cancelled';
+    saveModal();
+  }
+
+  // ---- DRIVERS ----
+  function renderDrivers() {
+    const drivers = getDrivers();
+    const bookings = getBookings();
+    const today = todayStr();
+    const assignedToday = bookings.filter(b => b.date === today && b.driverId);
+
+    // Driver cards
+    const grid = document.getElementById('driver-grid');
+    if (drivers.length === 0) {
+      grid.innerHTML = '<div style="color:var(--dim);font-size:0.85rem;">Aucun chauffeur enregistré.</div>';
+    } else {
+      grid.innerHTML = drivers.map(d => {
+        const todayCount = assignedToday.filter(b => b.driverId === d.id).length;
+        return `
+        <div class="driver-card ${d.available ? 'available' : ''}">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <div class="driver-name">${d.name}</div>
+            <button class="btn-action ${d.available ? '' : 'danger'}" onclick="toggleDriverAvailability('${d.id}')" style="font-size:0.7rem;">
+              ${d.available ? 'Désactiver' : 'Activer'}
+            </button>
+          </div>
+          <div class="driver-detail"><i class="fas fa-phone" style="color:var(--gold);width:14px;"></i> ${d.phone}</div>
+          <div class="driver-detail"><i class="fas fa-car" style="color:var(--gold);width:14px;"></i> ${d.vehicle}</div>
+          <div class="driver-detail" style="margin-top:6px;"><i class="fas fa-calendar" style="color:var(--gold);width:14px;"></i> ${todayCount} course(s) aujourd'hui</div>
+          <div class="driver-status ${d.available ? 'avail' : 'busy'}">
+            <i class="fas fa-circle" style="font-size:0.5rem;"></i>
+            ${d.available ? 'Disponible' : 'Indisponible'}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // Assigned today table
+    const tbody = document.getElementById('assigned-tbody');
+    if (assignedToday.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Aucune course assignée aujourd\'hui.</td></tr>';
+    } else {
+      tbody.innerHTML = assignedToday.map(b => `
+        <tr>
+          <td>${b.driverName || '—'}</td>
+          <td><code style="font-size:0.75rem;color:var(--gold);">${b.id || b.bookingRef}</code></td>
+          <td>${b.name || '—'}</td>
+          <td>${b.time || '—'}</td>
+          <td>${vehicleLabel(b.vehicle)}</td>
+          <td>${statusBadge(b.status)}</td>
+        </tr>`).join('');
+    }
+  }
+
+  function toggleDriverAvailability(id) {
+    const drivers = getDrivers();
+    const idx = drivers.findIndex(d => d.id === id);
+    if (idx === -1) return;
+    drivers[idx].available = !drivers[idx].available;
+    saveDrivers(drivers);
+    addAuditLog('driver_availability_changed', { driverId: id, available: drivers[idx].available });
+    renderDrivers();
+  }
+
+  function openAddDriver() { document.getElementById('driver-modal').classList.add('active'); }
+  function closeDriverModal() {
+    document.getElementById('driver-modal').classList.remove('active');
+    document.getElementById('drv-name').value = '';
+    document.getElementById('drv-phone').value = '';
+  }
+
+  function saveDriver() {
+    const name = document.getElementById('drv-name').value.trim();
+    const phone = document.getElementById('drv-phone').value.trim();
+    const vehicle = document.getElementById('drv-vehicle').value;
+    if (!name || !phone) return;
+    const drivers = getDrivers();
+    const id = 'DRV-' + String(drivers.length + 1).padStart(3, '0');
+    drivers.push({ id, name, phone, vehicle, available: true });
+    saveDrivers(drivers);
+    addAuditLog('driver_added', { name });
+    closeDriverModal();
+    renderDrivers();
+  }
+
+  // ---- REVENUE ----
+  function renderRevenue() {
+    const all = getBookings();
+    const completed = all.filter(b => b.status === 'completed');
+    const now = new Date();
+    const thisMonth = completed.filter(b => {
+      if (!b.date) return false;
+      const d = new Date(b.date + 'T00:00:00');
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    });
+
+    const totalRev = completed.reduce((s, b) => s + (b.totalPrice || 0), 0);
+    const monthRev = thisMonth.reduce((s, b) => s + (b.totalPrice || 0), 0);
+    const avg = completed.length ? Math.round(totalRev / completed.length) : 0;
+
+    document.getElementById('rev-total').textContent = totalRev.toLocaleString('fr-FR');
+    document.getElementById('rev-month').textContent = monthRev.toLocaleString('fr-FR');
+    document.getElementById('rev-avg').textContent = avg.toLocaleString('fr-FR');
+
+    // Revenue by zone
+    const revByZone = { 'Zone 1': 0, 'Zone 2': 0, 'Zone 3': 0, 'Zone 4': 0 };
+    completed.forEach(b => { const k = zoneLabel(b.zone); if (revByZone[k] !== undefined) revByZone[k] += b.totalPrice || 0; });
+    renderBarChart('rev-zone-chart', revByZone, true);
+
+    // Revenue by vehicle
+    const revByVehicle = { 'Économique': 0, 'Premium (Van)': 0, 'Business': 0 };
+    completed.forEach(b => { const k = vehicleLabel(b.vehicle); if (revByVehicle[k] !== undefined) revByVehicle[k] += b.totalPrice || 0; });
+    renderBarChart('rev-vehicle-chart', revByVehicle, true);
+
+    // Completed table
+    const tbody = document.getElementById('completed-tbody');
+    if (completed.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Aucune course complétée.</td></tr>';
+    } else {
+      tbody.innerHTML = completed.slice().sort((a,b) => (b.date||'').localeCompare(a.date||'')).map(b => `
+        <tr>
+          <td><code style="font-size:0.75rem;color:var(--gold);">${b.id || b.bookingRef}</code></td>
+          <td>${formatDate(b.date)}</td>
+          <td>${b.name || '—'}</td>
+          <td>${zoneLabel(b.zone)}</td>
+          <td>${vehicleLabel(b.vehicle)}</td>
+          <td style="color:var(--gold);font-weight:700;">${formatPrice(b.totalPrice)}</td>
+        </tr>`).join('');
+    }
+  }
+
+  // ---- AUDIT ----
+  function renderAudit() {
+    const logs = getAuditLogs();
+    const el = document.getElementById('audit-list');
+    if (logs.length === 0) {
+      el.innerHTML = '<div style="color:var(--dim);font-size:0.85rem;text-align:center;padding:20px;">Aucun log d\'audit.</div>';
+      return;
+    }
+    const auditLabels = {
+      login: '🔐 Connexion administrateur',
+      status_changed: '🔄 Statut de course modifié',
+      driver_assigned: '🧑‍✈️ Chauffeur assigné',
+      driver_unassigned: '❌ Chauffeur désassigné',
+      driver_added: '➕ Nouveau chauffeur ajouté',
+      driver_availability_changed: '⚡ Disponibilité chauffeur modifiée',
+      note_added: '📝 Note ajoutée sur une course',
+      password_changed: '🔑 Mot de passe modifié',
+    };
+    el.innerHTML = logs.map(l => {
+      const dotClass = l.action === 'login' ? 'green' : l.action.includes('cancel') ? 'red' : 'blue';
+      const detailStr = l.details ? Object.entries(l.details).filter(([k]) => k !== 'by').map(([k,v]) => `<span style="color:var(--gold);">${k}:</span> ${v}`).join(' · ') : '';
+      return `<div class="audit-item">
+        <div class="audit-dot ${dotClass}"></div>
+        <div>
+          <div class="audit-text">${auditLabels[l.action] || l.action}${detailStr ? ` — <small style="color:var(--dim);">${detailStr}</small>` : ''}</div>
+          <div class="audit-time">${formatDateTime(l.at)} — par <strong>${l.by}</strong></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function clearAuditLogs() {
+    if (!confirm('Vider tous les logs d\'audit ? Cette action est irréversible.')) return;
+    saveAuditLogs([]);
+    renderAudit();
+  }
+
+  // ---- SETTINGS ----
+  async function changePassword() {
+    const oldPass = document.getElementById('settings-old-pass').value;
+    const newPass = document.getElementById('settings-new-pass').value;
+    const confirmPass = document.getElementById('settings-confirm-pass').value;
+    const alert = document.getElementById('settings-alert');
+
+    alert.style.display = 'none';
+
+    const config = JSON.parse(localStorage.getItem('fct_admin_config') || 'null');
+    if (!config) return;
+
+    const sha256 = async (msg) => {
+      const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+    };
+
+    const oldHash = await sha256(oldPass + config.salt + config.username);
+    if (oldHash !== config.hash) {
+      alert.style.cssText = 'display:block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171;border-radius:8px;padding:10px 12px;font-size:0.82rem;margin-bottom:10px;';
+      alert.textContent = 'Mot de passe actuel incorrect.';
+      return;
+    }
+    if (newPass.length < 8) {
+      alert.style.cssText = 'display:block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171;border-radius:8px;padding:10px 12px;font-size:0.82rem;margin-bottom:10px;';
+      alert.textContent = 'Le nouveau mot de passe doit faire au moins 8 caractères.';
+      return;
+    }
+    if (newPass !== confirmPass) {
+      alert.style.cssText = 'display:block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171;border-radius:8px;padding:10px 12px;font-size:0.82rem;margin-bottom:10px;';
+      alert.textContent = 'Les mots de passe ne correspondent pas.';
+      return;
+    }
+
+    const newSalt = crypto.randomUUID();
+    const newHash = await sha256(newPass + newSalt + config.username);
+    localStorage.setItem('fct_admin_config', JSON.stringify({ ...config, hash: newHash, salt: newSalt }));
+    addAuditLog('password_changed', {});
+
+    alert.style.cssText = 'display:block;background:rgba(5,150,105,0.1);border:1px solid rgba(5,150,105,0.3);color:#34d399;border-radius:8px;padding:10px 12px;font-size:0.82rem;margin-bottom:10px;';
+    alert.textContent = 'Mot de passe mis à jour avec succès.';
+    document.getElementById('settings-old-pass').value = '';
+    document.getElementById('settings-new-pass').value = '';
+    document.getElementById('settings-confirm-pass').value = '';
+  }
+
+  // ---- EXPORT ----
+  function exportBookings() {
+    const data = JSON.stringify(getBookings(), null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `fct-reservations-${todayStr()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function exportBookingsCSV() {
+    const bookings = getBookings();
+    const headers = ['Référence','Date','Heure','Client','Téléphone','Email','Direction','Zone','Quartier','Véhicule','Passagers','Bagages','Compagnie','Vol','Montant FCFA','Statut','Chauffeur','Créée le'];
+    const rows = bookings.map(b => [
+      b.id||b.bookingRef, b.date, b.time, b.name, b.phone, b.email,
+      b.direction === 'arrival' ? 'Arrivée' : 'Départ',
+      zoneLabel(b.zone), b.neighborhood||b.address, vehicleLabel(b.vehicle),
+      b.passengers, b.luggage, b.airline, b.flightNumber, b.totalPrice||0,
+      b.status, b.driverName||'', b.createdAt
+    ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+    const csv = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob(['﻿'+csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `fct-reservations-${todayStr()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // ---- LOGOUT ----
+  function doLogout() {
+    addAuditLog('logout', {});
+    sessionStorage.removeItem('fct_admin_session');
+    window.location.href = 'admin.html';
+  }
+
+  // ---- INIT ----
+  renderOverview();
+</script>
+</body>
+</html>
