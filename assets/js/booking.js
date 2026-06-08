@@ -485,10 +485,9 @@ window.switchMethod = switchMethod;
 // =============================================
 // STEP 1 - TRIP DETAILS
 // =============================================
-$('#btn-next-1')?.addEventListener('click', () => {
+function onNext1() {
   if (!validateStep1()) return;
 
-  // Save state
   if (bookingState.pickupMethod === 'neighborhood') {
     bookingState.neighborhood = $('#trip-neighborhood')?.value?.trim() || '';
     const match = detectZoneFromNeighborhood(bookingState.neighborhood);
@@ -505,7 +504,7 @@ $('#btn-next-1')?.addEventListener('click', () => {
 
   renderVehicleOptions();
   showStep(2);
-});
+}
 
 function validateStep1() {
   let valid = true;
@@ -681,20 +680,20 @@ function renderVehicleOptions() {
   }
 }
 
-$('#btn-back-2')?.addEventListener('click', () => showStep(1));
-$('#btn-next-2')?.addEventListener('click', () => {
+function onBack2() { showStep(1); }
+function onNext2() {
   if (!bookingState.vehicle) {
     showToast('Veuillez sélectionner un véhicule.', 'error');
     return;
   }
   showStep(3);
-});
+}
 
 // =============================================
 // STEP 3 - PERSONAL INFO
 // =============================================
-$('#btn-back-3')?.addEventListener('click', () => showStep(2));
-$('#btn-next-3')?.addEventListener('click', () => {
+function onBack3() { showStep(2); }
+function onNext3() {
   if (!validateStep3()) return;
 
   bookingState.name            = $('#client-name')?.value?.trim() || '';
@@ -709,7 +708,7 @@ $('#btn-next-3')?.addEventListener('click', () => {
 
   renderPaymentSummary();
   showStep(4);
-});
+}
 
 function validateStep3() {
   let valid = true;
@@ -789,9 +788,9 @@ function renderPaymentSummary() {
   $('#pay-summary-total').textContent   = formatPrice(bookingState.totalPrice);
 }
 
-$('#btn-back-4')?.addEventListener('click', () => showStep(3));
+function onBack4() { showStep(3); }
 
-$('#btn-confirm-booking')?.addEventListener('click', () => {
+function onConfirmBooking() {
   bookingState.bookingRef = generateRef();
   localStorage.setItem('lastBooking', JSON.stringify(bookingState));
 
@@ -833,7 +832,7 @@ $('#btn-confirm-booking')?.addEventListener('click', () => {
   }
 
   showConfirmModal();
-});
+}
 
 function showConfirmModal() {
   const modal = $('#booking-success-modal');
@@ -926,6 +925,15 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById(id)?.addEventListener('change', updateLuggageHint);
   });
   updateLuggageHint();
+
+  // Step navigation buttons
+  $('#btn-next-1')?.addEventListener('click', onNext1);
+  $('#btn-back-2')?.addEventListener('click', onBack2);
+  $('#btn-next-2')?.addEventListener('click', onNext2);
+  $('#btn-back-3')?.addEventListener('click', onBack3);
+  $('#btn-next-3')?.addEventListener('click', onNext3);
+  $('#btn-back-4')?.addEventListener('click', onBack4);
+  $('#btn-confirm-booking')?.addEventListener('click', onConfirmBooking);
 
   showStep(1);
 });
