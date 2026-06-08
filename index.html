@@ -94,18 +94,18 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#fleet">Flotte</a></li>
-        <li><a href="#pricing">Tarifs</a></li>
-        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#fleet" data-i18n="nav_fleet">Flotte</a></li>
+        <li><a href="#pricing" data-i18n="nav_pricing">Tarifs</a></li>
+        <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
       </ul>
 
       <div class="nav-cta">
-        <a href="tel:+2250700000000" class="btn btn-outline btn-sm" aria-label="Appeler">
-          <i class="fas fa-phone"></i> Appel
+        <a href="tel:+33614058484" class="btn btn-outline btn-sm" aria-label="Appeler">
+          <i class="fas fa-phone"></i> <span data-i18n="nav_call">Appel</span>
         </a>
         <a href="booking.html" class="btn btn-primary btn-sm">
-          <i class="fas fa-calendar-check"></i> Réserver
+          <i class="fas fa-calendar-check"></i> <span data-i18n="nav_book">Réserver</span>
         </a>
       </div>
 
@@ -136,23 +136,23 @@
       <div class="hero-text">
         <div class="hero-badge">
           <i class="fas fa-star"></i>
-          Service Premium · Ponctuel · Fiable
+          <span data-i18n="hero_badge">Service Premium · Ponctuel · Fiable</span>
         </div>
 
         <h1 class="hero-title" id="hero-title">
-          Votre Transfert Aéroport,<br>
-          <em>Simplement Parfait</em>
+          <span data-i18n="hero_title_line1">Votre Transfert Aéroport,</span><br>
+          <em data-i18n="hero_title_em">Simplement Parfait</em>
         </h1>
 
-        <p class="hero-description">
-          Réservez votre transfert vers l'Aéroport Félix-Houphouët-Boigny en 2 minutes.
-          Paiement sécurisé en ligne. Votre chauffeur vous contacte sur WhatsApp le jour J.
+        <p class="hero-description" data-i18n="hero_desc">
+          Réservez votre transfert vers l'Aéroport Félix-Houphouët-Boigny en 2 minutes — départ ou arrivée.
+          Confirmation immédiate. Votre chauffeur vous contacte sur WhatsApp le jour J.
         </p>
 
         <div class="hero-actions">
           <a href="booking.html" class="btn btn-primary btn-lg">
             <i class="fas fa-calendar-check"></i>
-            Réserver Maintenant
+            <span data-i18n="hero_book_btn">Réserver Maintenant</span>
           </a>
           <button class="btn btn-outline btn-lg" data-whatsapp="Bonjour, je souhaite réserver un transfert aéroport depuis Abidjan. Pouvez-vous m'aider ?">
             <i class="fab fa-whatsapp"></i>
@@ -163,42 +163,43 @@
         <div class="hero-stats">
           <div class="hero-stat">
             <span class="num" data-target="500" data-suffix="+">500+</span>
-            <span class="label">Transferts réalisés</span>
+            <span class="label" data-i18n="hero_stat_transfers">Transferts réalisés</span>
           </div>
           <div class="hero-stat">
             <span class="num" data-target="98" data-suffix="%">98%</span>
-            <span class="label">Clients satisfaits</span>
+            <span class="label" data-i18n="hero_stat_satisfied">Clients satisfaits</span>
           </div>
           <div class="hero-stat">
             <span class="num" data-target="24" data-suffix="h/7">24h/7</span>
-            <span class="label">Disponibilité</span>
+            <span class="label" data-i18n="hero_stat_avail">Disponibilité</span>
           </div>
         </div>
       </div>
 
       <!-- Right column: Quick Booking Card -->
       <div class="hero-booking-card glass-card">
-        <h3>Estimation instantanée</h3>
-        <p>Obtenez votre tarif en quelques secondes</p>
+        <h3 data-i18n="hero_card_title">Estimation instantanée</h3>
+        <p data-i18n="hero_card_sub">Obtenez votre tarif en quelques secondes</p>
 
         <form id="hero-booking-form" novalidate>
           <!-- Hero method toggle -->
           <div class="pickup-method-toggle" style="margin-bottom:16px;">
             <button type="button" class="hero-method-btn method-btn active" data-method="neighborhood">
-              <i class="fa-solid fa-map-pin"></i> Par quartier
+              <i class="fa-solid fa-map-pin"></i> <span data-i18n="hero_by_nb">Par quartier</span>
             </button>
             <button type="button" class="hero-method-btn method-btn" data-method="address">
-              <i class="fa-solid fa-location-dot"></i> Par zone
+              <i class="fa-solid fa-location-dot"></i> <span data-i18n="hero_by_zone">Par zone</span>
             </button>
           </div>
 
           <!-- Neighborhood field -->
           <div id="hero-neighborhood-field" class="form-group">
-            <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> Votre quartier de départ</label>
+            <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> <span data-i18n="hero_nb_label">Votre quartier de départ</span></label>
             <input
               type="text"
               id="hero-neighborhood"
               list="hero-neighborhoods-list"
+              data-i18n-ph="hero_nb_ph"
               placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
               autocomplete="off"
               aria-label="Quartier de départ"
@@ -249,14 +250,14 @@
 
           <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;">
             <i class="fas fa-arrow-right"></i>
-            Voir les Disponibilités
+            <span data-i18n="hero_cta">Voir les Disponibilités</span>
           </button>
         </form>
 
         <div class="trust-strip">
-          <div class="trust-item"><i class="fas fa-lock"></i> Paiement sécurisé</div>
-          <div class="trust-item"><i class="fas fa-undo"></i> Annulation flexible</div>
-          <div class="trust-item"><i class="fab fa-whatsapp"></i> Suivi WhatsApp</div>
+          <div class="trust-item"><i class="fas fa-check-circle"></i> <span data-i18n="trust_confirm">Confirmation immédiate</span></div>
+          <div class="trust-item"><i class="fas fa-undo"></i> <span data-i18n="trust_cancel">Annulation flexible</span></div>
+          <div class="trust-item"><i class="fab fa-whatsapp"></i> <span data-i18n="trust_wa">Suivi WhatsApp</span></div>
         </div>
       </div>
     </div>
@@ -266,37 +267,79 @@
   <section class="how-it-works" id="services" aria-labelledby="hiw-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Comment ça marche</span>
-        <h2 class="section-title" id="hiw-title">3 Étapes pour un<br><em class="gold">Transfert Sans Souci</em></h2>
+        <span class="section-label" data-i18n="hiw_label">Comment ça marche</span>
+        <h2 class="section-title" id="hiw-title" data-i18n-html="hiw_title">Simple dans les <em class="gold">2 sens</em></h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">De la réservation à l'aéroport, nous gérons tout. Vous n'avez qu'à monter dans le véhicule.</p>
+        <p class="section-subtitle" data-i18n="hiw_sub">Que vous partiez à l'aéroport ou que vous arriviez à Abidjan, nous gérons tout en 3 étapes.</p>
       </div>
 
-      <div class="steps-grid">
+      <!-- Direction tabs for how-it-works -->
+      <div class="hiw-direction-tabs">
+        <button class="hiw-tab active" data-hiw="departure" onclick="switchHiwTab('departure')">
+          <i class="fas fa-plane-departure"></i> Départ vers l'aéroport
+        </button>
+        <button class="hiw-tab" data-hiw="arrival" onclick="switchHiwTab('arrival')">
+          <i class="fas fa-plane-arrival"></i> Arrivée depuis l'aéroport
+        </button>
+      </div>
+
+      <!-- Departure steps -->
+      <div class="steps-grid hiw-panel" id="hiw-departure">
         <div class="step-card glass-card animate-on-scroll animate-delay-1">
           <div class="step-number">
             <i class="fas fa-mouse-pointer step-icon"></i>
           </div>
           <h3>Réservez en ligne</h3>
-          <p>Choisissez votre zone, votre véhicule, la date et l'heure. Notre formulaire simple prend moins de 2 minutes. Disponible 24h/7j.</p>
+          <p>Indiquez votre adresse de départ, la date, l'heure et votre numéro de vol. Notre formulaire prend moins de 2 minutes.</p>
         </div>
-
         <div class="step-card glass-card animate-on-scroll animate-delay-2">
           <div class="step-number">
             <i class="fas fa-shield-halved step-icon"></i>
           </div>
-          <h3>Payez en sécurité</h3>
-          <p>Réglez via CinetPay, Orange Money ou Wave. Votre paiement est 100% sécurisé. Vous recevez une confirmation immédiate par email.</p>
+          <h3>Choisissez votre véhicule</h3>
+          <p>Sélectionnez Basic, Premium (Van) ou Business selon votre groupe et vos bagages. Le tarif est affiché clairement par zone, sans frais cachés.</p>
         </div>
-
         <div class="step-card glass-card animate-on-scroll animate-delay-3">
           <div class="step-number">
             <i class="fab fa-whatsapp step-icon"></i>
           </div>
           <h3>Le chauffeur vous contacte</h3>
-          <p>Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées et sa position. Il arrive à l'heure convenue, sans exception.</p>
+          <p>Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées. Il arrive à l'heure exacte convenue, sans exception.</p>
         </div>
       </div>
+
+      <!-- Arrival steps -->
+      <div class="steps-grid hiw-panel" id="hiw-arrival" style="display:none;">
+        <div class="step-card glass-card animate-on-scroll animate-delay-1">
+          <div class="step-number">
+            <i class="fas fa-mouse-pointer step-icon"></i>
+          </div>
+          <h3>Réservez en ligne</h3>
+          <p>Indiquez votre numéro de vol, l'heure d'atterrissage et votre adresse de destination à Abidjan. Rapide et simple.</p>
+        </div>
+        <div class="step-card glass-card animate-on-scroll animate-delay-2">
+          <div class="step-number">
+            <i class="fas fa-shield-halved step-icon"></i>
+          </div>
+          <h3>Choisissez votre véhicule</h3>
+          <p>Sélectionnez le véhicule adapté à votre groupe et vos bagages. Tarif fixe selon votre zone de destination, sans surprise.</p>
+        </div>
+        <div class="step-card glass-card animate-on-scroll animate-delay-3">
+          <div class="step-number">
+            <i class="fas fa-id-card step-icon"></i>
+          </div>
+          <h3>Votre chauffeur vous attend</h3>
+          <p>Dans le hall d'arrivée, votre chauffeur vous attend avec une pancarte à votre nom et le logo First Class Transfer. Il s'occupe de vos bagages.</p>
+        </div>
+      </div>
+
+      <script>
+        function switchHiwTab(dir) {
+          document.querySelectorAll('.hiw-tab').forEach(t => t.classList.toggle('active', t.dataset.hiw === dir));
+          document.getElementById('hiw-departure').style.display = dir === 'departure' ? '' : 'none';
+          document.getElementById('hiw-arrival').style.display = dir === 'arrival' ? '' : 'none';
+        }
+      </script>
     </div>
   </section>
 
@@ -304,10 +347,10 @@
   <section class="fleet" id="fleet" aria-labelledby="fleet-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Notre Flotte</span>
-        <h2 class="section-title" id="fleet-title">Des Véhicules <em class="gold">Premium</em><br>pour Chaque Besoin</h2>
+        <span class="section-label" data-i18n="fleet_label">Notre Flotte</span>
+        <h2 class="section-title" id="fleet-title" data-i18n-html="fleet_title">Des Véhicules <em class="gold">Premium</em><br>pour Chaque Besoin</h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">Tous nos véhicules sont climatisés, régulièrement entretenus et conduits par des chauffeurs professionnels.</p>
+        <p class="section-subtitle" data-i18n="fleet_sub">Tous nos véhicules sont climatisés, régulièrement entretenus et conduits par des chauffeurs professionnels.</p>
       </div>
 
       <div class="fleet-grid">
@@ -333,21 +376,21 @@
             <li><i class="fas fa-check"></i> Chargeur USB</li>
           </ul>
           <div class="fleet-price">
-            <span class="amount">12 000</span>
-            <span class="currency">FCFA · Zone 1</span>
+            <span class="amount" data-price-fcfa="12000">12 000</span>
+            <span class="currency fleet-currency">FCFA · Zone 1</span>
           </div>
           <a href="booking.html" class="btn btn-outline" style="width:100%;justify-content:center;">
-            <i class="fas fa-calendar-check"></i> Réserver
+            <i class="fas fa-calendar-check"></i> <span data-i18n="fleet_book">Réserver</span>
           </a>
         </div>
 
         <!-- PREMIUM — Van (featured, most popular) -->
         <div class="fleet-card glass-card featured animate-on-scroll animate-delay-2">
-          <div class="fleet-badge">⭐ Le Plus Populaire</div>
+          <div class="fleet-badge" data-i18n="fleet_popular">⭐ Le Plus Populaire</div>
           <div class="fleet-photo-wrap">
             <img
-              src="https://images.unsplash.com/photo-1570733577524-3a047079e80d?auto=format&fit=crop&w=700&q=80"
-              alt="Toyota HiAce Van Premium — First Class Transfer Abidjan"
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80"
+              alt="Toyota HiAce Van blanc Premium — First Class Transfer Abidjan"
               loading="lazy"
               class="fleet-photo"
             />
@@ -363,11 +406,11 @@
             <li><i class="fas fa-check"></i> Chargeurs USB &amp; Wi-Fi</li>
           </ul>
           <div class="fleet-price">
-            <span class="amount">25 000</span>
-            <span class="currency">FCFA · Zone 1</span>
+            <span class="amount" data-price-fcfa="25000">25 000</span>
+            <span class="currency fleet-currency">FCFA · Zone 1</span>
           </div>
           <a href="booking.html" class="btn btn-primary" style="width:100%;justify-content:center;">
-            <i class="fas fa-calendar-check"></i> Réserver
+            <i class="fas fa-calendar-check"></i> <span data-i18n="fleet_book">Réserver</span>
           </a>
         </div>
 
@@ -393,11 +436,11 @@
             <li><i class="fas fa-check"></i> Eau minérale &amp; chargeur inclus</li>
           </ul>
           <div class="fleet-price">
-            <span class="amount">25 000</span>
-            <span class="currency">FCFA · Zone 1</span>
+            <span class="amount" data-price-fcfa="25000">25 000</span>
+            <span class="currency fleet-currency">FCFA · Zone 1</span>
           </div>
           <a href="booking.html" class="btn btn-outline" style="width:100%;justify-content:center;">
-            <i class="fas fa-calendar-check"></i> Réserver
+            <i class="fas fa-calendar-check"></i> <span data-i18n="fleet_book">Réserver</span>
           </a>
         </div>
 
@@ -428,27 +471,27 @@
           </div>
         </div>
 
-        <!-- Top right: luxury interior -->
+        <!-- Top right: jeune femme africaine professionnelle -->
         <div class="ambiance-item">
           <img
-            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=85"
-            alt="Intérieur cuir d'une voiture Business premium"
+            src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?auto=format&fit=crop&w=600&q=85"
+            alt="Jeune femme africaine professionnelle en déplacement"
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Intérieur Business cuir</span>
+            <span>Clientèle exigeante</span>
           </div>
         </div>
 
-        <!-- Bottom right top: young professional -->
+        <!-- Bottom right top: homme africain d'affaires -->
         <div class="ambiance-item">
           <img
-            src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=85"
-            alt="Jeune professionnel ivoirien en déplacement"
+            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=85"
+            alt="Homme d'affaires africain en costume"
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Voyageurs exigeants</span>
+            <span>Voyageurs d'affaires</span>
           </div>
         </div>
 
@@ -464,15 +507,15 @@
           </div>
         </div>
 
-        <!-- Bottom right: chauffeur -->
+        <!-- Bottom right: intérieur luxe -->
         <div class="ambiance-item">
           <img
-            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=85"
-            alt="Chauffeur professionnel First Class Transfer"
+            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=85"
+            alt="Intérieur cuir d'une voiture Business premium"
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Chauffeurs certifiés</span>
+            <span>Intérieur Business cuir</span>
           </div>
         </div>
       </div>
@@ -483,10 +526,10 @@
   <section class="pricing" id="pricing" aria-labelledby="pricing-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Nos Tarifs</span>
-        <h2 class="section-title" id="pricing-title">Tarifs Clairs,<br><em class="gold">Sans Frais Cachés</em></h2>
+        <span class="section-label" data-i18n="pr_label">Nos Tarifs</span>
+        <h2 class="section-title" id="pricing-title" data-i18n-html="pr_title">Tarifs Clairs,<br><em class="gold">Sans Frais Cachés</em></h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">Le prix affiché est le prix payé. Aucun supplément surprise.</p>
+        <p class="section-subtitle" data-i18n="pr_sub">Le prix affiché est le prix payé. Aucun supplément surprise.</p>
       </div>
 
       <div class="animate-on-scroll">
@@ -505,36 +548,36 @@
                 <div class="zone-name">Zone 1</div>
                 <div class="zone-areas">Plateau · Cocody · Riviera · Angré · Marcory · Treichville · Port-Bouët · Adjamé</div>
               </td>
-              <td class="price-cell">12 000 FCFA</td>
-              <td class="price-cell">25 000 FCFA</td>
-              <td class="price-cell">25 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="12000">12 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="25000">25 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="25000">25 000 FCFA</td>
             </tr>
             <tr>
               <td>
                 <div class="zone-name">Zone 2</div>
                 <div class="zone-areas">Yopougon · Abobo · Koumassi · Attécoubé</div>
               </td>
-              <td class="price-cell">15 000 FCFA</td>
-              <td class="price-cell">30 000 FCFA</td>
-              <td class="price-cell">32 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="15000">15 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="30000">30 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="32000">32 000 FCFA</td>
             </tr>
             <tr>
               <td>
                 <div class="zone-name">Zone 3</div>
                 <div class="zone-areas">Bingerville · Anyama · Songon · Abatta · PK 20 · PK 22</div>
               </td>
-              <td class="price-cell">14 000 FCFA</td>
-              <td class="price-cell">28 000 FCFA</td>
-              <td class="price-cell">28 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="14000">14 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="28000">28 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="28000">28 000 FCFA</td>
             </tr>
             <tr>
               <td>
                 <div class="zone-name">Zone 4</div>
                 <div class="zone-areas">Grand-Bassam · Dabou · Assinie · Jacqueville · Bonoua · Azaguié · Alépé</div>
               </td>
-              <td class="price-cell">28 000 FCFA</td>
-              <td class="price-cell">50 000 FCFA</td>
-              <td class="price-cell">50 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="28000">28 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="50000">50 000 FCFA</td>
+              <td class="price-cell" data-price-fcfa="50000">50 000 FCFA</td>
             </tr>
           </tbody>
         </table>
@@ -570,7 +613,7 @@
       <div class="text-center" style="margin-top:40px;">
         <a href="booking.html" class="btn btn-primary btn-lg animate-on-scroll">
           <i class="fas fa-calendar-check"></i>
-          Réserver au Meilleur Tarif
+          <span data-i18n="pr_book_btn">Réserver au Meilleur Tarif</span>
         </a>
       </div>
     </div>
@@ -594,7 +637,7 @@
             "Le chauffeur était là 10 minutes avant l'heure convenue. Voiture impeccable, conduite douce. Le message WhatsApp le matin m'a rassurée. Je recommande à 100% !"
           </p>
           <div class="testimonial-author">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=80&h=80&q=80" alt="Aminata Koné" class="author-avatar-img" />
+            <img src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?auto=format&fit=crop&w=80&h=80&q=80" alt="Aminata Koné" class="author-avatar-img" />
             <div>
               <div class="author-name">Aminata Koné</div>
               <div class="author-role">Consultante, Cocody</div>
@@ -626,7 +669,7 @@
             "J'avais un vol tôt le matin depuis Yopougon. Le chauffeur était ponctuel malgré la distance. Prix honnête, voiture propre. J'ai pris le Business et c'était top !"
           </p>
           <div class="testimonial-author">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80" alt="Oumar Diallo" class="author-avatar-img" />
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=80&h=80&q=80" alt="Oumar Diallo" class="author-avatar-img" />
             <div>
               <div class="author-name">Oumar Diallo</div>
               <div class="author-role">Homme d'affaires, Yopougon</div>
@@ -669,11 +712,11 @@
 
         <div class="faq-item animate-on-scroll">
           <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
-            Quels modes de paiement acceptez-vous ?
+            Comment s'effectue le paiement ?
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
           <div class="faq-answer">
-            Nous acceptons Orange Money, Wave, MTN Mobile Money via CinetPay, ainsi que les cartes bancaires Visa/Mastercard. Le paiement est 100% sécurisé et vous recevez un reçu par email.
+            Le paiement s'effectue directement avec votre chauffeur le jour du transfert (espèces), ou via un lien de paiement mobile (Orange Money, Wave, MTN MoMo) qui vous sera envoyé par WhatsApp après confirmation de votre réservation.
           </div>
         </div>
 
@@ -703,7 +746,7 @@
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
           <div class="faq-answer">
-            Pour l'instant, notre service est principalement dédié aux transferts vers l'aéroport (départs). La navette retour (arrivée depuis l'aéroport) est disponible sur demande via WhatsApp. Contactez-nous 48h à l'avance pour organiser votre retour.
+            Oui, absolument ! Nous assurons les deux directions. Pour une arrivée depuis l'aéroport, sélectionnez "Depuis l'Aéroport" lors de votre réservation en ligne. Votre chauffeur vous attendra dans le hall d'arrivée avec une pancarte à votre nom et le logo First Class Transfer. Il suivra votre vol en cas de retard.
           </div>
         </div>
       </div>
@@ -747,7 +790,7 @@
             <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-            <a href="https://wa.me/2250700000000" class="social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://wa.me/33614058484" class="social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
 
@@ -778,8 +821,8 @@
           <div class="footer-contact-item">
             <i class="fab fa-whatsapp"></i>
             <span>
-              <a href="https://wa.me/2250700000000" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted);transition:color 0.2s;">
-                +225 07 00 000 000
+              <a href="https://wa.me/33614058484" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted);transition:color 0.2s;">
+                +33 6 14 05 84 84
               </a>
             </span>
           </div>
@@ -814,7 +857,7 @@
   </footer>
 
   <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/2250700000000?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20un%20transfert%20a%C3%A9roport."
+  <a href="https://wa.me/33614058484?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20un%20transfert%20a%C3%A9roport."
      class="float-whatsapp"
      target="_blank"
      rel="noopener noreferrer"
@@ -822,6 +865,8 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 
+  <!-- i18n (must load before main.js) -->
+  <script src="assets/js/i18n.js"></script>
   <!-- Main JS -->
   <script src="assets/js/main.js"></script>
 </body>

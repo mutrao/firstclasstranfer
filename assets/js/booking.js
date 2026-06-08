@@ -181,7 +181,7 @@ const ZONES = {
   },
 };
 
-const WA_NUMBER = '2250700000000';
+const WA_NUMBER = '33614058484';
 
 // =============================================
 // STATE
@@ -191,6 +191,7 @@ let bookingState = {
   totalSteps: 4,
 
   // Step 1
+  direction: 'departure', // 'departure' | 'arrival'
   pickupMethod: 'neighborhood', // 'neighborhood' or 'address'
   neighborhood: '',
   address: '',
@@ -209,8 +210,12 @@ let bookingState = {
   name: '',
   phone: '',
   email: '',
+  airline: '',
   flightNumber: '',
+  flightTime: '',
   specialRequests: '',
+  notifEmail: true,
+  notifWhatsapp: true,
 
   // Step 4
   paymentMethod: '',
@@ -243,6 +248,7 @@ function showStep(step) {
 function updateSummary() {
   const zone = bookingState.zone;
   const zoneInfo = ZONES[zone];
+  const isArrival = bookingState.direction === 'arrival';
 
   // Show neighborhood or address in pickup summary
   let pickupLabel = '—';
@@ -255,8 +261,27 @@ function updateSummary() {
     pickupLabel = zoneInfo.label;
   }
 
-  $('#summary-pickup').textContent = pickupLabel;
-  $('#summary-destination').textContent = 'Aéroport FHB, Abidjan';
+  // Direction-aware sidebar labels
+  const pickupLabelEl = $('#summary-pickup-label');
+  const destLabelEl = $('#summary-destination-label');
+  const dirIconEl = $('#summary-dir-icon');
+  if (isArrival) {
+    if (pickupLabelEl) pickupLabelEl.innerHTML = '<i class="fas fa-plane-arrival" id="summary-dir-icon" style="color:var(--gold);margin-right:4px;"></i> Arrivée depuis';
+    if (destLabelEl) destLabelEl.innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> Destination';
+  } else {
+    if (pickupLabelEl) pickupLabelEl.innerHTML = '<i class="fas fa-plane-departure" id="summary-dir-icon" style="color:var(--gold);margin-right:4px;"></i> Départ';
+    if (destLabelEl) destLabelEl.innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> Arrivée';
+  }
+
+  // Direction badge
+  const dirBadge = $('#summary-direction-badge');
+  if (dirBadge) {
+    dirBadge.style.display = 'block';
+    dirBadge.textContent = isArrival ? '← Depuis l\'Aéroport' : '→ Vers l\'Aéroport';
+  }
+
+  $('#summary-pickup').textContent = isArrival ? 'Aéroport FHB, Abidjan' : pickupLabel;
+  $('#summary-destination').textContent = isArrival ? pickupLabel : 'Aéroport FHB, Abidjan';
   $('#summary-date').textContent = bookingState.date ? formatDate(bookingState.date) : '—';
   $('#summary-time').textContent = bookingState.time || '—';
   const luggageLabel = bookingState.luggage === 0 ? 'Aucun bagage'
@@ -362,6 +387,77 @@ function showZoneDetectedCard(zoneKey) {
 }
 
 // =============================================
+// DIRECTION TOGGLE
+// =============================================
+function switchDirection(dir) {
+  bookingState.direction = dir;
+
+  // Toggle active class on dir-btn buttons
+  document.querySelectorAll('.dir-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.direction === dir);
+  });
+
+  const banner = document.getElementById('arrival-info-banner');
+  const neighborhoodLabel = document.getElementById('neighborhood-label');
+  const addressLabel = document.getElementById('address-label');
+  const destinationLabel = document.getElementById('destination-label');
+  const originFixedGroup = document.getElementById('origin-fixed-group');
+  const destinationGroup = document.querySelector('#trip-destination')?.closest('.form-group');
+  const step1Title = document.getElementById('step1-title');
+  const step1Desc = document.getElementById('step1-desc');
+  const tripDateLabel = document.getElementById('trip-date-label');
+  const tripTimeLabel = document.getElementById('trip-time-label');
+  const flightTimeLabel = document.getElementById('flight-time-label');
+
+  if (dir === 'arrival') {
+    // Show arrival info banner
+    if (banner) banner.style.display = 'flex';
+
+    // Show fixed origin (airport), hide destination field (or make it show neighborhood)
+    if (originFixedGroup) originFixedGroup.style.display = 'block';
+    if (destinationGroup) destinationGroup.style.display = 'none';
+
+    // Update labels for neighborhood/address = destination
+    if (neighborhoodLabel) neighborhoodLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre quartier / adresse de destination <span style="color:var(--error)">*</span>';
+    if (addressLabel) addressLabel.innerHTML = '<i class="fas fa-home"></i> Adresse complète de destination <span style="color:var(--error)">*</span>';
+
+    // Update date/time labels
+    if (tripDateLabel) tripDateLabel.innerHTML = '<i class="fas fa-calendar"></i> Date d\'atterrissage <span style="color:var(--error)">*</span>';
+    if (tripTimeLabel) tripTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure de prise en charge <span style="color:var(--error)">*</span>';
+    if (flightTimeLabel) flightTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure d\'atterrissage <span style="color:var(--error)">*</span>';
+
+    // Update step title
+    if (step1Title) step1Title.textContent = 'Détails du Trajet — Arrivée';
+    if (step1Desc) step1Desc.textContent = 'Indiquez votre destination, la date et l\'heure d\'atterrissage.';
+  } else {
+    // Hide arrival info banner
+    if (banner) banner.style.display = 'none';
+
+    // Hide fixed origin, show destination field
+    if (originFixedGroup) originFixedGroup.style.display = 'none';
+    if (destinationGroup) destinationGroup.style.display = 'block';
+
+    // Restore departure labels
+    if (neighborhoodLabel) neighborhoodLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre quartier de départ <span style="color:var(--error)">*</span>';
+    if (addressLabel) addressLabel.innerHTML = '<i class="fas fa-home"></i> Adresse complète de départ <span style="color:var(--error)">*</span>';
+
+    // Restore date/time labels
+    if (tripDateLabel) tripDateLabel.innerHTML = '<i class="fas fa-calendar"></i> Date de départ <span style="color:var(--error)">*</span>';
+    if (tripTimeLabel) tripTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure de prise en charge <span style="color:var(--error)">*</span>';
+    if (flightTimeLabel) flightTimeLabel.innerHTML = '<i class="fas fa-clock"></i> Heure de vol <span style="color:var(--error)">*</span>';
+
+    // Restore step title
+    if (step1Title) step1Title.textContent = 'Détails du Trajet';
+    if (step1Desc) step1Desc.textContent = 'Indiquez votre point de départ, la date et l\'heure souhaitée.';
+  }
+
+  updateSummary();
+}
+
+// Expose globally
+window.switchDirection = switchDirection;
+
+// =============================================
 // METHOD TOGGLE
 // =============================================
 function switchMethod(method) {
@@ -389,10 +485,9 @@ window.switchMethod = switchMethod;
 // =============================================
 // STEP 1 - TRIP DETAILS
 // =============================================
-$('#btn-next-1')?.addEventListener('click', () => {
+function onNext1() {
   if (!validateStep1()) return;
 
-  // Save state
   if (bookingState.pickupMethod === 'neighborhood') {
     bookingState.neighborhood = $('#trip-neighborhood')?.value?.trim() || '';
     const match = detectZoneFromNeighborhood(bookingState.neighborhood);
@@ -409,7 +504,7 @@ $('#btn-next-1')?.addEventListener('click', () => {
 
   renderVehicleOptions();
   showStep(2);
-});
+}
 
 function validateStep1() {
   let valid = true;
@@ -585,39 +680,68 @@ function renderVehicleOptions() {
   }
 }
 
-$('#btn-back-2')?.addEventListener('click', () => showStep(1));
-$('#btn-next-2')?.addEventListener('click', () => {
+function onBack2() { showStep(1); }
+function onNext2() {
   if (!bookingState.vehicle) {
     showToast('Veuillez sélectionner un véhicule.', 'error');
     return;
   }
   showStep(3);
-});
+}
 
 // =============================================
 // STEP 3 - PERSONAL INFO
 // =============================================
-$('#btn-back-3')?.addEventListener('click', () => showStep(2));
-$('#btn-next-3')?.addEventListener('click', () => {
+function onBack3() { showStep(2); }
+function onNext3() {
   if (!validateStep3()) return;
 
-  bookingState.name           = $('#client-name')?.value?.trim() || '';
-  bookingState.phone          = $('#client-phone')?.value?.trim() || '';
-  bookingState.email          = $('#client-email')?.value?.trim() || '';
-  bookingState.flightNumber   = $('#client-flight')?.value?.trim() || '';
-  bookingState.specialRequests= $('#client-requests')?.value?.trim() || '';
+  bookingState.name            = $('#client-name')?.value?.trim() || '';
+  bookingState.phone           = $('#client-phone')?.value?.trim() || '';
+  bookingState.email           = $('#client-email')?.value?.trim() || '';
+  bookingState.airline         = $('#client-airline')?.value?.trim() || '';
+  bookingState.flightNumber    = $('#client-flight')?.value?.trim() || '';
+  bookingState.flightTime      = $('#client-flight-time')?.value?.trim() || '';
+  bookingState.specialRequests = $('#client-requests')?.value?.trim() || '';
+  bookingState.notifEmail      = $('#notif-email')?.checked ?? true;
+  bookingState.notifWhatsapp   = $('#notif-whatsapp')?.checked ?? true;
+
+  // Collect special request checkboxes
+  const srMap = {
+    sr_child_seat: 'Siège enfant',
+    sr_luggage_help: 'Aide bagages',
+    sr_meet_greet: 'Pancarte nominative',
+    sr_water: 'Eau minérale',
+    sr_silent: 'Trajet silencieux',
+    sr_stop: 'Arrêt intermédiaire',
+    sr_wifi: 'Wi-Fi à bord',
+    sr_accessible: 'Accessibilité PMR',
+  };
+  const checkedSr = Object.entries(srMap)
+    .filter(([id]) => document.getElementById(id)?.checked)
+    .map(([, label]) => label);
+  if (checkedSr.length) {
+    const existing = bookingState.specialRequests;
+    bookingState.specialRequests = [
+      ...checkedSr,
+      ...(existing ? [existing] : []),
+    ].join(', ');
+  }
 
   renderPaymentSummary();
   showStep(4);
-});
+}
 
 function validateStep3() {
   let valid = true;
-  const name  = $('#client-name');
-  const phone = $('#client-phone');
-  const email = $('#client-email');
+  const name    = $('#client-name');
+  const phone   = $('#client-phone');
+  const email   = $('#client-email');
+  const airline = $('#client-airline');
+  const flight  = $('#client-flight');
 
   clearError(name); clearError(phone); clearError(email);
+  clearError(airline); clearError(flight);
 
   if (!name?.value?.trim()) { showError(name, 'Veuillez entrer votre nom.'); valid = false; }
   if (!phone?.value?.trim() || phone.value.trim().length < 8) {
@@ -625,6 +749,12 @@ function validateStep3() {
   }
   if (!email?.value?.trim() || !isValidEmail(email.value)) {
     showError(email, 'Adresse email invalide.'); valid = false;
+  }
+  if (!airline?.value?.trim()) {
+    showError(airline, 'Veuillez indiquer la compagnie aérienne.'); valid = false;
+  }
+  if (!flight?.value?.trim()) {
+    showError(flight, 'Veuillez indiquer le numéro de vol.'); valid = false;
   }
   return valid;
 }
@@ -634,7 +764,7 @@ function isValidEmail(email) {
 }
 
 // =============================================
-// STEP 4 - PAYMENT
+// STEP 4 - CONFIRMATION
 // =============================================
 function renderPaymentSummary() {
   const zone = bookingState.zone;
@@ -649,39 +779,82 @@ function renderPaymentSummary() {
     pickupDisplay = zoneInfo.label;
   }
 
-  $('#pay-summary-pickup').textContent  = pickupDisplay;
-  $('#pay-summary-dest').textContent    = 'Aéroport FHB, Abidjan';
+  const isArrival = bookingState.direction === 'arrival';
+
+  // Direction display
+  const dirDisplay = isArrival
+    ? 'Aéroport FHB → ' + (pickupDisplay !== '—' ? pickupDisplay : 'Destination')
+    : (pickupDisplay !== '—' ? pickupDisplay : 'Départ') + ' → Aéroport FHB';
+
+  if ($('#pay-summary-direction')) $('#pay-summary-direction').textContent = isArrival ? 'Arrivée depuis l\'aéroport' : 'Départ vers l\'aéroport';
+  $('#pay-summary-pickup').textContent  = isArrival ? 'Aéroport FHB, Abidjan' : pickupDisplay;
+  $('#pay-summary-dest').textContent    = isArrival ? pickupDisplay : 'Aéroport FHB, Abidjan';
   $('#pay-summary-date').textContent    = formatDate(bookingState.date);
   $('#pay-summary-time').textContent    = bookingState.time;
   $('#pay-summary-vehicle').textContent = getVehicleLabel(bookingState.vehicle);
+  if ($('#pay-summary-passengers')) $('#pay-summary-passengers').textContent = bookingState.passengers + ' passager(s)';
   const lgLabel = bookingState.luggage === 0 ? 'Aucun' : bookingState.luggage === 1 ? '1 valise' : `${bookingState.luggage} valises`;
   if ($('#pay-summary-luggage')) $('#pay-summary-luggage').textContent = lgLabel;
   $('#pay-summary-name').textContent    = bookingState.name;
   $('#pay-summary-phone').textContent   = bookingState.phone;
+  if ($('#pay-summary-airline')) $('#pay-summary-airline').textContent = bookingState.airline || 'Non renseigné';
   $('#pay-summary-flight').textContent  = bookingState.flightNumber || 'Non renseigné';
+  if ($('#pay-summary-flight-time')) $('#pay-summary-flight-time').textContent = bookingState.flightTime || 'Non renseigné';
+
+  // Notifications
+  const notifParts = [];
+  if (bookingState.notifEmail) notifParts.push('Email');
+  if (bookingState.notifWhatsapp) notifParts.push('WhatsApp');
+  if ($('#pay-summary-notifs')) $('#pay-summary-notifs').textContent = notifParts.length ? notifParts.join(' + ') : 'Aucune';
+
   $('#pay-summary-total').textContent   = formatPrice(bookingState.totalPrice);
 }
 
-$('#btn-back-4')?.addEventListener('click', () => showStep(3));
+function onBack4() { showStep(3); }
 
-$$('.payment-option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    $$('.payment-option').forEach(o => o.classList.remove('selected'));
-    opt.classList.add('selected');
-    bookingState.paymentMethod = opt.dataset.method;
-  });
-});
-
-$('#btn-confirm-payment')?.addEventListener('click', () => {
-  if (!bookingState.paymentMethod) {
-    showToast('Veuillez sélectionner un mode de paiement.', 'error');
-    return;
-  }
-
+function onConfirmBooking() {
   bookingState.bookingRef = generateRef();
   localStorage.setItem('lastBooking', JSON.stringify(bookingState));
+
+  // Trigger WhatsApp if notifWhatsapp is checked
+  if (bookingState.notifWhatsapp) {
+    const isArrival = bookingState.direction === 'arrival';
+    const dirLabel = isArrival ? 'Arrivée depuis l\'aéroport' : 'Départ vers l\'aéroport';
+    const pickup = bookingState.pickupMethod === 'neighborhood' && bookingState.neighborhood
+      ? bookingState.neighborhood
+      : bookingState.address || (ZONES[bookingState.zone] ? ZONES[bookingState.zone].label : '—');
+    const departure = isArrival ? 'Aéroport FHB, Abidjan' : pickup;
+    const destination = isArrival ? pickup : 'Aéroport FHB, Abidjan';
+
+    const waMsg = [
+      'Bonjour First Class Transfer 👋',
+      '',
+      'Nouvelle réservation confirmée :',
+      `📋 Réf : ${bookingState.bookingRef}`,
+      `↔️ Direction : ${dirLabel}`,
+      `📍 Départ : ${departure}`,
+      `🏁 Destination : ${destination}`,
+      `📅 Date : ${formatDate(bookingState.date)}`,
+      `🕐 Heure : ${bookingState.time}`,
+      `🚗 Véhicule : ${getVehicleLabel(bookingState.vehicle)}`,
+      `👥 Passagers : ${bookingState.passengers}`,
+      `🧳 Bagages : ${bookingState.luggage}`,
+      `👤 Nom : ${bookingState.name}`,
+      `📱 Téléphone : ${bookingState.phone}`,
+      `✉️ Email : ${bookingState.email}`,
+      `✈️ Compagnie : ${bookingState.airline || 'Non renseigné'}`,
+      `🔢 Vol : ${bookingState.flightNumber || 'Non renseigné'}`,
+      `⏰ Heure vol : ${bookingState.flightTime || 'Non renseigné'}`,
+      `💰 Total : ${formatPrice(bookingState.totalPrice)}`,
+      '',
+      'Merci !',
+    ].join('\n');
+
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
+  }
+
   showConfirmModal();
-});
+}
 
 function showConfirmModal() {
   const modal = $('#booking-success-modal');
@@ -708,6 +881,11 @@ window.addEventListener('DOMContentLoaded', () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateInput.min = tomorrow.toISOString().split('T')[0];
   }
+
+  // Direction toggle buttons
+  $$('.dir-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchDirection(btn.dataset.direction));
+  });
 
   // Method toggle buttons
   $$('.method-btn').forEach(btn => {
@@ -769,6 +947,15 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById(id)?.addEventListener('change', updateLuggageHint);
   });
   updateLuggageHint();
+
+  // Step navigation buttons
+  $('#btn-next-1')?.addEventListener('click', onNext1);
+  $('#btn-back-2')?.addEventListener('click', onBack2);
+  $('#btn-next-2')?.addEventListener('click', onNext2);
+  $('#btn-back-3')?.addEventListener('click', onBack3);
+  $('#btn-next-3')?.addEventListener('click', onNext3);
+  $('#btn-back-4')?.addEventListener('click', onBack4);
+  $('#btn-confirm-booking')?.addEventListener('click', onConfirmBooking);
 
   showStep(1);
 });

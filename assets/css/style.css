@@ -304,6 +304,71 @@ section {
   gap: 12px;
 }
 
+/* ─── i18n Switcher ─────────────────────────────────────── */
+.i18n-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.i18n-lang-group {
+  display: flex;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.i18n-lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  font-family: var(--font-body);
+}
+
+.i18n-lang-btn.active,
+.i18n-lang-btn:hover {
+  background: rgba(201,168,76,0.18);
+  color: var(--gold);
+}
+
+.i18n-currency-select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 6px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.i18n-currency-select:hover,
+.i18n-currency-select:focus {
+  border-color: var(--gold);
+  color: var(--gold);
+  outline: none;
+}
+
+.i18n-currency-select option {
+  background: var(--navy-mid);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .i18n-switcher { gap: 4px; }
+  .i18n-lang-btn { padding: 3px 6px; font-size: 0.68rem; }
+  .i18n-currency-select { font-size: 0.68rem; padding: 3px 4px; }
+}
+/* ────────────────────────────────────────────────────────── */
+
 .nav-hamburger {
   display: none;
   background: none;
@@ -2404,4 +2469,346 @@ section {
   font-style: italic;
   margin: 2px 0 5px;
   opacity: 0.9;
+}
+
+/* =========================================
+   DIRECTION TOGGLE (booking step 1)
+   ========================================= */
+.direction-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.dir-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 18px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+  font-family: var(--font-body);
+}
+
+.dir-btn i {
+  font-size: 1.7rem;
+  color: var(--text-muted);
+  transition: color 0.25s ease;
+}
+
+.dir-btn .dir-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+}
+
+.dir-btn .dir-sublabel {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.dir-btn:hover {
+  border-color: rgba(201,168,76,0.4);
+  background: rgba(201,168,76,0.05);
+}
+
+.dir-btn.active {
+  background: linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.08) 100%);
+  border-color: var(--gold);
+  color: var(--white);
+}
+
+.dir-btn.active i {
+  color: var(--gold);
+}
+
+.dir-btn.active .dir-sublabel {
+  color: rgba(201,168,76,0.8);
+}
+
+/* =========================================
+   ARRIVAL INFO BANNER
+   ========================================= */
+.arrival-info-banner {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  background: rgba(201,168,76,0.07);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.arrival-info-banner strong {
+  color: var(--white);
+}
+
+/* =========================================
+   NOTIFICATION PREFS (step 3)
+   ========================================= */
+.notification-prefs {
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+}
+
+.notif-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.notif-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 0;
+  font-size: 0.88rem;
+  color: var(--white);
+  user-select: none;
+}
+
+.notif-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.notif-option span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.notif-option span i {
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+/* ─── Form section label ─────────────────────────────────── */
+.form-section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 10px 0 8px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Special requests grid ──────────────────────────────── */
+.special-requests-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.sr-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.02);
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
+  user-select: none;
+}
+
+.sr-option:hover {
+  border-color: rgba(201,168,76,0.3);
+  background: rgba(201,168,76,0.05);
+  color: var(--white);
+}
+
+.sr-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sr-option:has(input:checked) {
+  border-color: rgba(201,168,76,0.5);
+  background: rgba(201,168,76,0.08);
+  color: var(--white);
+}
+
+.sr-option span i {
+  color: var(--gold);
+  width: 16px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .special-requests-grid { grid-template-columns: 1fr; }
+}
+/* ────────────────────────────────────────────────────────── */
+
+/* =========================================
+   CONFIRMATION — DRIVER MEETING CARD
+   ========================================= */
+.driver-meeting-card {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 20px 22px;
+  background: rgba(201,168,76,0.06);
+  border: 2px solid rgba(201,168,76,0.35);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+}
+
+.driver-icon {
+  font-size: 2rem;
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.driver-meeting-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+  font-family: var(--font-heading);
+}
+
+.driver-meeting-card p {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.driver-meeting-card strong {
+  color: var(--gold);
+}
+
+/* =========================================
+   CONFIRMATION — NOTIFICATIONS SENT STRIP
+   ========================================= */
+.notif-sent-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.notif-sent-strip span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: rgba(37,211,102,0.08);
+  border: 1px solid rgba(37,211,102,0.2);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.notif-sent-strip span i {
+  color: #25d366;
+}
+
+.notif-sent-strip span i.fa-envelope-circle-check {
+  color: var(--gold);
+}
+
+/* =========================================
+   HOW IT WORKS — DIRECTION TABS
+   ========================================= */
+.hiw-direction-tabs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.hiw-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 30px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.25s ease;
+}
+
+.hiw-tab i {
+  font-size: 1rem;
+}
+
+.hiw-tab:hover {
+  border-color: rgba(201,168,76,0.4);
+  color: var(--white);
+}
+
+.hiw-tab.active {
+  background: rgba(201,168,76,0.12);
+  border-color: var(--gold);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .direction-toggle {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .dir-btn {
+    padding: 14px 8px;
+  }
+  .dir-btn i {
+    font-size: 1.3rem;
+  }
+  .dir-btn .dir-label {
+    font-size: 0.82rem;
+  }
+  .hiw-direction-tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hiw-tab {
+    justify-content: center;
+  }
 }

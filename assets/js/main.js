@@ -308,7 +308,7 @@ statNumbers.forEach(el => statsObserver.observe(el));
 // =============================================
 // WHATSAPP REDIRECT
 // =============================================
-const WA_NUMBER = '2250700000000';
+const WA_NUMBER = '33614058484';
 
 function openWhatsApp(message = '') {
   const text = encodeURIComponent(message || 'Bonjour, je souhaite réserver un transfert aéroport.');
