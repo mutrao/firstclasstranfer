@@ -51,7 +51,7 @@ const T = {
     hiw_dep1_title: 'Réservez en ligne',
     hiw_dep1_desc: 'Indiquez votre adresse de départ, la date, l\'heure et votre numéro de vol. Notre formulaire prend moins de 2 minutes.',
     hiw_dep2_title: 'Choisissez votre véhicule',
-    hiw_dep2_desc: 'Sélectionnez Basic, Premium (Van) ou Business selon votre groupe et vos bagages. Le tarif est affiché clairement par zone, sans frais cachés.',
+    hiw_dep2_desc: 'Sélectionnez Économique, Premium (Van) ou Business selon votre groupe et vos bagages. Le tarif est affiché clairement par zone, sans frais cachés.',
     hiw_dep3_title: 'Le chauffeur vous contacte',
     hiw_dep3_desc: 'Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées. Il arrive à l\'heure exacte convenue, sans exception.',
     hiw_arr1_title: 'Réservez en ligne',
@@ -174,7 +174,7 @@ const T = {
     hiw_dep1_title: 'Book online',
     hiw_dep1_desc: 'Enter your departure address, date, time and flight number. Our form takes less than 2 minutes.',
     hiw_dep2_title: 'Choose your vehicle',
-    hiw_dep2_desc: 'Select Basic, Premium (Van) or Business based on your group and luggage. Price clearly shown by zone, no hidden fees.',
+    hiw_dep2_desc: 'Select Économique, Premium (Van) or Business based on your group and luggage. Price clearly shown by zone, no hidden fees.',
     hiw_dep3_title: 'Driver contacts you',
     hiw_dep3_desc: 'On the day, your driver sends you a WhatsApp message with their details. They arrive at the exact agreed time, without exception.',
     hiw_arr1_title: 'Book online',
@@ -396,9 +396,32 @@ function injectSwitcher() {
   });
 }
 
+function injectMobileSwitcher() {
+  document.querySelectorAll('.i18n-switcher-mobile').forEach(container => {
+    if (container.querySelector('.i18n-lang-btn')) return;
+    container.innerHTML = `
+      <button class="i18n-lang-btn ${currentLang === 'fr' ? 'active' : ''}" data-lang="fr">FR</button>
+      <button class="i18n-lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en">EN</button>
+      <select class="i18n-currency-select">
+        <option value="XOF" ${currentCurrency === 'XOF' ? 'selected' : ''}>FCFA</option>
+        <option value="EUR" ${currentCurrency === 'EUR' ? 'selected' : ''}>€ EUR</option>
+        <option value="USD" ${currentCurrency === 'USD' ? 'selected' : ''}>$ USD</option>
+        <option value="GBP" ${currentCurrency === 'GBP' ? 'selected' : ''}>£ GBP</option>
+        <option value="CAD" ${currentCurrency === 'CAD' ? 'selected' : ''}>CA$</option>
+      </select>`;
+    container.querySelectorAll('.i18n-lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+    container.querySelector('.i18n-currency-select').addEventListener('change', e => {
+      setCurrency(e.target.value);
+    });
+  });
+}
+
 // ─── Init ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   injectSwitcher();
+  injectMobileSwitcher();
   applyTranslations();
   applyPrices();
 });

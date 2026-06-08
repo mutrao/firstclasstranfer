@@ -300,7 +300,7 @@ function updateSummary() {
 
 function getVehicleLabel(v) {
   switch (v) {
-    case 'basic':    return 'Basic (Corolla / i20)';
+    case 'basic':    return 'Économique (Corolla / i20)';
     case 'premium':  return 'Premium (Van / HiAce)';
     case 'business': return 'Business (Mercedes / BMW)';
     default:         return '';
@@ -378,7 +378,7 @@ function showZoneDetectedCard(zoneKey) {
     <div class="zone-detected-info">
       <div class="zone-detected-label">${z.label}</div>
       <div class="zone-detected-prices">
-        <span class="zd-price"><i class="fas fa-car"></i> Basic : <strong>${z.basic.toLocaleString('fr-FR')} FCFA</strong></span>
+        <span class="zd-price"><i class="fas fa-car"></i> Économique : <strong>${z.basic.toLocaleString('fr-FR')} FCFA</strong></span>
         <span class="zd-price"><i class="fas fa-van-shuttle"></i> Premium : <strong>${z.premium.toLocaleString('fr-FR')} FCFA</strong></span>
         <span class="zd-price"><i class="fas fa-car-side"></i> Business : <strong>${z.business.toLocaleString('fr-FR')} FCFA</strong></span>
       </div>
@@ -557,7 +557,7 @@ function updateLuggageHint() {
   if (!hint) return;
 
   const rec = getRecommendedVehicle(pax, luggage);
-  const labels = { basic: 'Basic', premium: 'Premium (Van)', business: 'Business' };
+  const labels = { basic: 'Économique', premium: 'Premium (Van)', business: 'Business' };
   const icons  = { basic: 'fa-car', premium: 'fa-van-shuttle', business: 'fa-car-side' };
   const forced = (pax >= 3 || luggage >= 3);
 
@@ -605,7 +605,7 @@ function renderVehicleOptions() {
   const vehicles = [
     {
       id: 'basic',
-      label: 'Basic',
+      label: 'Économique',
       model: 'Toyota Corolla / Hyundai i20',
       icon: 'fa-car',
       capacity: '1–2 passagers · 2 valises max',
