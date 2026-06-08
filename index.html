@@ -196,16 +196,20 @@
           <!-- Neighborhood field -->
           <div id="hero-neighborhood-field" class="form-group">
             <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> <span data-i18n="hero_nb_label">Votre quartier de départ</span></label>
-            <input
-              type="text"
-              id="hero-neighborhood"
-              list="hero-neighborhoods-list"
-              data-i18n-ph="hero_nb_ph"
-              placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
-              autocomplete="off"
-              aria-label="Quartier de départ"
-            />
-            <datalist id="hero-neighborhoods-list"></datalist>
+            <div class="nb-autocomplete-wrap" id="hero-nb-autocomplete-wrap">
+              <input
+                type="text"
+                id="hero-neighborhood"
+                data-i18n-ph="hero_nb_ph"
+                placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
+                autocomplete="off"
+                aria-label="Quartier de départ"
+                aria-autocomplete="list"
+                role="combobox"
+                aria-expanded="false"
+              />
+              <div id="hero-nb-dropdown" class="nb-dropdown" role="listbox" style="display:none;"></div>
+            </div>
           </div>
 
           <!-- Zone field (address method) -->

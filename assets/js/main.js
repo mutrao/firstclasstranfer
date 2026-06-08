@@ -151,24 +151,96 @@ const heroMethodBtns = document.querySelectorAll('.hero-method-btn');
 let heroPickupMethod = 'neighborhood';
 let heroDetectedZone = null;
 
-// Populate hero datalist
-function populateHeroDatalist() {
-  const datalist = document.getElementById('hero-neighborhoods-list');
-  if (!datalist) return;
-  const names = [
-    'Plateau','Cocody','Riviera 1','Riviera 2','Riviera 3','Riviera 4','Riviera Golf','Riviera Palmeraie',
-    '2 Plateaux','2 Plateaux Vallon','Angré','Angré Château','Blockhaus','Bonoumin','Mermoz',
-    'Ambassades','Treichville','Zone 4','Marcory','Marcory Résidentiel','Port-Bouët','Vridi',
-    'Vridi Canal','Gonzagueville','Biétry','Zone Industrielle','Adjamé','Williamsville',
-    'Yopougon','Yopougon Wassakara','Yopougon Niangon','Yopougon Selmer','Yopougon Banco',
-    'Yopougon Gesco','Yopougon Toits Rouges','Abobo','Abobo Gare','Attécoubé',
-    'Koumassi','Koumassi Remblai',
-    'Bingerville','Bingerville Centre','Moossou','Ebimpé','PK 20','PK 22',
-    'Songon','Anyama','Locodjro','Niangon Sud','Abatta','Cocody Abatta',
-    'Grand-Bassam','Assinie','Braffedon','Jacqueville','Dabou','Sikensi','Azaguié','Bonoua','Alépé'
-  ];
-  names.sort((a, b) => a.localeCompare(b, 'fr'));
-  datalist.innerHTML = names.map(n => `<option value="${n}">`).join('');
+// Hero neighborhood autocomplete data
+const HERO_NB_LIST = [
+  {d:'Plateau',z:'zone1'},{d:'Cocody',z:'zone1'},{d:'Riviera 1',z:'zone1'},{d:'Riviera 2',z:'zone1'},
+  {d:'Riviera 3',z:'zone1'},{d:'Riviera 4',z:'zone1'},{d:'Riviera Golf',z:'zone1'},{d:'Riviera Palmeraie',z:'zone1'},
+  {d:'2 Plateaux',z:'zone1'},{d:'2 Plateaux Vallon',z:'zone1'},{d:'Angré',z:'zone1'},{d:'Angré Château',z:'zone1'},
+  {d:'Blockhaus',z:'zone1'},{d:'Bonoumin',z:'zone1'},{d:'Mermoz',z:'zone1'},{d:'Ambassades',z:'zone1'},
+  {d:'Anono',z:'zone1'},{d:'Treichville',z:'zone1'},{d:'Zone 4',z:'zone1'},{d:'Zone 3',z:'zone1'},
+  {d:'Marcory',z:'zone1'},{d:'Marcory Résidentiel',z:'zone1'},{d:'Port-Bouët',z:'zone1'},
+  {d:'Vridi',z:'zone1'},{d:'Vridi Canal',z:'zone1'},{d:'Gonzagueville',z:'zone1'},
+  {d:'Biétry',z:'zone1'},{d:'Zone Industrielle',z:'zone1'},{d:'Adjamé',z:'zone1'},
+  {d:'Williamsville',z:'zone1'},{d:'Jean-Folly',z:'zone1'},{d:'M\'Badon',z:'zone1'},
+  {d:'Yopougon',z:'zone2'},{d:'Yopougon Wassakara',z:'zone2'},{d:'Yopougon Niangon',z:'zone2'},
+  {d:'Yopougon Selmer',z:'zone2'},{d:'Yopougon Banco',z:'zone2'},{d:'Yopougon Gesco',z:'zone2'},
+  {d:'Yopougon SIDECI',z:'zone2'},{d:'Yopougon Lokoa',z:'zone2'},{d:'Yopougon Koweït',z:'zone2'},
+  {d:'Yopougon Toits Rouges',z:'zone2'},{d:'Yopougon Académie',z:'zone2'},{d:'Yopougon Doukouré',z:'zone2'},
+  {d:'Abobo',z:'zone2'},{d:'Abobo Gare',z:'zone2'},{d:'Abobo PK 18',z:'zone2'},
+  {d:'Attécoubé',z:'zone2'},{d:'Koumassi',z:'zone2'},{d:'Koumassi Remblai',z:'zone2'},
+  {d:'Bingerville',z:'zone3'},{d:'Bingerville Centre',z:'zone3'},{d:'Moossou',z:'zone3'},
+  {d:'Ebimpé',z:'zone3'},{d:'PK 20',z:'zone3'},{d:'PK 22',z:'zone3'},
+  {d:'Songon',z:'zone3'},{d:'Anyama',z:'zone3'},{d:'Locodjro',z:'zone3'},
+  {d:'Niangon Sud',z:'zone3'},{d:'Abatta',z:'zone3'},{d:'Cocody Abatta',z:'zone3'},
+  {d:'Grand-Bassam',z:'zone4'},{d:'Bassam Centre',z:'zone4'},{d:'Assinie',z:'zone4'},
+  {d:'Braffedon',z:'zone4'},{d:'Jacqueville',z:'zone4'},{d:'Dabou',z:'zone4'},
+  {d:'Sikensi',z:'zone4'},{d:'Azaguié',z:'zone4'},{d:'Bonoua',z:'zone4'},{d:'Alépé',z:'zone4'},
+].sort((a,b) => a.d.localeCompare(b.d, 'fr'));
+
+const HERO_ZONE_NAMES = { zone1:'Zone 1', zone2:'Zone 2', zone3:'Zone 3', zone4:'Zone 4' };
+
+function populateHeroDatalist() { /* replaced by custom autocomplete */ }
+
+function initHeroAutocomplete() {
+  const input = document.getElementById('hero-neighborhood');
+  const dropdown = document.getElementById('hero-nb-dropdown');
+  if (!input || !dropdown) return;
+
+  let hiIdx = -1;
+
+  function norm(s) {
+    return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();
+  }
+
+  function renderHeroDropdown(q) {
+    hiIdx = -1;
+    const nq = norm(q);
+    const results = nq
+      ? HERO_NB_LIST.filter(e => norm(e.d).includes(nq)).slice(0,30)
+      : HERO_NB_LIST.slice(0,50);
+
+    dropdown.innerHTML = results.map(e =>
+      `<div class="nb-option" data-value="${e.d}" data-zone="${e.z}">
+        <span>${q ? e.d.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<strong style="color:var(--gold,#c9a84c)">$1</strong>') : e.d}</span>
+        <span class="nb-zone-tag">${HERO_ZONE_NAMES[e.z]||e.z}</span>
+      </div>`
+    ).join('') + (q ? `<div class="nb-option nb-add-new" data-value="${q}" data-zone="unknown"><span><i class="fas fa-plus-circle"></i> Utiliser "<strong>${q}</strong>"</span></div>` : '');
+
+    dropdown.querySelectorAll('.nb-option').forEach(el => {
+      el.addEventListener('mousedown', ev => {
+        ev.preventDefault();
+        input.value = el.dataset.value;
+        const zone = el.dataset.zone;
+        heroDetectedZone = zone !== 'unknown' ? zone : null;
+        updateHeroPrice();
+        dropdown.style.display = 'none';
+        input.setAttribute('aria-expanded','false');
+      });
+    });
+  }
+
+  input.addEventListener('input', () => {
+    renderHeroDropdown(input.value.trim());
+    dropdown.style.display = 'block';
+    input.setAttribute('aria-expanded','true');
+    heroDetectedZone = detectZoneHero(input.value);
+    updateHeroPrice();
+  });
+  input.addEventListener('focus', () => {
+    renderHeroDropdown(input.value.trim());
+    dropdown.style.display = 'block';
+    input.setAttribute('aria-expanded','true');
+  });
+  input.addEventListener('keydown', e => {
+    const items = dropdown.querySelectorAll('.nb-option');
+    if (e.key==='ArrowDown') { e.preventDefault(); hiIdx=Math.min(hiIdx+1,items.length-1); items.forEach((el,i)=>el.classList.toggle('highlighted',i===hiIdx)); items[hiIdx]?.scrollIntoView({block:'nearest'}); }
+    else if (e.key==='ArrowUp') { e.preventDefault(); hiIdx=Math.max(hiIdx-1,0); items.forEach((el,i)=>el.classList.toggle('highlighted',i===hiIdx)); items[hiIdx]?.scrollIntoView({block:'nearest'}); }
+    else if (e.key==='Enter' && hiIdx>=0) { e.preventDefault(); items[hiIdx]?.dispatchEvent(new MouseEvent('mousedown')); }
+    else if (e.key==='Escape') { dropdown.style.display='none'; input.setAttribute('aria-expanded','false'); }
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#hero-nb-autocomplete-wrap')) { dropdown.style.display='none'; input.setAttribute('aria-expanded','false'); }
+  });
 }
 
 function updateHeroPrice() {
@@ -344,6 +416,7 @@ document.querySelectorAll('[data-whatsapp]').forEach(btn => {
 // =============================================
 window.addEventListener('DOMContentLoaded', () => {
   populateHeroDatalist();
+  initHeroAutocomplete();
 
   const dateInput = document.getElementById('hero-date');
   if (dateInput) {
