@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Réservez votre transfert aéroport à Abidjan avec First Class Transfer. Processus simple en 4 étapes." />
+  <title>Réservation | First Class Transfer Abidjan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" role="navigation">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+        <div>First Class Transfer <span>Abidjan · Côte d'Ivoire</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#fleet">Flotte</a></li>
+        <li><a href="index.html#pricing">Tarifs</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://wa.me/2250700000000" class="btn btn-whatsapp btn-sm" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+      <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="nav-mobile">
+    <button class="nav-mobile-close"><i class="fas fa-times"></i></button>
+    <a href="index.html">Accueil</a>
+    <a href="index.html#fleet">Flotte</a>
+    <a href="index.html#pricing">Tarifs</a>
+    <a href="index.html#faq">FAQ</a>
+  </div>
+
+  <!-- BOOKING HERO -->
+  <div class="booking-hero">
+    <div class="container">
+      <span class="section-label"><i class="fas fa-calendar-check"></i> Réservation en ligne</span>
+      <h1>Réservez votre <em class="gold">Transfert Aéroport</em></h1>
+      <p>Complétez les 4 étapes ci-dessous. La réservation prend moins de 3 minutes.</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar-wrapper" role="navigation" aria-label="Étapes de réservation">
+    <div class="progress-steps">
+      <div class="progress-step active" id="progress-1">
+        <div class="step-circle">1</div>
+        <span class="step-label">Trajet</span>
+      </div>
+      <div class="progress-step" id="progress-2">
+        <div class="step-circle">2</div>
+        <span class="step-label">Véhicule</span>
+      </div>
+      <div class="progress-step" id="progress-3">
+        <div class="step-circle">3</div>
+        <span class="step-label">Informations</span>
+      </div>
+      <div class="progress-step" id="progress-4">
+        <div class="step-circle">4</div>
+        <span class="step-label">Paiement</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKING FORM -->
+  <main class="booking-form-section">
+    <div class="container">
+      <div class="booking-layout">
+
+        <!-- FORM CARD -->
+        <div class="booking-form-card glass-card">
+
+          <!-- STEP 1: TRIP DETAILS -->
+          <div class="form-step active" id="step-1" role="form" aria-label="Détails du trajet">
+            <h2 class="form-step-title">Détails du Trajet</h2>
+            <p class="form-step-desc">Renseignez votre point de départ, la date et l'heure souhaitée.</p>
+
+            <div class="form-group">
+              <label for="trip-zone"><i class="fas fa-map-marker-alt"></i> Zone de départ <span style="color:var(--error)">*</span></label>
+              <select id="trip-zone" name="zone" required aria-required="true">
+                <option value="" disabled selected>Sélectionnez votre quartier / zone</option>
+                <option value="zone1">Zone 1 — Plateau · Cocody · Marcory · Treichville</option>
+                <option value="zone2">Zone 2 — Yopougon · Adjamé · Abobo · Attécoubé</option>
+                <option value="zone3">Zone 3 — Bingerville · Port-Bouët · Koumassi</option>
+                <option value="zone4">Zone 4 — Grand-Bassam · Braffedon · Assinie</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="trip-address"><i class="fas fa-home"></i> Adresse précise de prise en charge</label>
+              <input type="text" id="trip-address" name="address" placeholder="Ex: Rue des Jardins, Cocody Riviera 2" />
+            </div>
+
+            <div class="form-group">
+              <label for="trip-destination"><i class="fas fa-plane-departure"></i> Destination</label>
+              <input type="text" id="trip-destination" value="Aéroport International Félix-Houphouët-Boigny, Abidjan" readonly style="opacity:0.7;cursor:not-allowed;" />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="trip-date"><i class="fas fa-calendar"></i> Date de départ <span style="color:var(--error)">*</span></label>
+                <input type="date" id="trip-date" name="date" required aria-required="true" />
+              </div>
+              <div class="form-group">
+                <label for="trip-time"><i class="fas fa-clock"></i> Heure de prise en charge <span style="color:var(--error)">*</span></label>
+                <input type="time" id="trip-time" name="time" required aria-required="true" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="trip-passengers"><i class="fas fa-users"></i> Nombre de passagers <span style="color:var(--error)">*</span></label>
+              <select id="trip-passengers" name="passengers" required aria-required="true">
+                <option value="1">1 passager</option>
+                <option value="2" selected>2 passagers</option>
+                <option value="3">3 passagers</option>
+                <option value="4">4 passagers</option>
+                <option value="5">5 passagers (Van requis)</option>
+                <option value="6">6 passagers (Van requis)</option>
+                <option value="7">7 passagers (Van requis)</option>
+                <option value="8">8 passagers (Van requis)</option>
+              </select>
+            </div>
+
+            <div class="form-nav">
+              <a href="index.html" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> Retour
+              </a>
+              <button class="btn btn-primary" id="btn-next-1">
+                Continuer <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: VEHICLE SELECTION -->
+          <div class="form-step" id="step-2" role="form" aria-label="Sélection du véhicule">
+            <h2 class="form-step-title">Choisissez votre Véhicule</h2>
+            <p class="form-step-desc">Les tarifs affichés sont calculés selon votre zone de départ.</p>
+
+            <div class="vehicle-options" id="vehicle-options-container">
+              <!-- Populated by JS -->
+            </div>
+
+            <div class="form-nav" style="margin-top:24px;">
+              <button class="btn btn-outline" id="btn-back-2">
+                <i class="fas fa-arrow-left"></i> Retour
+              </button>
+              <button class="btn btn-primary" id="btn-next-2">
+                Continuer <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: PERSONAL INFO -->
+          <div class="form-step" id="step-3" role="form" aria-label="Informations personnelles">
+            <h2 class="form-step-title">Vos Informations</h2>
+            <p class="form-step-desc">Ces informations permettront au chauffeur de vous contacter.</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="client-name"><i class="fas fa-user"></i> Nom complet <span style="color:var(--error)">*</span></label>
+                <input type="text" id="client-name" name="name" placeholder="Prénom Nom" required aria-required="true" autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="client-phone"><i class="fab fa-whatsapp"></i> Téléphone WhatsApp <span style="color:var(--error)">*</span></label>
+                <input type="tel" id="client-phone" name="phone" placeholder="+225 07 00 00 00 00" required aria-required="true" autocomplete="tel" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="client-email"><i class="fas fa-envelope"></i> Email <span style="color:var(--error)">*</span></label>
+              <input type="email" id="client-email" name="email" placeholder="vous@exemple.com" required aria-required="true" autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="client-flight"><i class="fas fa-plane"></i> Numéro de vol</label>
+              <input type="text" id="client-flight" name="flight" placeholder="Ex: ET 302, AF 703..." />
+            </div>
+
+            <div class="form-group">
+              <label for="client-requests"><i class="fas fa-comment"></i> Demandes spéciales</label>
+              <textarea id="client-requests" name="requests" rows="3" placeholder="Ex: siège enfant, aide bagages, arrêt intermédiaire..."></textarea>
+            </div>
+
+            <div style="padding:14px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.15);border-radius:8px;font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">
+              <i class="fab fa-whatsapp" style="color:#25d366;margin-right:6px;"></i>
+              Votre chauffeur vous contactera sur ce numéro WhatsApp la veille ou le matin du transfert.
+            </div>
+
+            <div class="form-nav">
+              <button class="btn btn-outline" id="btn-back-3">
+                <i class="fas fa-arrow-left"></i> Retour
+              </button>
+              <button class="btn btn-primary" id="btn-next-3">
+                Continuer <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 4: PAYMENT -->
+          <div class="form-step" id="step-4" role="form" aria-label="Paiement">
+            <h2 class="form-step-title">Récapitulatif &amp; Paiement</h2>
+            <p class="form-step-desc">Vérifiez vos informations et choisissez votre mode de paiement.</p>
+
+            <!-- Payment Summary -->
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-sm);padding:20px;margin-bottom:24px;">
+              <h4 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Récapitulatif du trajet</h4>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.88rem;">
+                <div><span style="color:var(--text-muted);">Départ :</span><br><strong id="pay-summary-pickup">—</strong></div>
+                <div><span style="color:var(--text-muted);">Destination :</span><br><strong id="pay-summary-dest">—</strong></div>
+                <div><span style="color:var(--text-muted);">Date :</span><br><strong id="pay-summary-date">—</strong></div>
+                <div><span style="color:var(--text-muted);">Heure :</span><br><strong id="pay-summary-time">—</strong></div>
+                <div><span style="color:var(--text-muted);">Véhicule :</span><br><strong id="pay-summary-vehicle">—</strong></div>
+                <div><span style="color:var(--text-muted);">Passager :</span><br><strong id="pay-summary-name">—</strong></div>
+                <div><span style="color:var(--text-muted);">Téléphone :</span><br><strong id="pay-summary-phone">—</strong></div>
+                <div><span style="color:var(--text-muted);">N° de vol :</span><br><strong id="pay-summary-flight">—</strong></div>
+              </div>
+              <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-weight:700;">Total à payer</span>
+                <span style="font-family:var(--font-heading);font-size:1.8rem;color:var(--gold);font-weight:700;" id="pay-summary-total">—</span>
+              </div>
+            </div>
+
+            <!-- Payment methods -->
+            <h4 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Mode de paiement</h4>
+
+            <div class="payment-option" data-method="orange-money">
+              <div class="payment-option-icon" style="background:rgba(255,140,0,0.15);color:#ff8c00;"><i class="fas fa-mobile-alt"></i></div>
+              <div class="payment-option-info">
+                <h4>Orange Money</h4>
+                <p>Paiement mobile Orange — disponible 24h/7j</p>
+              </div>
+            </div>
+
+            <div class="payment-option" data-method="wave">
+              <div class="payment-option-icon" style="background:rgba(0,180,255,0.12);color:#00b4ff;"><i class="fas fa-wave-square"></i></div>
+              <div class="payment-option-info">
+                <h4>Wave</h4>
+                <p>Paiement rapide via Wave CI</p>
+              </div>
+            </div>
+
+            <div class="payment-option" data-method="mtn">
+              <div class="payment-option-icon" style="background:rgba(255,200,0,0.12);color:#ffc800;"><i class="fas fa-mobile-alt"></i></div>
+              <div class="payment-option-info">
+                <h4>MTN Mobile Money</h4>
+                <p>Paiement mobile MTN — simple et rapide</p>
+              </div>
+            </div>
+
+            <div class="payment-option" data-method="card">
+              <div class="payment-option-icon" style="background:rgba(201,168,76,0.12);color:var(--gold);"><i class="fas fa-credit-card"></i></div>
+              <div class="payment-option-info">
+                <h4>Carte Bancaire (Visa / Mastercard)</h4>
+                <p>Via CinetPay — paiement sécurisé SSL</p>
+              </div>
+            </div>
+
+            <div class="secure-badge">
+              <i class="fas fa-lock"></i>
+              Paiement 100% sécurisé — Vos données sont chiffrées et protégées
+            </div>
+
+            <div class="form-nav" style="margin-top:24px;">
+              <button class="btn btn-outline" id="btn-back-4">
+                <i class="fas fa-arrow-left"></i> Retour
+              </button>
+              <button class="btn btn-primary btn-lg" id="btn-confirm-payment">
+                <i class="fas fa-lock"></i> Confirmer &amp; Payer
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SIDEBAR SUMMARY -->
+        <aside>
+          <div class="booking-summary glass-card" aria-label="Résumé de la réservation">
+            <h3><i class="fas fa-clipboard-list" style="color:var(--gold);margin-right:8px;"></i> Votre réservation</h3>
+
+            <div class="summary-row">
+              <span class="summary-label"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> Départ</span>
+              <span class="summary-value" id="summary-pickup">—</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label"><i class="fas fa-plane-departure" style="color:var(--gold);margin-right:4px;"></i> Arrivée</span>
+              <span class="summary-value" id="summary-destination">Aéroport FHB</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label"><i class="fas fa-calendar" style="color:var(--gold);margin-right:4px;"></i> Date</span>
+              <span class="summary-value" id="summary-date">—</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label"><i class="fas fa-clock" style="color:var(--gold);margin-right:4px;"></i> Heure</span>
+              <span class="summary-value" id="summary-time">—</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label"><i class="fas fa-users" style="color:var(--gold);margin-right:4px;"></i> Passagers</span>
+              <span class="summary-value" id="summary-passengers">—</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label"><i class="fas fa-car" style="color:var(--gold);margin-right:4px;"></i> Véhicule</span>
+              <span class="summary-value" id="summary-vehicle">—</span>
+            </div>
+
+            <div class="summary-total">
+              <span class="label">Total estimé</span>
+              <span class="amount" id="summary-total-amount">—</span>
+            </div>
+
+            <div class="payment-methods">
+              <h4>Paiements acceptés</h4>
+              <div class="payment-logos">
+                <div class="payment-logo">Orange Money</div>
+                <div class="payment-logo">Wave</div>
+                <div class="payment-logo">MTN MoMo</div>
+                <div class="payment-logo">Visa/MC</div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;padding:14px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.15);border-radius:8px;font-size:0.82rem;color:var(--text-muted);line-height:1.55;">
+              <i class="fab fa-whatsapp" style="color:#25d366;margin-right:6px;"></i>
+              <strong style="color:var(--white);">Suivi WhatsApp</strong><br>
+              Votre chauffeur vous contactera directement sur WhatsApp le jour du transfert.
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="booking-success-modal" role="dialog" aria-modal="true" aria-label="Confirmation de réservation">
+    <div class="modal">
+      <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+      <h3>Réservation Confirmée !</h3>
+      <p>
+        Votre référence : <strong style="color:var(--gold);font-family:monospace;font-size:1.2rem;" id="modal-booking-ref">—</strong><br><br>
+        Vous allez être redirigé vers la page de confirmation...
+      </p>
+      <div style="display:flex;justify-content:center;">
+        <div style="width:40px;height:40px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/2250700000000?text=Bonjour%2C%20j%27ai%20besoin%20d%27aide%20pour%20ma%20r%C3%A9servation."
+     class="float-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Support">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/booking.js"></script>
+</body>
+</html>
