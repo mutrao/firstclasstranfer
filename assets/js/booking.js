@@ -1123,20 +1123,39 @@ window.addEventListener('DOMContentLoaded', () => {
         if (zoneManual) zoneManual.value = data.zone;
         bookingState.zone = data.zone;
       }
-      if ($('#trip-date') && data.date)         $('#trip-date').value = data.date;
-      if ($('#trip-time') && data.time)         $('#trip-time').value = data.time;
-      if ($('#trip-passengers') && data.passengers) $('#trip-passengers').value = data.passengers;
-      if ($('#trip-luggage') && data.luggage)   $('#trip-luggage').value = data.luggage;
+      if ($('#trip-date') && data.date)         { $('#trip-date').value = data.date; bookingState.date = data.date; }
+      if ($('#trip-time') && data.time)         { $('#trip-time').value = data.time; bookingState.time = data.time; }
+      if ($('#trip-passengers') && data.passengers) { $('#trip-passengers').value = data.passengers; bookingState.passengers = parseInt(data.passengers) || 1; }
+      if ($('#trip-luggage') && data.luggage !== undefined) { $('#trip-luggage').value = data.luggage; bookingState.luggage = parseInt(data.luggage) || 0; }
       if (data.flightTime && $('#client-flight-time')) $('#client-flight-time').value = data.flightTime;
       if (data.direction) switchDirection(data.direction);
     } catch (err) { /* ignore */ }
   }
 
-  // Live luggage/passengers hint
+  // Live luggage/passengers hint + sidebar sync
   ['trip-passengers', 'trip-luggage'].forEach(id => {
-    document.getElementById(id)?.addEventListener('change', updateLuggageHint);
+    document.getElementById(id)?.addEventListener('change', () => {
+      updateLuggageHint();
+      bookingState.passengers = parseInt($('#trip-passengers')?.value) || 1;
+      bookingState.luggage = parseInt($('#trip-luggage')?.value) || 0;
+      updateSummary();
+    });
   });
   updateLuggageHint();
+
+  // Live date/time → sidebar sync
+  document.getElementById('trip-date')?.addEventListener('change', () => {
+    bookingState.date = $('#trip-date')?.value || '';
+    updateSummary();
+  });
+  document.getElementById('trip-time')?.addEventListener('change', () => {
+    bookingState.time = $('#trip-time')?.value || '';
+    updateSummary();
+  });
+  document.getElementById('trip-time')?.addEventListener('input', () => {
+    bookingState.time = $('#trip-time')?.value || '';
+    updateSummary();
+  });
 
   // Step navigation buttons
   $('#btn-next-1')?.addEventListener('click', onNext1);
