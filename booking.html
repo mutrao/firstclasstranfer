@@ -485,18 +485,42 @@
               </div>
             </div>
 
-            <!-- Payment note -->
-            <div style="padding:14px 16px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.2);border-radius:8px;font-size:0.87rem;color:var(--text-muted);line-height:1.6;margin-bottom:24px;">
-              <i class="fas fa-info-circle" style="color:var(--gold);margin-right:6px;"></i>
-              <strong style="color:var(--white);">Payment :</strong> <span data-i18n="step4_pay">Le paiement s'effectuera directement avec le chauffeur (espèces) ou via un lien de paiement mobile qui vous sera envoyé par WhatsApp.</span>
+            <!-- Payment options -->
+            <div style="margin-bottom:24px;">
+              <p style="font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:14px;font-weight:700;">
+                <i class="fas fa-credit-card" style="margin-right:6px;"></i>
+                <span data-i18n="pay_method_title">Choisissez votre mode de paiement</span>
+              </p>
+
+              <!-- Option A : Online payment (CinetPay) -->
+              <button id="btn-pay-online" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:12px;">
+                <i class="fas fa-mobile-screen-button"></i>
+                <span data-i18n="pay_online_btn">Payer en ligne maintenant</span>
+                <span style="display:flex;align-items:center;gap:6px;margin-left:8px;opacity:0.85;font-size:0.78rem;font-weight:400;">
+                  Orange Money · MTN · Wave · CB
+                </span>
+              </button>
+
+              <!-- Option B : Cash / WhatsApp -->
+              <button id="btn-confirm-booking" class="btn btn-outline" style="width:100%;justify-content:center;">
+                <i class="fab fa-whatsapp"></i>
+                <span data-i18n="pay_cash_btn">Confirmer &amp; payer en espèces</span>
+              </button>
+
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:10px;text-align:center;" data-i18n="pay_cash_note">
+                Paiement en espèces remis au chauffeur le jour J.
+              </p>
+            </div>
+
+            <!-- Payment error feedback -->
+            <div id="payment-error" style="display:none;padding:12px 14px;background:rgba(220,53,69,0.1);border:1px solid rgba(220,53,69,0.3);border-radius:8px;font-size:0.85rem;color:#ff6b6b;margin-bottom:16px;">
+              <i class="fas fa-exclamation-circle" style="margin-right:6px;"></i>
+              <span id="payment-error-msg">Paiement échoué. Veuillez réessayer.</span>
             </div>
 
             <div class="form-nav" style="margin-top:8px;">
               <button class="btn btn-outline" id="btn-back-4">
                 <i class="fas fa-arrow-left"></i> <span data-i18n="btn_back">Retour</span>
-              </button>
-              <button class="btn btn-primary btn-lg" id="btn-confirm-booking" style="background:var(--gold);color:#0a0d14;">
-                <i class="fas fa-check-circle"></i> <span data-i18n="confirm_btn">Confirmer ma réservation</span>
               </button>
             </div>
           </div>
@@ -585,6 +609,7 @@
   </style>
 
   <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/cinetpay.js"></script>
   <script src="assets/js/booking.js"></script>
 </body>
 </html>

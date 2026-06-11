@@ -975,8 +975,46 @@ function renderPaymentSummary() {
 
 function onBack4() { showStep(3); }
 
+// =============================================
+// CINETPAY ONLINE PAYMENT
+// =============================================
+function onPayOnline() {
+  const errorEl = document.getElementById('payment-error');
+  const errorMsg = document.getElementById('payment-error-msg');
+  if (errorEl) errorEl.style.display = 'none';
+
+  if (!bookingState.bookingRef) bookingState.bookingRef = generateRef();
+
+  const btn = document.getElementById('btn-pay-online');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement…'; }
+
+  window.FCT_CinetPay.initCinetPayCheckout(
+    bookingState,
+    // onSuccess
+    (transactionId) => {
+      bookingState.paymentMethod  = 'online';
+      bookingState.paymentStatus  = 'paid';
+      bookingState.transactionId  = transactionId;
+      finishBooking();
+    },
+    // onFailure
+    (data) => {
+      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-mobile-screen-button"></i> <span>Payer en ligne maintenant</span>'; }
+      const msg = data.message || 'Paiement non abouti. Veuillez réessayer ou choisir le paiement en espèces.';
+      if (errorMsg) errorMsg.textContent = msg;
+      if (errorEl) errorEl.style.display = 'block';
+    }
+  );
+}
+
 function onConfirmBooking() {
-  bookingState.bookingRef = generateRef();
+  bookingState.paymentMethod = 'cash';
+  bookingState.paymentStatus = 'pending';
+  if (!bookingState.bookingRef) bookingState.bookingRef = generateRef();
+  finishBooking();
+}
+
+function finishBooking() {
   localStorage.setItem('lastBooking', JSON.stringify(bookingState));
 
   // Save to persistent bookings list for admin
@@ -1164,6 +1202,7 @@ window.addEventListener('DOMContentLoaded', () => {
   $('#btn-back-3')?.addEventListener('click', onBack3);
   $('#btn-next-3')?.addEventListener('click', onNext3);
   $('#btn-back-4')?.addEventListener('click', onBack4);
+  $('#btn-pay-online')?.addEventListener('click', onPayOnline);
   $('#btn-confirm-booking')?.addEventListener('click', onConfirmBooking);
 
   showStep(1);

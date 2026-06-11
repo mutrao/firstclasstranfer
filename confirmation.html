@@ -144,8 +144,8 @@
         <!-- Notification sent badges -->
         <div id="conf-notif-badges" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;"></div>
 
-        <!-- Payment note -->
-        <div style="margin-top:20px;padding:14px 16px;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;font-size:0.87rem;color:var(--text-muted);line-height:1.6;text-align:center;">
+        <!-- Payment status (dynamically updated by JS) -->
+        <div id="conf-payment-note" style="margin-top:20px;padding:14px 16px;border-radius:8px;font-size:0.87rem;line-height:1.6;text-align:center;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);color:var(--text-muted);">
           <i class="fas fa-info-circle" style="color:var(--gold);margin-right:6px;"></i>
           <span data-i18n="conf_payment">Le paiement s'effectuera directement avec le chauffeur (espèces) ou via un lien de paiement mobile qui vous sera envoyé par WhatsApp.</span>
         </div>
@@ -345,6 +345,18 @@
       const waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMsg);
       document.getElementById('btn-whatsapp-support').href = waUrl;
       document.getElementById('float-wa-btn').href = waUrl;
+
+      // Payment status banner
+      const payNote = document.getElementById('conf-payment-note');
+      if (payNote && booking.paymentMethod === 'online' && booking.paymentStatus === 'paid') {
+        payNote.style.background = 'rgba(37,211,102,0.08)';
+        payNote.style.borderColor = 'rgba(37,211,102,0.3)';
+        payNote.innerHTML = `
+          <i class="fas fa-check-circle" style="color:#25d366;margin-right:6px;"></i>
+          <strong style="color:#25d366;">Paiement confirmé</strong>
+          — votre transfert est réservé et payé.
+          ${booking.transactionId ? `<br><small style="opacity:0.7;">ID transaction : ${booking.transactionId}</small>` : ''}`;
+      }
     }
 
     // Run on load, and again if language changes
