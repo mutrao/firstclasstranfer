@@ -144,11 +144,9 @@ function detectZoneHero(input) {
 // =============================================
 const heroForm = document.getElementById('hero-booking-form');
 const priceDisplay = document.getElementById('hero-price-display');
-const vehicleSelect = document.getElementById('hero-vehicle');
 const passengersInput = document.getElementById('hero-passengers');
-const heroMethodBtns = document.querySelectorAll('.hero-method-btn');
 
-let heroPickupMethod = 'neighborhood';
+let heroDirection = 'departure'; // 'departure' | 'arrival'
 let heroDetectedZone = null;
 
 // Hero neighborhood autocomplete data
@@ -244,73 +242,85 @@ function initHeroAutocomplete() {
 }
 
 function updateHeroPrice() {
-  const vehicle = vehicleSelect?.value;
-  const passengers = parseInt(passengersInput?.value) || 1;
-  if (!heroDetectedZone || !vehicle) {
+  if (!heroDetectedZone) {
     if (priceDisplay) priceDisplay.style.display = 'none';
     return;
   }
   const zoneInfo = PRICING_ZONES[heroDetectedZone];
   if (!zoneInfo) return;
 
-  let price;
-  if (vehicle === 'premium' || passengers >= 3) {
-    price = zoneInfo.premium;
-  } else {
-    price = zoneInfo[vehicle] || zoneInfo.basic;
-  }
+  const fromLabel = window.fctI18n ? window.fctI18n.t('hero_price_from') : 'À partir de';
+  const price = zoneInfo.basic;
 
   if (priceDisplay) {
     priceDisplay.innerHTML = `
       <div class="price-estimate">
-        <span class="price-label"><i class="fa-solid fa-map-pin" style="color:var(--gold);margin-right:4px;"></i> ${zoneInfo.label.split('—')[0].trim()} détectée &rarr;</span>
-        <span class="price-amount">${price.toLocaleString('fr-FR')} FCFA</span>
+        <span class="price-label"><i class="fa-solid fa-map-pin" style="color:var(--gold);margin-right:4px;"></i> ${zoneInfo.label.split('—')[0].trim()} &rarr;</span>
+        <span class="price-amount">${fromLabel} ${price.toLocaleString('fr-FR')} FCFA</span>
       </div>`;
     priceDisplay.style.display = 'block';
   }
 }
 
-// Hero method toggle
-function switchHeroMethod(method) {
-  heroPickupMethod = method;
-  heroDetectedZone = null;
-  if (priceDisplay) priceDisplay.style.display = 'none';
+// Direction toggle
+function switchHeroDirection(dir) {
+  heroDirection = dir;
 
-  heroMethodBtns.forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.method === method);
+  document.querySelectorAll('.hero-dir-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.dir === dir);
   });
 
-  const nbField = document.getElementById('hero-neighborhood-field');
-  const zoneField = document.getElementById('hero-zone-field');
-  if (nbField) nbField.style.display = method === 'neighborhood' ? 'block' : 'none';
-  if (zoneField) zoneField.style.display = method === 'address' ? 'block' : 'none';
+  const arrNotice = document.getElementById('hero-arr-notice');
+  const flightNotice = document.querySelector('.hero-flight-notice span[data-i18n-html]');
+  const dateLabel = document.getElementById('hero-date-label');
+  const timeLabel = document.getElementById('hero-time-label');
+
+  if (dir === 'arrival') {
+    if (arrNotice) arrNotice.style.display = 'flex';
+    if (flightNotice && window.fctI18n) {
+      flightNotice.setAttribute('data-i18n-html', 'hero_flight_arr_notice');
+      flightNotice.innerHTML = window.fctI18n.t('hero_flight_arr_notice');
+    }
+    if (dateLabel && window.fctI18n) {
+      dateLabel.setAttribute('data-i18n', 'hero_date_arr_label');
+      dateLabel.textContent = window.fctI18n.t('hero_date_arr_label');
+    }
+    if (timeLabel && window.fctI18n) {
+      timeLabel.setAttribute('data-i18n', 'hero_time_arr_label');
+      timeLabel.textContent = window.fctI18n.t('hero_time_arr_label');
+    }
+  } else {
+    if (arrNotice) arrNotice.style.display = 'none';
+    if (flightNotice && window.fctI18n) {
+      flightNotice.setAttribute('data-i18n-html', 'hero_flight_notice_text');
+      flightNotice.innerHTML = window.fctI18n.t('hero_flight_notice_text');
+    }
+    if (dateLabel && window.fctI18n) {
+      dateLabel.setAttribute('data-i18n', 'hero_date_form_label');
+      dateLabel.textContent = window.fctI18n.t('hero_date_form_label');
+    }
+    if (timeLabel && window.fctI18n) {
+      timeLabel.setAttribute('data-i18n', 'hero_time_form_label');
+      timeLabel.textContent = window.fctI18n.t('hero_time_form_label');
+    }
+  }
 }
 
-heroMethodBtns.forEach(btn => {
-  btn.addEventListener('click', () => switchHeroMethod(btn.dataset.method));
+document.querySelectorAll('.hero-dir-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchHeroDirection(btn.dataset.dir));
 });
 
-// Neighborhood input events
+// Neighbourhood input events
 const heroNbInput = document.getElementById('hero-neighborhood');
 heroNbInput?.addEventListener('input', () => {
-  const zone = detectZoneHero(heroNbInput.value);
-  heroDetectedZone = zone;
+  heroDetectedZone = detectZoneHero(heroNbInput.value);
   updateHeroPrice();
 });
 heroNbInput?.addEventListener('change', () => {
-  const zone = detectZoneHero(heroNbInput.value);
-  heroDetectedZone = zone;
+  heroDetectedZone = detectZoneHero(heroNbInput.value);
   updateHeroPrice();
 });
 
-// Zone select (legacy / address method)
-const heroZoneSelect = document.getElementById('hero-zone');
-heroZoneSelect?.addEventListener('change', () => {
-  heroDetectedZone = heroZoneSelect.value || null;
-  updateHeroPrice();
-});
-
-vehicleSelect?.addEventListener('change', updateHeroPrice);
 passengersInput?.addEventListener('input', updateHeroPrice);
 
 heroForm?.addEventListener('submit', (e) => {
@@ -321,26 +331,25 @@ heroForm?.addEventListener('submit', (e) => {
   const passengers = document.getElementById('hero-passengers')?.value || 1;
   const luggage    = document.getElementById('hero-luggage')?.value || 1;
 
-  // Suggest pickup time = flight time - 3h30
   let pickupTime = '';
-  if (flightTime) {
+  if (heroDirection === 'departure' && flightTime) {
     const [h, m] = flightTime.split(':').map(Number);
-    const totalMins = h * 60 + m - 210; // 210 min = 3h30
+    const totalMins = h * 60 + m - 210;
     const ph = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
     const pm = ((totalMins % 1440) + 1440) % 1440 % 60;
     pickupTime = `${String(ph).padStart(2,'0')}:${String(pm).padStart(2,'0')}`;
   }
 
   const formData = {
-    pickupMethod: heroPickupMethod,
-    neighborhood: heroPickupMethod === 'neighborhood' ? (heroNbInput?.value || '') : '',
-    zone: heroDetectedZone || heroZoneSelect?.value || '',
+    pickupMethod: 'neighborhood',
+    neighborhood: heroNbInput?.value || '',
+    zone: heroDetectedZone || '',
     passengers,
     luggage,
     date: flightDate,
-    time: pickupTime,
+    time: heroDirection === 'arrival' ? flightTime : pickupTime,
     flightTime,
-    direction: 'departure',
+    direction: heroDirection,
   };
 
   sessionStorage.setItem('bookingInit', JSON.stringify(formData));
@@ -430,24 +439,19 @@ window.addEventListener('DOMContentLoaded', () => {
   if (saved) {
     try {
       const data = JSON.parse(saved);
-      if (data.pickupMethod === 'neighborhood' && data.neighborhood) {
-        switchHeroMethod('neighborhood');
-        if (heroNbInput) {
-          heroNbInput.value = data.neighborhood;
-          heroDetectedZone = detectZoneHero(data.neighborhood);
-        }
+      if (data.direction) switchHeroDirection(data.direction);
+      if (data.neighborhood && heroNbInput) {
+        heroNbInput.value = data.neighborhood;
+        heroDetectedZone = detectZoneHero(data.neighborhood) || data.zone || null;
       } else if (data.zone) {
-        switchHeroMethod('address');
-        if (heroZoneSelect) heroZoneSelect.value = data.zone;
         heroDetectedZone = data.zone;
       }
-      if (vehicleSelect && data.vehicle) vehicleSelect.value = data.vehicle;
       if (passengersInput && data.passengers) passengersInput.value = data.passengers;
       if (document.getElementById('hero-date') && data.date) {
         document.getElementById('hero-date').value = data.date;
       }
-      if (document.getElementById('hero-time') && data.time) {
-        document.getElementById('hero-time').value = data.time;
+      if (document.getElementById('hero-time') && data.flightTime) {
+        document.getElementById('hero-time').value = data.flightTime;
       }
       updateHeroPrice();
     } catch (err) {

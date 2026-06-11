@@ -183,45 +183,39 @@
         <p data-i18n="hero_card_sub">Obtenez votre tarif en quelques secondes</p>
 
         <form id="hero-booking-form" novalidate>
-          <!-- Hero method toggle -->
+          <!-- Direction toggle -->
           <div class="pickup-method-toggle" style="margin-bottom:16px;">
-            <button type="button" class="hero-method-btn method-btn active" data-method="neighborhood">
-              <i class="fa-solid fa-map-pin"></i> <span data-i18n="hero_by_nb">Par quartier</span>
+            <button type="button" class="hero-dir-btn method-btn" data-dir="arrival">
+              <i class="fa-solid fa-plane-arrival"></i> <span data-i18n="hero_dir_dep">Depuis l'aéroport</span>
             </button>
-            <button type="button" class="hero-method-btn method-btn" data-method="address">
-              <i class="fa-solid fa-location-dot"></i> <span data-i18n="hero_by_zone">Par zone</span>
+            <button type="button" class="hero-dir-btn method-btn active" data-dir="departure">
+              <i class="fa-solid fa-plane-departure"></i> <span data-i18n="hero_dir_arr">Vers l'aéroport</span>
             </button>
           </div>
 
-          <!-- Neighborhood field -->
+          <!-- Airport notice (shown when direction = arrival) -->
+          <div id="hero-arr-notice" class="hero-arr-notice" style="display:none;">
+            <i class="fas fa-sign"></i>
+            <span data-i18n="hero_arr_notice">Votre chauffeur vous attendra dans le hall d'arrivées avec une pancarte à votre nom.</span>
+          </div>
+
+          <!-- Smart address/neighborhood field -->
           <div id="hero-neighborhood-field" class="form-group">
-            <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> <span data-i18n="hero_nb_label">Votre quartier de départ</span></label>
+            <label for="hero-neighborhood"><i class="fas fa-map-marker-alt"></i> <span id="hero-smart-label" data-i18n="hero_smart_label">Votre adresse ou quartier</span></label>
             <div class="nb-autocomplete-wrap" id="hero-nb-autocomplete-wrap">
               <input
                 type="text"
                 id="hero-neighborhood"
-                data-i18n-ph="hero_nb_ph"
+                data-i18n-ph="hero_smart_ph"
                 placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
                 autocomplete="off"
-                aria-label="Quartier de départ"
+                aria-label="Adresse ou quartier"
                 aria-autocomplete="list"
                 role="combobox"
                 aria-expanded="false"
               />
               <div id="hero-nb-dropdown" class="nb-dropdown" role="listbox" style="display:none;"></div>
             </div>
-          </div>
-
-          <!-- Zone field (address method) -->
-          <div id="hero-zone-field" class="form-group" style="display:none">
-            <label for="hero-zone"><i class="fas fa-map-marker-alt"></i> <span data-i18n="hero_zone_label">Zone de départ</span></label>
-            <select id="hero-zone" name="zone" aria-label="Sélectionnez votre zone">
-              <option value="" disabled selected data-i18n="hero_zone_ph">Sélectionnez votre zone</option>
-              <option value="zone1">Zone 1 — Plateau / Cocody / Marcory</option>
-              <option value="zone2">Zone 2 — Yopougon / Abobo / Koumassi</option>
-              <option value="zone3">Zone 3 — Bingerville / Anyama / Abatta</option>
-              <option value="zone4">Zone 4 — Bassam / Dabou / Assinie</option>
-            </select>
           </div>
 
           <!-- Passengers + Luggage -->
@@ -244,11 +238,11 @@
             </div>
             <div class="form-row" style="margin-bottom:0;">
               <div class="form-group">
-                <label for="hero-date"><i class="fas fa-calendar"></i> <span data-i18n="hero_date_form_label">Date de décollage</span></label>
+                <label for="hero-date"><i class="fas fa-calendar"></i> <span id="hero-date-label" data-i18n="hero_date_form_label">Date de décollage</span></label>
                 <input type="date" id="hero-date" name="date" aria-label="Date du vol" />
               </div>
               <div class="form-group">
-                <label for="hero-time"><i class="fas fa-clock"></i> <span data-i18n="hero_time_form_label">Heure de décollage</span></label>
+                <label for="hero-time"><i class="fas fa-clock"></i> <span id="hero-time-label" data-i18n="hero_time_form_label">Heure de décollage</span></label>
                 <input type="time" id="hero-time" name="time" aria-label="Heure du vol" />
               </div>
             </div>
