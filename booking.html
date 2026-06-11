@@ -38,19 +38,19 @@
   <!-- Mobile Nav -->
   <div class="nav-mobile">
     <button class="nav-mobile-close"><i class="fas fa-times"></i></button>
-    <a href="index.html">Accueil</a>
-    <a href="index.html#fleet">Flotte</a>
-    <a href="index.html#pricing">Tarifs</a>
-    <a href="index.html#faq">FAQ</a>
+    <a href="index.html" data-i18n="nav_home">Accueil</a>
+    <a href="index.html#fleet" data-i18n="nav_fleet">Flotte</a>
+    <a href="index.html#pricing" data-i18n="nav_pricing">Tarifs</a>
+    <a href="index.html#faq" data-i18n="nav_faq">FAQ</a>
     <div class="i18n-switcher-mobile" id="i18n-switcher-mobile-booking"></div>
   </div>
 
   <!-- BOOKING HERO -->
   <div class="booking-hero">
     <div class="container">
-      <span class="section-label"><i class="fas fa-calendar-check"></i> Réservation en ligne</span>
-      <h1>Réservez votre <em class="gold">Transfert Aéroport</em></h1>
-      <p>Complétez les 4 étapes ci-dessous. La réservation prend moins de 3 minutes. Paiement directement avec le chauffeur.</p>
+      <span class="section-label"><i class="fas fa-calendar-check"></i> <span data-i18n="booking_label">Réservation en ligne</span></span>
+      <h1 data-i18n-html="booking_title">Réservez votre <em class="gold">Transfert Aéroport</em></h1>
+      <p data-i18n="booking_sub">Complétez les 4 étapes ci-dessous. La réservation prend moins de 3 minutes. Paiement directement avec le chauffeur.</p>
     </div>
   </div>
 
@@ -86,8 +86,8 @@
 
           <!-- STEP 1: TRIP DETAILS -->
           <div class="form-step active" id="step-1" role="form" aria-label="Détails du trajet">
-            <h2 class="form-step-title" id="step1-title">Détails du Trajet</h2>
-            <p class="form-step-desc" id="step1-desc">Indiquez votre point de départ, la date et l'heure souhaitée.</p>
+            <h2 class="form-step-title" id="step1-title" data-i18n="step1_title">Détails du Trajet</h2>
+            <p class="form-step-desc" id="step1-desc" data-i18n="step1_desc">Indiquez votre point de départ, la date et l'heure souhaitée.</p>
 
             <!-- DIRECTION SELECTOR — shown first, before everything else in Step 1 -->
             <div class="direction-toggle" id="direction-toggle">
@@ -106,7 +106,7 @@
             <!-- Arrival info banner (hidden by default) -->
             <div class="arrival-info-banner" id="arrival-info-banner" style="display:none">
               <i class="fas fa-id-card" style="font-size:1.4rem;color:var(--gold);flex-shrink:0;margin-top:2px;"></i>
-              <div>
+              <div data-i18n-html="arr_banner">
                 <strong>Votre chauffeur vous attendra dans le hall d'arrivée</strong> avec une pancarte à votre nom et le logo First Class Transfer.<br>
                 Il vous aidera avec vos bagages. Aucun souci — il vous contactera directement sur WhatsApp à votre atterrissage.
               </div>
@@ -124,11 +124,12 @@
 
             <!-- Neighborhood search (shown by default) -->
             <div id="neighborhood-field" class="form-group">
-              <label for="trip-neighborhood" id="neighborhood-label"><i class="fas fa-map-marker-alt"></i> Votre quartier de départ <span style="color:var(--error)">*</span></label>
+              <label for="trip-neighborhood" id="neighborhood-label"><i class="fas fa-map-marker-alt"></i> <span data-i18n="nb_label">Votre quartier de départ</span> <span style="color:var(--error)">*</span></label>
               <div class="nb-autocomplete-wrap" id="nb-autocomplete-wrap">
                 <input
                   type="text"
                   id="trip-neighborhood"
+                  data-i18n-ph="nb_ph"
                   placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
                   autocomplete="off"
                   aria-required="true"
@@ -145,11 +146,11 @@
                 <div style="display:flex;gap:10px;align-items:flex-start;">
                   <i class="fas fa-map-pin" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
                   <div>
-                    <strong style="color:var(--gold);display:block;margin-bottom:4px;">Quartier non répertorié — pas d'inquiétude !</strong>
+                    <strong style="color:var(--gold);display:block;margin-bottom:4px;" data-i18n="unknown_nb_title">Quartier non répertorié — pas d'inquiétude !</strong>
                     <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin:0;">
-                      Votre quartier ne fait pas encore partie de notre base, mais vous pouvez continuer votre réservation.
-                      <strong style="color:var(--white);">Nos conseillers vous recontacteront dans moins de 5 minutes</strong> pour vous proposer la meilleure offre et confirmer le tarif.
-                      Vous serez contacté sur <strong style="color:#25d366;">WhatsApp</strong>, par email ou directement par téléphone.
+                      <span data-i18n="unknown_nb_body">Votre quartier ne fait pas encore partie de notre base, mais vous pouvez continuer votre réservation.</span>
+                      <strong style="color:var(--white);" data-i18n="unknown_nb_team">Nos conseillers vous recontacteront dans moins de 5 minutes</strong>
+                      <span data-i18n="unknown_nb_channels">pour vous proposer la meilleure offre et confirmer le tarif. Vous serez contacté sur WhatsApp, par email ou directement par téléphone.</span>
                     </p>
                   </div>
                 </div>
@@ -158,83 +159,83 @@
 
             <!-- Address input (hidden by default) -->
             <div id="address-field" class="form-group" style="display:none">
-              <label for="trip-address" id="address-label"><i class="fas fa-home"></i> Adresse complète de départ <span style="color:var(--error)">*</span></label>
-              <input type="text" id="trip-address" placeholder="Ex: Rue des Jardins, Cocody Riviera 2" autocomplete="street-address" />
+              <label for="trip-address" id="address-label"><i class="fas fa-home"></i> <span data-i18n="addr_label">Adresse complète de départ</span> <span style="color:var(--error)">*</span></label>
+              <input type="text" id="trip-address" data-i18n-ph="addr_ph" placeholder="Ex: Rue des Jardins, Cocody Riviera 2" autocomplete="street-address" />
               <p class="form-hint">
                 <i class="fa-solid fa-circle-info"></i>
-                Pas d'adresse précise ?
-                <button type="button" class="link-btn" onclick="switchMethod('neighborhood')">Utilisez la recherche par quartier</button>
-                — le tarif sera identique.
+                <span data-i18n="addr_no_addr_q">Pas d'adresse précise ?</span>
+                <button type="button" class="link-btn" onclick="switchMethod('neighborhood')" data-i18n="addr_no_addr_link">Utilisez la recherche par quartier</button>
+                <span data-i18n="addr_no_addr_end">— le tarif sera identique.</span>
               </p>
               <!-- Manual zone selector for address method -->
               <div class="form-group" style="margin-top:12px">
                 <label for="trip-zone-manual">
-                  Votre zone approximative <span class="badge-optional">pour le devis</span>
+                  <span data-i18n="zone_approx_lbl">Votre zone approximative</span> <span class="badge-optional" data-i18n="zone_approx_badge">pour le devis</span>
                 </label>
                 <select id="trip-zone-manual" aria-label="Zone approximative">
-                  <option value="">— Sélectionnez votre zone —</option>
-                  <option value="zone1">Zone 1 — Plateau, Cocody, Marcory (dès 15 000 FCFA)</option>
-                  <option value="zone2">Zone 2 — Yopougon, Abobo, Koumassi (dès 20 000 FCFA)</option>
-                  <option value="zone3">Zone 3 — Bingerville, Anyama, Abatta (dès 18 000 FCFA)</option>
-                  <option value="zone4">Zone 4 — Grand-Bassam, Dabou, Assinie (dès 35 000 FCFA)</option>
+                  <option value="" data-i18n="zone_approx_ph">— Sélectionnez votre zone —</option>
+                  <option value="zone1" data-i18n="zone_approx_1">Zone 1 — Plateau, Cocody, Marcory (dès 15 000 FCFA)</option>
+                  <option value="zone2" data-i18n="zone_approx_2">Zone 2 — Yopougon, Abobo, Koumassi (dès 20 000 FCFA)</option>
+                  <option value="zone3" data-i18n="zone_approx_3">Zone 3 — Bingerville, Anyama, Abatta (dès 18 000 FCFA)</option>
+                  <option value="zone4" data-i18n="zone_approx_4">Zone 4 — Grand-Bassam, Dabou, Assinie (dès 35 000 FCFA)</option>
                 </select>
               </div>
             </div>
 
             <div class="form-group" id="origin-fixed-group" style="display:none">
-              <label id="origin-fixed-label"><i class="fas fa-plane-arrival"></i> Origine</label>
+              <label id="origin-fixed-label"><i class="fas fa-plane-arrival"></i> <span data-i18n="origin_lbl">Origine</span></label>
               <input type="text" id="trip-origin-fixed" value="Aéroport International FHB, Abidjan" readonly style="opacity:0.7;cursor:not-allowed;" />
             </div>
 
             <div class="form-group">
-              <label for="trip-destination" id="destination-label"><i class="fas fa-plane-departure"></i> Destination</label>
+              <label for="trip-destination" id="destination-label"><i class="fas fa-plane-departure"></i> <span data-i18n="dest_lbl">Destination</span></label>
               <input type="text" id="trip-destination" value="Aéroport International Félix-Houphouët-Boigny, Abidjan" readonly style="opacity:0.7;cursor:not-allowed;" />
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label for="trip-date" id="trip-date-label"><i class="fas fa-calendar"></i> Date de départ <span style="color:var(--error)">*</span></label>
+                <label for="trip-date" id="trip-date-label"><i class="fas fa-calendar"></i> <span data-i18n="trip_date_lbl">Date de départ</span> <span style="color:var(--error)">*</span></label>
                 <input type="date" id="trip-date" name="date" required aria-required="true" />
               </div>
               <div class="form-group">
-                <label for="trip-time" id="trip-time-label"><i class="fas fa-clock"></i> Heure de prise en charge <span style="color:var(--error)">*</span></label>
+                <label for="trip-time" id="trip-time-label"><i class="fas fa-clock"></i> <span data-i18n="trip_time_lbl">Heure de prise en charge</span> <span style="color:var(--error)">*</span></label>
                 <input type="time" id="trip-time" name="time" required aria-required="true" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label for="trip-passengers"><i class="fas fa-users"></i> Passagers <span style="color:var(--error)">*</span></label>
+                <label for="trip-passengers"><i class="fas fa-users"></i> <span data-i18n="pax_lbl">Passagers</span> <span style="color:var(--error)">*</span></label>
                 <select id="trip-passengers" name="passengers" required aria-required="true">
-                  <option value="1">1 passager</option>
-                  <option value="2" selected>2 passagers</option>
-                  <option value="3">3 passagers</option>
-                  <option value="4">4 passagers</option>
-                  <option value="5">5 passagers</option>
-                  <option value="6">6 passagers</option>
-                  <option value="7">7 passagers</option>
-                  <option value="8">8 passagers</option>
+                  <option value="1" data-i18n="pax_1">1 passager</option>
+                  <option value="2" selected data-i18n="pax_2">2 passagers</option>
+                  <option value="3" data-i18n="pax_3">3 passagers</option>
+                  <option value="4" data-i18n="pax_4">4 passagers</option>
+                  <option value="5" data-i18n="pax_5">5 passagers</option>
+                  <option value="6" data-i18n="pax_6">6 passagers</option>
+                  <option value="7" data-i18n="pax_7">7 passagers</option>
+                  <option value="8" data-i18n="pax_8">8 passagers</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="trip-luggage"><i class="fas fa-suitcase-rolling"></i> Bagages <span style="color:var(--error)">*</span></label>
+                <label for="trip-luggage"><i class="fas fa-suitcase-rolling"></i> <span data-i18n="luggage_lbl">Bagages</span> <span style="color:var(--error)">*</span></label>
                 <select id="trip-luggage" name="luggage" required aria-required="true">
-                  <option value="0">Aucun bagage</option>
-                  <option value="1" selected>1 valise</option>
-                  <option value="2">2 valises</option>
-                  <option value="3">3 valises</option>
-                  <option value="4">4 valises</option>
-                  <option value="5">5 valises</option>
-                  <option value="6">6+ valises (Van recommandé)</option>
+                  <option value="0" data-i18n="luggage_0">Aucun bagage</option>
+                  <option value="1" selected data-i18n="luggage_1">1 valise</option>
+                  <option value="2" data-i18n="luggage_2">2 valises</option>
+                  <option value="3" data-i18n="luggage_3">3 valises</option>
+                  <option value="4" data-i18n="luggage_4">4 valises</option>
+                  <option value="5" data-i18n="luggage_5">5 valises</option>
+                  <option value="6" data-i18n="luggage_6plus">6+ valises (Van recommandé)</option>
                 </select>
-                <p class="form-hint"><i class="fas fa-info-circle"></i> Bagage cabine (sac à dos, vanity) non compté</p>
+                <p class="form-hint"><i class="fas fa-info-circle"></i> <span data-i18n="luggage_hint">Bagage cabine (sac à dos, vanity) non compté</span></p>
               </div>
             </div>
             <div id="luggage-vehicle-hint" class="luggage-hint" style="display:none" aria-live="polite"></div>
 
             <div class="form-nav">
               <a href="index.html" class="btn btn-outline">
-                <i class="fas fa-arrow-left"></i> Retour
+                <i class="fas fa-arrow-left"></i> <span data-i18n="btn_back">Retour</span>
               </a>
               <button class="btn btn-primary" id="btn-next-1">
                 <span data-i18n="btn_continue">Continuer</span> <i class="fas fa-arrow-right"></i>
@@ -244,8 +245,8 @@
 
           <!-- STEP 2: VEHICLE SELECTION -->
           <div class="form-step" id="step-2" role="form" aria-label="Sélection du véhicule">
-            <h2 class="form-step-title">Choisissez votre Véhicule</h2>
-            <p class="form-step-desc">Les tarifs affichés sont calculés selon votre zone de départ.</p>
+            <h2 class="form-step-title" data-i18n="step2_title">Choisissez votre Véhicule</h2>
+            <p class="form-step-desc" data-i18n="step2_desc">Les tarifs affichés sont calculés selon votre zone de départ.</p>
 
             <div class="vehicle-options" id="vehicle-options-container">
               <!-- Populated by JS -->
@@ -267,7 +268,7 @@
             <p class="form-step-desc" data-i18n="step3_desc">Ces informations permettront au chauffeur de vous contacter.</p>
 
             <!-- Contact -->
-            <div class="form-section-label"><i class="fas fa-user-circle"></i> Coordonnées</div>
+            <div class="form-section-label"><i class="fas fa-user-circle"></i> <span data-i18n="section_contact">Coordonnées</span></div>
             <div class="form-row">
               <div class="form-group">
                 <label for="client-name"><i class="fas fa-user"></i> <span data-i18n="name_label">Nom complet</span> <span style="color:var(--error)">*</span></label>
@@ -342,11 +343,11 @@
 
             <div style="padding:12px 14px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.15);border-radius:8px;font-size:0.84rem;color:var(--text-muted);margin-bottom:20px;">
               <i class="fab fa-whatsapp" style="color:#25d366;margin-right:6px;"></i>
-              Votre chauffeur vous contactera sur ce numéro WhatsApp la veille ou le matin du transfert.
+              <span data-i18n="wa_notice">Votre chauffeur vous contactera sur ce numéro WhatsApp la veille ou le matin du transfert.</span>
             </div>
 
             <!-- Flight info -->
-            <div class="form-section-label"><i class="fas fa-plane"></i> Informations de vol</div>
+            <div class="form-section-label"><i class="fas fa-plane"></i> <span data-i18n="section_flight">Informations de vol</span></div>
 
             <div class="form-group">
               <label for="client-airline"><i class="fas fa-plane-departure"></i> <span data-i18n="airline_label">Compagnie aérienne</span> <span style="color:var(--error)">*</span></label>
@@ -384,45 +385,45 @@
               <div class="form-group">
                 <label for="client-flight-time" id="flight-time-label"><i class="fas fa-clock"></i> <span data-i18n="flight_time_label">Heure de vol</span> <span style="color:var(--error)">*</span></label>
                 <input type="time" id="client-flight-time" name="flight-time" required aria-required="true" />
-                <p class="form-hint"><i class="fas fa-info-circle"></i> Permet au chauffeur de suivre votre vol en cas de retard</p>
+                <p class="form-hint"><i class="fas fa-info-circle"></i> <span data-i18n="flight_hint">Permet au chauffeur de suivre votre vol en cas de retard</span></p>
               </div>
             </div>
 
             <!-- Special requests — structured -->
-            <div class="form-section-label"><i class="fas fa-concierge-bell"></i> Demandes spéciales <span class="badge-optional">optionnel</span></div>
+            <div class="form-section-label"><i class="fas fa-concierge-bell"></i> <span data-i18n="section_sr">Demandes spéciales</span> <span class="badge-optional" data-i18n="badge_optional">optionnel</span></div>
 
             <div class="special-requests-grid">
               <label class="sr-option">
                 <input type="checkbox" id="sr-child-seat" name="sr_child_seat" />
-                <span><i class="fas fa-baby"></i> Siège enfant</span>
+                <span><i class="fas fa-baby"></i> <span data-i18n="sr_child">Siège enfant</span></span>
               </label>
               <label class="sr-option">
                 <input type="checkbox" id="sr-luggage-help" name="sr_luggage_help" />
-                <span><i class="fas fa-suitcase"></i> Aide bagages</span>
+                <span><i class="fas fa-suitcase"></i> <span data-i18n="sr_luggage_help">Aide bagages</span></span>
               </label>
               <label class="sr-option">
                 <input type="checkbox" id="sr-meet-greet" name="sr_meet_greet" />
-                <span><i class="fas fa-id-card"></i> Pancarte nominative</span>
+                <span><i class="fas fa-id-card"></i> <span data-i18n="sr_sign">Pancarte nominative</span></span>
               </label>
               <label class="sr-option">
                 <input type="checkbox" id="sr-water" name="sr_water" />
-                <span><i class="fas fa-bottle-water"></i> Eau minérale</span>
+                <span><i class="fas fa-bottle-water"></i> <span data-i18n="sr_water">Eau minérale</span></span>
               </label>
               <label class="sr-option">
                 <input type="checkbox" id="sr-silent" name="sr_silent" />
-                <span><i class="fas fa-volume-xmark"></i> Trajet silencieux</span>
+                <span><i class="fas fa-volume-xmark"></i> <span data-i18n="sr_silent">Trajet silencieux</span></span>
               </label>
               <label class="sr-option">
                 <input type="checkbox" id="sr-stop" name="sr_stop" />
-                <span><i class="fas fa-map-pin"></i> Arrêt intermédiaire</span>
+                <span><i class="fas fa-map-pin"></i> <span data-i18n="sr_stop">Arrêt intermédiaire</span></span>
               </label>
               <label class="sr-option">
                 <input type="checkbox" id="sr-wifi" name="sr_wifi" />
-                <span><i class="fas fa-wifi"></i> Wi-Fi à bord</span>
+                <span><i class="fas fa-wifi"></i> <span data-i18n="sr_wifi_txt">Wi-Fi à bord</span></span>
               </label>
               <label class="sr-option">
                 <input type="checkbox" id="sr-accessible" name="sr_accessible" />
-                <span><i class="fas fa-wheelchair"></i> Accessibilité PMR</span>
+                <span><i class="fas fa-wheelchair"></i> <span data-i18n="sr_pmr">Accessibilité PMR</span></span>
               </label>
             </div>
 
@@ -441,7 +442,7 @@
                 <input type="checkbox" id="notif-whatsapp" checked />
                 <span><i class="fab fa-whatsapp"></i> <span data-i18n="notif_wa">Confirmation sur WhatsApp</span></span>
               </label>
-              <p class="form-hint">Un récapitulatif de votre réservation vous sera envoyé. Le chauffeur vous contactera également la veille du transfert.</p>
+              <p class="form-hint" data-i18n="notif_hint">Un récapitulatif de votre réservation vous sera envoyé. Le chauffeur vous contactera également la veille du transfert.</p>
             </div>
 
             <div class="form-nav">
@@ -456,30 +457,30 @@
 
           <!-- STEP 4: CONFIRMATION (no payment) -->
           <div class="form-step" id="step-4" role="form" aria-label="Confirmer la réservation">
-            <h2 class="form-step-title">Récapitulatif &amp; Confirmation</h2>
-            <p class="form-step-desc">Vérifiez vos informations et confirmez votre réservation.</p>
+            <h2 class="form-step-title" data-i18n="step4_title">Récapitulatif &amp; Confirmation</h2>
+            <p class="form-step-desc" data-i18n="step4_desc">Vérifiez vos informations et confirmez votre réservation.</p>
 
             <!-- Full Trip Summary -->
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;">
-              <h4 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Récapitulatif du trajet</h4>
+              <h4 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;" data-i18n="step4_recap">Récapitulatif du trajet</h4>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.88rem;">
-                <div><span style="color:var(--text-muted);">Direction :</span><br><strong id="pay-summary-direction">—</strong></div>
-                <div><span style="color:var(--text-muted);">Départ :</span><br><strong id="pay-summary-pickup">—</strong></div>
-                <div><span style="color:var(--text-muted);">Destination :</span><br><strong id="pay-summary-dest">—</strong></div>
-                <div><span style="color:var(--text-muted);">Date :</span><br><strong id="pay-summary-date">—</strong></div>
-                <div><span style="color:var(--text-muted);">Heure :</span><br><strong id="pay-summary-time">—</strong></div>
-                <div><span style="color:var(--text-muted);">Véhicule :</span><br><strong id="pay-summary-vehicle">—</strong></div>
-                <div><span style="color:var(--text-muted);">Passagers :</span><br><strong id="pay-summary-passengers">—</strong></div>
-                <div><span style="color:var(--text-muted);">Bagages :</span><br><strong id="pay-summary-luggage">—</strong></div>
-                <div><span style="color:var(--text-muted);">Passager :</span><br><strong id="pay-summary-name">—</strong></div>
-                <div><span style="color:var(--text-muted);">Téléphone :</span><br><strong id="pay-summary-phone">—</strong></div>
-                <div><span style="color:var(--text-muted);">Compagnie :</span><br><strong id="pay-summary-airline">—</strong></div>
-                <div><span style="color:var(--text-muted);">N° de vol :</span><br><strong id="pay-summary-flight">—</strong></div>
-                <div><span style="color:var(--text-muted);">Heure de vol :</span><br><strong id="pay-summary-flight-time">—</strong></div>
-                <div><span style="color:var(--text-muted);">Notifications :</span><br><strong id="pay-summary-notifs">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_dir">Direction</span> :<br><strong id="pay-summary-direction">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_dep">Départ</span> :<br><strong id="pay-summary-pickup">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_dest">Destination</span> :<br><strong id="pay-summary-dest">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_dt">Date</span> :<br><strong id="pay-summary-date">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_hr">Heure</span> :<br><strong id="pay-summary-time">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_veh">Véhicule</span> :<br><strong id="pay-summary-vehicle">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_pax_lbl">Passagers</span> :<br><strong id="pay-summary-passengers">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_bagages">Bagages</span> :<br><strong id="pay-summary-luggage">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_passager">Passager</span> :<br><strong id="pay-summary-name">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_tel">Téléphone</span> :<br><strong id="pay-summary-phone">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_cie">Compagnie</span> :<br><strong id="pay-summary-airline">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_vol">N° de vol</span> :<br><strong id="pay-summary-flight">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_heure_vol">Heure de vol</span> :<br><strong id="pay-summary-flight-time">—</strong></div>
+                <div><span style="color:var(--text-muted);" data-i18n="sum_notifs">Notifications</span> :<br><strong id="pay-summary-notifs">—</strong></div>
               </div>
               <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-weight:700;">Total</span>
+                <span style="font-weight:700;" data-i18n="sum_grand_total">Total</span>
                 <span style="font-family:var(--font-heading);font-size:1.8rem;color:var(--gold);font-weight:700;" id="pay-summary-total">—</span>
               </div>
             </div>
@@ -487,7 +488,7 @@
             <!-- Payment note -->
             <div style="padding:14px 16px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.2);border-radius:8px;font-size:0.87rem;color:var(--text-muted);line-height:1.6;margin-bottom:24px;">
               <i class="fas fa-info-circle" style="color:var(--gold);margin-right:6px;"></i>
-              <strong style="color:var(--white);">Paiement :</strong> Le paiement s'effectuera directement avec le chauffeur (espèces) ou via un lien de paiement mobile qui vous sera envoyé par WhatsApp.
+              <strong style="color:var(--white);">Payment :</strong> <span data-i18n="step4_pay">Le paiement s'effectuera directement avec le chauffeur (espèces) ou via un lien de paiement mobile qui vous sera envoyé par WhatsApp.</span>
             </div>
 
             <div class="form-nav" style="margin-top:8px;">
@@ -505,35 +506,35 @@
         <!-- SIDEBAR SUMMARY -->
         <aside>
           <div class="booking-summary glass-card" aria-label="Résumé de la réservation">
-            <h3><i class="fas fa-clipboard-list" style="color:var(--gold);margin-right:8px;"></i> Votre réservation</h3>
+            <h3><i class="fas fa-clipboard-list" style="color:var(--gold);margin-right:8px;"></i> <span data-i18n="sum_title">Votre réservation</span></h3>
 
             <div class="summary-row">
-              <span class="summary-label" id="summary-pickup-label"><i class="fas fa-plane-departure" style="color:var(--gold);margin-right:4px;" id="summary-dir-icon"></i> Départ</span>
+              <span class="summary-label" id="summary-pickup-label"><i class="fas fa-plane-departure" style="color:var(--gold);margin-right:4px;" id="summary-dir-icon"></i> <span data-i18n="sum_departure">Départ</span></span>
               <span class="summary-value" id="summary-pickup">—</span>
             </div>
             <div class="summary-row">
-              <span class="summary-label" id="summary-destination-label"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> Arrivée</span>
+              <span class="summary-label" id="summary-destination-label"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px;"></i> <span data-i18n="sum_arrival">Arrivée</span></span>
               <span class="summary-value" id="summary-destination">Aéroport FHB</span>
             </div>
             <div class="summary-row">
-              <span class="summary-label"><i class="fas fa-calendar" style="color:var(--gold);margin-right:4px;"></i> Date</span>
+              <span class="summary-label"><i class="fas fa-calendar" style="color:var(--gold);margin-right:4px;"></i> <span data-i18n="sum_date">Date</span></span>
               <span class="summary-value" id="summary-date">—</span>
             </div>
             <div class="summary-row">
-              <span class="summary-label"><i class="fas fa-clock" style="color:var(--gold);margin-right:4px;"></i> Heure</span>
+              <span class="summary-label"><i class="fas fa-clock" style="color:var(--gold);margin-right:4px;"></i> <span data-i18n="sum_time">Heure</span></span>
               <span class="summary-value" id="summary-time">—</span>
             </div>
             <div class="summary-row">
-              <span class="summary-label"><i class="fas fa-users" style="color:var(--gold);margin-right:4px;"></i> Passagers</span>
+              <span class="summary-label"><i class="fas fa-users" style="color:var(--gold);margin-right:4px;"></i> <span data-i18n="sum_pax">Passagers</span></span>
               <span class="summary-value" id="summary-passengers">—</span>
             </div>
             <div class="summary-row">
-              <span class="summary-label"><i class="fas fa-car" style="color:var(--gold);margin-right:4px;"></i> Véhicule</span>
+              <span class="summary-label"><i class="fas fa-car" style="color:var(--gold);margin-right:4px;"></i> <span data-i18n="sum_vehicle">Véhicule</span></span>
               <span class="summary-value" id="summary-vehicle">—</span>
             </div>
 
             <div class="summary-total">
-              <span class="label">Total estimé</span>
+              <span class="label" data-i18n="sum_total">Total estimé</span>
               <span class="amount" id="summary-total-amount">—</span>
             </div>
 
@@ -541,13 +542,13 @@
 
             <div style="margin-top:12px;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:6px;font-size:0.78rem;color:var(--text-muted);">
               <i class="fas fa-info-circle" style="color:var(--gold);margin-right:4px;"></i>
-              Paiement sur place (espèces) ou via lien WhatsApp
+              <span data-i18n="sum_payment_note">Paiement sur place (espèces) ou via lien WhatsApp</span>
             </div>
 
             <div style="margin-top:20px;padding:14px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.15);border-radius:8px;font-size:0.82rem;color:var(--text-muted);line-height:1.55;">
               <i class="fab fa-whatsapp" style="color:#25d366;margin-right:6px;"></i>
-              <strong style="color:var(--white);">Suivi WhatsApp</strong><br>
-              Votre chauffeur vous contactera directement sur WhatsApp le jour du transfert.
+              <strong style="color:var(--white);" data-i18n="sidebar_wa_title">Suivi WhatsApp</strong><br>
+              <span data-i18n="sidebar_wa_desc">Votre chauffeur vous contactera directement sur WhatsApp le jour du transfert.</span>
             </div>
           </div>
         </aside>
@@ -560,10 +561,10 @@
   <div class="modal-overlay" id="booking-success-modal" role="dialog" aria-modal="true" aria-label="Confirmation de réservation">
     <div class="modal">
       <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
-      <h3>Réservation Confirmée !</h3>
+      <h3 data-i18n="modal_title">Réservation Confirmée !</h3>
       <p>
         Votre référence : <strong style="color:var(--gold);font-family:monospace;font-size:1.2rem;" id="modal-booking-ref">—</strong><br><br>
-        Vous allez être redirigé vers la page de confirmation...
+        <span data-i18n="modal_redirect">Vous allez être redirigé vers la page de confirmation...</span>
       </p>
       <div style="display:flex;justify-content:center;">
         <div style="width:40px;height:40px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
