@@ -118,11 +118,11 @@
   <!-- Mobile Nav -->
   <div class="nav-mobile" role="dialog" aria-modal="true" aria-label="Menu mobile">
     <button class="nav-mobile-close" aria-label="Fermer le menu"><i class="fas fa-times"></i></button>
-    <a href="#services">Services</a>
-    <a href="#fleet">Flotte</a>
-    <a href="#pricing">Tarifs</a>
-    <a href="#faq">FAQ</a>
-    <a href="booking.html" class="btn btn-primary">Réserver Maintenant</a>
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#fleet" data-i18n="nav_fleet">Flotte</a>
+    <a href="#pricing" data-i18n="nav_pricing">Tarifs</a>
+    <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    <a href="booking.html" class="btn btn-primary" data-i18n="nav_book_now">Réserver Maintenant</a>
     <div class="i18n-switcher-mobile" id="i18n-switcher-mobile-index"></div>
   </div>
 
@@ -214,9 +214,9 @@
 
           <!-- Zone field (address method) -->
           <div id="hero-zone-field" class="form-group" style="display:none">
-            <label for="hero-zone"><i class="fas fa-map-marker-alt"></i> Zone de départ</label>
+            <label for="hero-zone"><i class="fas fa-map-marker-alt"></i> <span data-i18n="hero_zone_label">Zone de départ</span></label>
             <select id="hero-zone" name="zone" aria-label="Sélectionnez votre zone">
-              <option value="" disabled selected>Sélectionnez votre zone</option>
+              <option value="" disabled selected data-i18n="hero_zone_ph">Sélectionnez votre zone</option>
               <option value="zone1">Zone 1 — Plateau / Cocody / Marcory</option>
               <option value="zone2">Zone 2 — Yopougon / Abobo / Koumassi</option>
               <option value="zone3">Zone 3 — Bingerville / Anyama / Abatta</option>
@@ -227,11 +227,11 @@
           <!-- Passengers + Luggage -->
           <div class="form-row">
             <div class="form-group">
-              <label for="hero-passengers"><i class="fas fa-users"></i> Passagers</label>
+              <label for="hero-passengers"><i class="fas fa-users"></i> <span data-i18n="hero_pax_form_label">Passagers</span></label>
               <input type="number" id="hero-passengers" name="passengers" min="1" max="8" value="1" placeholder="1" aria-label="Nombre de passagers" />
             </div>
             <div class="form-group">
-              <label for="hero-luggage"><i class="fas fa-suitcase-rolling"></i> Bagages</label>
+              <label for="hero-luggage"><i class="fas fa-suitcase-rolling"></i> <span data-i18n="hero_luggage_label">Bagages</span></label>
               <input type="number" id="hero-luggage" name="luggage" min="0" max="10" value="1" placeholder="1" aria-label="Nombre de bagages" />
             </div>
           </div>
@@ -240,21 +240,21 @@
           <div class="hero-flight-block">
             <div class="hero-flight-header">
               <i class="fas fa-plane-departure"></i>
-              <span>Votre Vol</span>
+              <span data-i18n="hero_flight_block_title">Votre Vol</span>
             </div>
             <div class="form-row" style="margin-bottom:0;">
               <div class="form-group">
-                <label for="hero-date"><i class="fas fa-calendar"></i> Date de décollage</label>
+                <label for="hero-date"><i class="fas fa-calendar"></i> <span data-i18n="hero_date_form_label">Date de décollage</span></label>
                 <input type="date" id="hero-date" name="date" aria-label="Date du vol" />
               </div>
               <div class="form-group">
-                <label for="hero-time"><i class="fas fa-clock"></i> Heure de décollage</label>
+                <label for="hero-time"><i class="fas fa-clock"></i> <span data-i18n="hero_time_form_label">Heure de décollage</span></label>
                 <input type="time" id="hero-time" name="time" aria-label="Heure du vol" />
               </div>
             </div>
             <div class="hero-flight-notice">
               <i class="fas fa-shield-halved"></i>
-              <span>Votre ponctualité, notre priorité — nous vous prenons en charge <strong>3h30 avant votre décollage</strong>, avec un délai ajusté selon votre zone. Parce qu'un vol raté, ça n'arrive pas avec First Class Transfer.</span>
+              <span data-i18n-html="hero_flight_notice_text">Votre ponctualité, notre priorité — nous vous prenons en charge <strong>3h30 avant votre décollage</strong>, avec un délai ajusté selon votre zone. Parce qu'un vol raté, ça n'arrive pas avec First Class Transfer.</span>
             </div>
           </div>
 
@@ -288,10 +288,10 @@
       <!-- Direction tabs for how-it-works -->
       <div class="hiw-direction-tabs">
         <button class="hiw-tab active" data-hiw="departure" onclick="switchHiwTab('departure')">
-          <i class="fas fa-plane-departure"></i> Départ vers l'aéroport
+          <i class="fas fa-plane-departure"></i> <span data-i18n="hiw_tab_dep_text">Départ vers l'aéroport</span>
         </button>
         <button class="hiw-tab" data-hiw="arrival" onclick="switchHiwTab('arrival')">
-          <i class="fas fa-plane-arrival"></i> Arrivée depuis l'aéroport
+          <i class="fas fa-plane-arrival"></i> <span data-i18n="hiw_tab_arr_text">Arrivée depuis l'aéroport</span>
         </button>
       </div>
 
@@ -301,22 +301,22 @@
           <div class="step-number">
             <i class="fas fa-mouse-pointer step-icon"></i>
           </div>
-          <h3>Réservez en ligne</h3>
-          <p>Indiquez votre adresse de départ, la date, l'heure et votre numéro de vol. Notre formulaire prend moins de 2 minutes.</p>
+          <h3 data-i18n="hiw_dep1_title">Réservez en ligne</h3>
+          <p data-i18n="hiw_dep1_desc">Indiquez votre adresse de départ, la date, l'heure et votre numéro de vol. Notre formulaire prend moins de 2 minutes.</p>
         </div>
         <div class="step-card glass-card animate-on-scroll animate-delay-2">
           <div class="step-number">
             <i class="fas fa-shield-halved step-icon"></i>
           </div>
-          <h3>Choisissez votre véhicule</h3>
-          <p>Sélectionnez Économique, Premium (Van) ou Business selon votre groupe et vos bagages. Le tarif est affiché clairement par zone, sans frais cachés.</p>
+          <h3 data-i18n="hiw_dep2_title">Choisissez votre véhicule</h3>
+          <p data-i18n="hiw_dep2_desc">Sélectionnez Économique, Premium (Van) ou Business selon votre groupe et vos bagages. Le tarif est affiché clairement par zone, sans frais cachés.</p>
         </div>
         <div class="step-card glass-card animate-on-scroll animate-delay-3">
           <div class="step-number">
             <i class="fab fa-whatsapp step-icon"></i>
           </div>
-          <h3>Le chauffeur vous contacte</h3>
-          <p>Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées. Il arrive à l'heure exacte convenue, sans exception.</p>
+          <h3 data-i18n="hiw_dep3_title">Le chauffeur vous contacte</h3>
+          <p data-i18n="hiw_dep3_desc">Le jour J, votre chauffeur vous envoie un message WhatsApp avec ses coordonnées. Il arrive à l'heure exacte convenue, sans exception.</p>
         </div>
       </div>
 
@@ -326,22 +326,22 @@
           <div class="step-number">
             <i class="fas fa-mouse-pointer step-icon"></i>
           </div>
-          <h3>Réservez en ligne</h3>
-          <p>Indiquez votre numéro de vol, l'heure d'atterrissage et votre adresse de destination à Abidjan. Rapide et simple.</p>
+          <h3 data-i18n="hiw_arr1_title">Réservez en ligne</h3>
+          <p data-i18n="hiw_arr1_desc">Indiquez votre numéro de vol, l'heure d'atterrissage et votre adresse de destination à Abidjan. Rapide et simple.</p>
         </div>
         <div class="step-card glass-card animate-on-scroll animate-delay-2">
           <div class="step-number">
             <i class="fas fa-shield-halved step-icon"></i>
           </div>
-          <h3>Choisissez votre véhicule</h3>
-          <p>Sélectionnez le véhicule adapté à votre groupe et vos bagages. Tarif fixe selon votre zone de destination, sans surprise.</p>
+          <h3 data-i18n="hiw_arr2_title">Choisissez votre véhicule</h3>
+          <p data-i18n="hiw_arr2_desc">Sélectionnez le véhicule adapté à votre groupe et vos bagages. Tarif fixe selon votre zone de destination, sans surprise.</p>
         </div>
         <div class="step-card glass-card animate-on-scroll animate-delay-3">
           <div class="step-number">
             <i class="fas fa-id-card step-icon"></i>
           </div>
-          <h3>Votre chauffeur vous attend</h3>
-          <p>Dans le hall d'arrivée, votre chauffeur vous attend avec une pancarte à votre nom et le logo First Class Transfer. Il s'occupe de vos bagages.</p>
+          <h3 data-i18n="hiw_arr3_title">Votre chauffeur vous attend</h3>
+          <p data-i18n="hiw_arr3_desc">Dans le hall d'arrivée, votre chauffeur vous attend avec une pancarte à votre nom et le logo First Class Transfer. Il s'occupe de vos bagages.</p>
         </div>
       </div>
 
@@ -379,12 +379,12 @@
             />
           </div>
           <h3>Économique</h3>
-          <p class="fleet-tagline">Idéal pour un voyage solo ou en duo</p>
+          <p class="fleet-tagline" data-i18n="fleet_eco_tagline">Idéal pour un voyage solo ou en duo</p>
           <ul class="fleet-features">
-            <li><i class="fas fa-check"></i> <strong>1–2 passagers max</strong></li>
-            <li><i class="fas fa-check"></i> <strong style="white-space:nowrap">4 valises taille&nbsp;M</strong><br><small style="color:var(--text-muted);margin-left:20px">65×44×26&nbsp;cm</small></li>
-            <li><i class="fas fa-check"></i> Climatisation</li>
-            <li><i class="fas fa-check"></i> Chargeur USB</li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_eco_feat1"><strong>1–2 passagers max</strong></span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_eco_feat2"><strong style="white-space:nowrap">4 valises taille&nbsp;M</strong><br><small style="color:var(--text-muted);margin-left:20px">65×44×26&nbsp;cm</small></span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="fleet_eco_feat3">Climatisation</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="fleet_eco_feat4">Chargeur USB</span></li>
           </ul>
           <div class="fleet-price">
             <span class="amount" data-price-fcfa="20000">20 000</span>
@@ -408,13 +408,13 @@
             />
           </div>
           <h3>Premium</h3>
-          <p class="fleet-tagline">Le choix idéal pour familles et groupes</p>
+          <p class="fleet-tagline" data-i18n="fleet_premium_tagline">Le choix idéal pour familles et groupes</p>
           <ul class="fleet-features">
-            <li><i class="fas fa-check"></i> <strong>Jusqu'à 6 passagers</strong></li>
-            <li><i class="fas fa-check"></i> <strong style="white-space:nowrap">8–10 valises taille&nbsp;M/L</strong><br><small style="color:var(--text-muted);margin-left:20px">jusqu'à 75×53×29&nbsp;cm</small></li>
-            <li><i class="fas fa-check"></i> Familles, groupes, gros bagages</li>
-            <li><i class="fas fa-check"></i> Climatisation puissante</li>
-            <li><i class="fas fa-check"></i> Chargeurs USB &amp; Wi-Fi</li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_premium_feat1"><strong>Jusqu'à 6 passagers</strong></span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_premium_feat2"><strong style="white-space:nowrap">8–10 valises taille&nbsp;M/L</strong><br><small style="color:var(--text-muted);margin-left:20px">jusqu'à 75×53×29&nbsp;cm</small></span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="fleet_premium_feat3">Familles, groupes, gros bagages</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="fleet_premium_feat4">Climatisation puissante</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_premium_feat5">Chargeurs USB &amp; Wi-Fi</span></li>
           </ul>
           <div class="fleet-price">
             <span class="amount" data-price-fcfa="25000">25 000</span>
@@ -437,13 +437,13 @@
             />
           </div>
           <h3>Business</h3>
-          <p class="fleet-tagline">Pour les déplacements professionnels exigeants</p>
+          <p class="fleet-tagline" data-i18n="fleet_business_tagline">Pour les déplacements professionnels exigeants</p>
           <ul class="fleet-features">
-            <li><i class="fas fa-check"></i> <strong>1–2 passagers</strong></li>
-            <li><i class="fas fa-check"></i> <strong style="white-space:nowrap">2–4 valises taille&nbsp;M</strong><br><small style="color:var(--text-muted);margin-left:20px">65×44×26&nbsp;cm · coffre berline</small></li>
-            <li><i class="fas fa-check"></i> Sièges cuir, silence total</li>
-            <li><i class="fas fa-check"></i> Idéal appels &amp; réunions en route</li>
-            <li><i class="fas fa-check"></i> Eau minérale &amp; chargeur inclus</li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_business_feat1"><strong>1–2 passagers</strong></span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_business_feat2"><strong style="white-space:nowrap">2–4 valises taille&nbsp;M</strong><br><small style="color:var(--text-muted);margin-left:20px">65×44×26&nbsp;cm · coffre berline</small></span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="fleet_business_feat3">Sièges cuir, silence total</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_business_feat4">Idéal appels &amp; réunions en route</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_business_feat5">Eau minérale &amp; chargeur inclus</span></li>
           </ul>
           <div class="fleet-price">
             <span class="amount" data-price-fcfa="45000">45 000</span>
@@ -462,10 +462,10 @@
   <section class="ambiance" id="ambiance" aria-label="Galerie ambiance">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">L'Expérience First Class</span>
-        <h2 class="section-title">Le Luxe Ivoirien,<br><em class="gold">à Chaque Trajet</em></h2>
+        <span class="section-label" data-i18n="amb_label">L'Expérience First Class</span>
+        <h2 class="section-title" data-i18n-html="amb_title">Le Luxe Ivoirien,<br><em class="gold">à Chaque Trajet</em></h2>
         <div class="gold-line"></div>
-        <p class="section-subtitle">De Cocody à l'aéroport FHB — confort, ponctualité et style, à chaque fois.</p>
+        <p class="section-subtitle" data-i18n="amb_sub">De Cocody à l'aéroport FHB — confort, ponctualité et style, à chaque fois.</p>
       </div>
 
       <div class="ambiance-grid animate-on-scroll">
@@ -477,7 +477,7 @@
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Élégance à chaque trajet</span>
+            <span data-i18n="amb_overlay1">Élégance à chaque trajet</span>
           </div>
         </div>
 
@@ -489,7 +489,7 @@
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Clientèle exigeante</span>
+            <span data-i18n="amb_overlay2">Clientèle exigeante</span>
           </div>
         </div>
 
@@ -501,7 +501,7 @@
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Voyageurs d'affaires</span>
+            <span data-i18n="amb_overlay3">Voyageurs d'affaires</span>
           </div>
         </div>
 
@@ -513,7 +513,7 @@
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Aéroport FHB, Abidjan</span>
+            <span data-i18n="amb_overlay4">Aéroport FHB, Abidjan</span>
           </div>
         </div>
 
@@ -525,7 +525,7 @@
             loading="lazy"
           />
           <div class="ambiance-overlay">
-            <span>Intérieur Business cuir</span>
+            <span data-i18n="amb_overlay5">Intérieur Business cuir</span>
           </div>
         </div>
       </div>
@@ -546,17 +546,17 @@
         <table class="pricing-table" role="table" aria-label="Tableau des tarifs par zone">
           <thead>
             <tr>
-              <th scope="col">Zone</th>
-              <th scope="col"><i class="fas fa-car"></i> Économique<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Corolla · 1–2 pax · 4 val. taille M</small></th>
-              <th scope="col"><i class="fas fa-van-shuttle"></i> Premium ⭐<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Van · 6 pax · 8 val. M/L</small></th>
-              <th scope="col"><i class="fas fa-car-side"></i> Business<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)">Mercedes · 1–2 pax · 2 valises</small></th>
+              <th scope="col" data-i18n="pr_col_zone">Zone</th>
+              <th scope="col"><i class="fas fa-car"></i> Économique<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)" data-i18n="pr_eco_desc">Corolla · 1–2 pax · 4 val. taille M</small></th>
+              <th scope="col"><i class="fas fa-van-shuttle"></i> Premium ⭐<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)" data-i18n="pr_premium_desc">Van · 6 pax · 8 val. M/L</small></th>
+              <th scope="col"><i class="fas fa-car-side"></i> Business<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)" data-i18n="pr_business_desc">Mercedes · 1–2 pax · 2 valises</small></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
                 <div class="zone-name">Zone 1</div>
-                <div class="zone-areas">Plateau · Cocody · Riviera · Angré · Marcory · Treichville · Port-Bouët · Adjamé</div>
+                <div class="zone-areas" data-i18n="pr_zone1_areas">Plateau · Cocody · Riviera · Angré · Marcory · Treichville · Port-Bouët · Adjamé</div>
               </td>
               <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="20000">20 000 FCFA</td>
               <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="25000">25 000 FCFA</td>
@@ -565,7 +565,7 @@
             <tr>
               <td>
                 <div class="zone-name">Zone 2</div>
-                <div class="zone-areas">Yopougon · Abobo · Koumassi · Attécoubé</div>
+                <div class="zone-areas" data-i18n="pr_zone2_areas">Yopougon · Abobo · Koumassi · Attécoubé</div>
               </td>
               <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="25000">25 000 FCFA</td>
               <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="32000">32 000 FCFA</td>
@@ -574,7 +574,7 @@
             <tr>
               <td>
                 <div class="zone-name">Zone 3</div>
-                <div class="zone-areas">Bingerville · Anyama · Songon · Abatta · PK 20 · PK 22</div>
+                <div class="zone-areas" data-i18n="pr_zone3_areas">Bingerville · Anyama · Songon · Abatta · PK 20 · PK 22</div>
               </td>
               <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="22000">22 000 FCFA</td>
               <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="28000">28 000 FCFA</td>
@@ -583,7 +583,7 @@
             <tr>
               <td>
                 <div class="zone-name">Zone 4</div>
-                <div class="zone-areas">Grand-Bassam · Dabou · Assinie · Jacqueville · Bonoua · Azaguié · Alépé</div>
+                <div class="zone-areas" data-i18n="pr_zone4_areas">Grand-Bassam · Dabou · Assinie · Jacqueville · Bonoua · Azaguié · Alépé</div>
               </td>
               <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="45000">45 000 FCFA</td>
               <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="55000">55 000 FCFA</td>
@@ -596,25 +596,25 @@
         <div class="pricing-extras-grid">
           <!-- What's included -->
           <div class="pricing-extras-card pricing-included">
-            <h4><i class="fas fa-check-circle" style="color:var(--success);margin-right:8px;"></i>Ce qui est inclus</h4>
+            <h4><i class="fas fa-check-circle" style="color:var(--success);margin-right:8px;"></i><span data-i18n="pr_incl_title">Ce qui est inclus</span></h4>
             <ul class="pricing-checklist">
-              <li><i class="fas fa-check"></i> Bagages en soute (quantité raisonnable)</li>
-              <li><i class="fas fa-check"></i> Attente jusqu'à 15 minutes</li>
-              <li><i class="fas fa-check"></i> Péages autoroutiers inclus</li>
-              <li><i class="fas fa-check"></i> Prix garanti à la réservation</li>
-              <li><i class="fas fa-check"></i> Retard de vol : attente gratuite jusqu'à 1h</li>
+              <li><i class="fas fa-check"></i> <span data-i18n="pr_incl1">Bagages en soute (quantité raisonnable)</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="pr_incl2">Attente jusqu'à 15 minutes</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="pr_incl3">Péages autoroutiers inclus</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="pr_incl4">Prix garanti à la réservation</span></li>
+              <li><i class="fas fa-check"></i> <span data-i18n="pr_incl5">Retard de vol : attente gratuite jusqu'à 1h</span></li>
             </ul>
           </div>
           <!-- Possible supplements -->
           <div class="pricing-extras-card pricing-supplements">
-            <h4><i class="fas fa-plus-circle" style="color:var(--gold);margin-right:8px;"></i>Suppléments possibles <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted)">(affichés clairement)</span></h4>
+            <h4><i class="fas fa-plus-circle" style="color:var(--gold);margin-right:8px;"></i><span data-i18n="pr_supp_title">Suppléments possibles</span> <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted)" data-i18n="pr_supp_note">(affichés clairement)</span></h4>
             <ul class="pricing-checklist">
-              <li><i class="fas fa-moon"></i> Trajet de nuit (22h–5h) : <strong>+3 000 FCFA</strong></li>
-              <li><i class="fas fa-clock"></i> Attente &gt; 15 min (hors retard vol) : <strong>+2 000 FCFA / 15 min</strong></li>
+              <li><i class="fas fa-moon"></i> <span data-i18n-html="pr_supp1">Trajet de nuit (22h–5h) : <strong>+3 000 FCFA</strong></span></li>
+              <li><i class="fas fa-clock"></i> <span data-i18n-html="pr_supp2">Attente &gt; 15 min (hors retard vol) : <strong>+2 000 FCFA / 15 min</strong></span></li>
             </ul>
             <p style="margin-top:12px;font-size:0.82rem;color:var(--text-muted);line-height:1.5;">
               <i class="fas fa-shield-halved" style="color:var(--gold);margin-right:4px;"></i>
-              Aucun supplément ne peut être ajouté sans accord préalable. Votre tarif est verrouillé à la réservation.
+              <span data-i18n="pr_no_hidden">Aucun supplément ne peut être ajouté sans accord préalable. Votre tarif est verrouillé à la réservation.</span>
             </p>
           </div>
         </div>
@@ -633,8 +633,8 @@
   <section class="testimonials" id="avis" aria-labelledby="testimonials-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Témoignages</span>
-        <h2 class="section-title" id="testimonials-title">Ce que disent<br><em class="gold">nos Clients</em></h2>
+        <span class="section-label" data-i18n="test_label">Témoignages</span>
+        <h2 class="section-title" id="testimonials-title" data-i18n-html="test_title">Ce que disent<br><em class="gold">nos Clients</em></h2>
         <div class="gold-line"></div>
       </div>
 
@@ -643,14 +643,14 @@
           <div class="testimonial-stars">
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
-          <p class="testimonial-text">
+          <p class="testimonial-text" data-i18n="test1_text">
             "Le chauffeur était là 10 minutes avant l'heure convenue. Voiture impeccable, conduite douce. Le message WhatsApp le matin m'a rassurée. Je recommande à 100% !"
           </p>
           <div class="testimonial-author">
             <img src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?auto=format&fit=crop&w=80&h=80&q=80" alt="Aminata Koné" class="author-avatar-img" />
             <div>
               <div class="author-name">Aminata Koné</div>
-              <div class="author-role">Consultante, Cocody</div>
+              <div class="author-role" data-i18n="test1_role">Consultante, Cocody</div>
             </div>
           </div>
         </div>
@@ -659,14 +659,14 @@
           <div class="testimonial-stars">
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
-          <p class="testimonial-text">
+          <p class="testimonial-text" data-i18n="test2_text">
             "En tant qu'expatrié, j'utilise First Class Transfer pour chaque vol. Fiable, professionnel, et le paiement en ligne est super pratique. C'est mon service de référence."
           </p>
           <div class="testimonial-author">
             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&h=80&q=80" alt="Pierre Morin" class="author-avatar-img" />
             <div>
               <div class="author-name">Pierre Morin</div>
-              <div class="author-role">Expatrié français, Plateau</div>
+              <div class="author-role" data-i18n="test2_role">Expatrié français, Plateau</div>
             </div>
           </div>
         </div>
@@ -675,14 +675,14 @@
           <div class="testimonial-stars">
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
           </div>
-          <p class="testimonial-text">
+          <p class="testimonial-text" data-i18n="test3_text">
             "J'avais un vol tôt le matin depuis Yopougon. Le chauffeur était ponctuel malgré la distance. Prix honnête, voiture propre. J'ai pris le Business et c'était top !"
           </p>
           <div class="testimonial-author">
             <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=80&h=80&q=80" alt="Oumar Diallo" class="author-avatar-img" />
             <div>
               <div class="author-name">Oumar Diallo</div>
-              <div class="author-role">Homme d'affaires, Yopougon</div>
+              <div class="author-role" data-i18n="test3_role">Homme d'affaires, Yopougon</div>
             </div>
           </div>
         </div>
@@ -694,69 +694,69 @@
   <section class="faq" id="faq" aria-labelledby="faq-title">
     <div class="container">
       <div class="text-center section-header animate-on-scroll">
-        <span class="section-label">Questions fréquentes</span>
-        <h2 class="section-title" id="faq-title">Tout ce que vous<br><em class="gold">devez savoir</em></h2>
+        <span class="section-label" data-i18n="faq_label">Questions fréquentes</span>
+        <h2 class="section-title" id="faq-title" data-i18n-html="faq_title">Tout ce que vous<br><em class="gold">devez savoir</em></h2>
         <div class="gold-line"></div>
       </div>
 
       <div class="faq-grid">
         <div class="faq-item animate-on-scroll">
           <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
-            Comment se passe la réservation ?
+            <span data-i18n="faq1_q">Comment se passe la réservation ?</span>
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
-          <div class="faq-answer">
-            La réservation se fait entièrement en ligne via notre formulaire. Renseignez votre zone de départ, date, heure, type de véhicule et informations personnelles. Vous payez en ligne de manière sécurisée, et recevez une confirmation par email avec votre numéro de réservation.
+          <div class="faq-answer" data-i18n="faq1_a">
+            La réservation se fait entièrement en ligne via notre formulaire. Renseignez votre zone de départ, date, heure, type de véhicule et informations personnelles. Vous recevez une confirmation par email avec votre numéro de réservation.
           </div>
         </div>
 
         <div class="faq-item animate-on-scroll">
           <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
-            Comment le chauffeur me contacte-t-il ?
+            <span data-i18n="faq2_q">Comment le chauffeur me contacte-t-il ?</span>
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
-          <div class="faq-answer">
+          <div class="faq-answer" data-i18n="faq2_a">
             La veille ou le matin même de votre transfert, votre chauffeur vous envoie un message WhatsApp avec son prénom, son numéro de téléphone, le modèle et la plaque du véhicule. Il confirme l'heure et l'adresse de prise en charge.
           </div>
         </div>
 
         <div class="faq-item animate-on-scroll">
           <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
-            Comment s'effectue le paiement ?
+            <span data-i18n="faq3_q">Comment s'effectue le paiement ?</span>
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
-          <div class="faq-answer">
-            Le paiement s'effectue directement avec votre chauffeur le jour du transfert (espèces), ou via un lien de paiement mobile (Orange Money, Wave, MTN MoMo) qui vous sera envoyé par WhatsApp après confirmation de votre réservation.
+          <div class="faq-answer" data-i18n="faq3_a">
+            Le paiement s'effectue directement avec votre chauffeur le jour du transfert (espèces), ou via un lien de paiement mobile (Orange Money, Wave, MTN MoMo) envoyé par WhatsApp après confirmation.
           </div>
         </div>
 
         <div class="faq-item animate-on-scroll">
           <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
-            Puis-je annuler ou modifier ma réservation ?
+            <span data-i18n="faq4_q">Puis-je annuler ou modifier ma réservation ?</span>
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
-          <div class="faq-answer">
+          <div class="faq-answer" data-i18n="faq4_a">
             Oui. Toute annulation effectuée plus de 24h avant le départ est entièrement remboursée. En dessous de 24h, une retenue de 50% est appliquée. Contactez-nous via WhatsApp ou email avec votre numéro de réservation.
           </div>
         </div>
 
         <div class="faq-item animate-on-scroll">
           <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
-            Les tarifs incluent-ils les péages et bagages ?
+            <span data-i18n="faq5_q">Les tarifs incluent-ils les péages et bagages ?</span>
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
-          <div class="faq-answer">
+          <div class="faq-answer" data-i18n="faq5_a">
             Absolument. Nos tarifs sont fixes et tout compris : carburant, péages autoroutiers et bagages standards (1 valise + 1 bagage à main par passager). Aucun supplément caché ne vous sera facturé.
           </div>
         </div>
 
         <div class="faq-item animate-on-scroll">
           <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
-            Desservez-vous aussi les arrivées à l'aéroport ?
+            <span data-i18n="faq6_q">Desservez-vous aussi les arrivées à l'aéroport ?</span>
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
           </div>
-          <div class="faq-answer">
-            Oui, absolument ! Nous assurons les deux directions. Pour une arrivée depuis l'aéroport, sélectionnez "Depuis l'Aéroport" lors de votre réservation en ligne. Votre chauffeur vous attendra dans le hall d'arrivée avec une pancarte à votre nom et le logo First Class Transfer. Il suivra votre vol en cas de retard.
+          <div class="faq-answer" data-i18n="faq6_a">
+            Oui, absolument ! Nous assurons les deux directions. Pour une arrivée, sélectionnez "Depuis l'Aéroport" lors de la réservation. Votre chauffeur vous attendra dans le hall d'arrivée avec une pancarte à votre nom. Il suivra votre vol en cas de retard.
           </div>
         </div>
       </div>
@@ -766,17 +766,17 @@
   <!-- =================== CTA BANNER =================== -->
   <section class="cta-banner" aria-labelledby="cta-title">
     <div class="container cta-content">
-      <span class="section-label animate-on-scroll">Prêt à voyager ?</span>
-      <h2 class="section-title animate-on-scroll" id="cta-title">
+      <span class="section-label animate-on-scroll" data-i18n="cta_label">Prêt à voyager ?</span>
+      <h2 class="section-title animate-on-scroll" id="cta-title" data-i18n-html="cta_title">
         Réservez votre transfert<br><em class="gold">dès maintenant</em>
       </h2>
-      <p class="animate-on-scroll">Plus besoin de stresser pour trouver un taxi le matin. Réservez en 2 minutes et voyagez l'esprit serein.</p>
+      <p class="animate-on-scroll" data-i18n="cta_desc">Plus besoin de stresser pour trouver un taxi le matin. Réservez en 2 minutes et voyagez l'esprit serein.</p>
       <div class="cta-buttons animate-on-scroll">
         <a href="booking.html" class="btn btn-primary btn-lg">
-          <i class="fas fa-calendar-check"></i> Réserver Maintenant
+          <i class="fas fa-calendar-check"></i> <span data-i18n="cta_btn">Réserver Maintenant</span>
         </a>
         <button class="btn btn-whatsapp btn-lg" data-whatsapp="Bonjour First Class Transfer ! Je souhaite réserver un transfert aéroport.">
-          <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+          <i class="fab fa-whatsapp"></i> <span data-i18n="cta_wa_btn">Contacter sur WhatsApp</span>
         </button>
       </div>
     </div>
@@ -795,7 +795,7 @@
               <span>Abidjan · Côte d'Ivoire</span>
             </div>
           </div>
-          <p>Service premium de transfert vers l'Aéroport Félix-Houphouët-Boigny. Réservation en ligne, paiement sécurisé, suivi WhatsApp.</p>
+          <p data-i18n="footer_brand_desc">Service premium de transfert vers l'Aéroport Félix-Houphouët-Boigny. Réservation en ligne, paiement sécurisé, suivi WhatsApp.</p>
           <div class="footer-social" aria-label="Réseaux sociaux">
             <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -806,28 +806,28 @@
 
         <!-- Links -->
         <div class="footer-col">
-          <h4>Services</h4>
+          <h4 data-i18n="footer_col_services">Services</h4>
           <ul>
-            <li><a href="#fleet">Transfert Économie</a></li>
-            <li><a href="#fleet">Transfert Business</a></li>
-            <li><a href="#fleet">Groupes & Familles</a></li>
-            <li><a href="#pricing">Nos Tarifs</a></li>
+            <li><a href="#fleet" data-i18n="footer_svc1">Transfert Économie</a></li>
+            <li><a href="#fleet" data-i18n="footer_svc2">Transfert Business</a></li>
+            <li><a href="#fleet" data-i18n="footer_svc3">Groupes & Familles</a></li>
+            <li><a href="#pricing" data-i18n="footer_svc4">Nos Tarifs</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Informations</h4>
+          <h4 data-i18n="footer_col_info">Informations</h4>
           <ul>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#services">Comment ça marche</a></li>
-            <li><a href="#">Politique d'annulation</a></li>
-            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#faq" data-i18n="footer_faq_link">FAQ</a></li>
+            <li><a href="#services" data-i18n="footer_how_link">Comment ça marche</a></li>
+            <li><a href="#" data-i18n="footer_cancel_link">Politique d'annulation</a></li>
+            <li><a href="#" data-i18n="footer_legal_link">Mentions légales</a></li>
           </ul>
         </div>
 
         <!-- Contact -->
         <div class="footer-col">
-          <h4>Contact</h4>
+          <h4 data-i18n="footer_col_contact">Contact</h4>
           <div class="footer-contact-item">
             <i class="fab fa-whatsapp"></i>
             <span>
@@ -846,7 +846,7 @@
           </div>
           <div class="footer-contact-item">
             <i class="fas fa-map-marker-alt"></i>
-            <span>Abidjan, Côte d'Ivoire<br>Service disponible 24h/7j</span>
+            <span>Abidjan, Côte d'Ivoire<br><span data-i18n="footer_avail">Service disponible 24h/7j</span></span>
           </div>
           <div class="footer-contact-item">
             <i class="fas fa-plane"></i>
@@ -856,11 +856,11 @@
       </div>
 
       <div class="footer-bottom">
-        <p>© 2025 First Class Transfer Abidjan. Tous droits réservés.</p>
+        <p data-i18n="footer_rights">© 2025 First Class Transfer Abidjan. Tous droits réservés.</p>
         <div class="footer-bottom-links">
-          <a href="#">Confidentialité</a>
-          <a href="#">CGV</a>
-          <a href="#">Mentions légales</a>
+          <a href="#" data-i18n="footer_privacy">Confidentialité</a>
+          <a href="#" data-i18n="footer_cgv">CGV</a>
+          <a href="#" data-i18n="footer_legal">Mentions légales</a>
         </div>
       </div>
     </div>
