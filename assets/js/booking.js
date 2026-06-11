@@ -292,9 +292,14 @@ function updateSummary() {
 
   const totalEl = $('#summary-total-amount');
   if (totalEl) {
-    totalEl.textContent = bookingState.totalPrice > 0
-      ? bookingState.totalPrice.toLocaleString('fr-FR') + ' FCFA'
-      : '—';
+    if (bookingState.totalPrice > 0) {
+      totalEl.textContent = bookingState.totalPrice.toLocaleString('fr-FR') + ' FCFA';
+    } else if (zoneInfo) {
+      const fromLabel = window.fctI18n ? window.fctI18n.t('hero_price_from') : 'À partir de';
+      totalEl.textContent = `${fromLabel} ${zoneInfo.basic.toLocaleString('fr-FR')} FCFA`;
+    } else {
+      totalEl.textContent = '—';
+    }
   }
 }
 
@@ -472,6 +477,7 @@ function renderNbDropdown(q) {
       const val = el.dataset.value;
       const zone = el.dataset.zone;
       if (input) input.value = val;
+      bookingState.neighborhood = val; // live update for sidebar
       if (zone === 'unknown') {
         document.getElementById('unknown-nb-notice').style.display = 'block';
         bookingState.neighborhoodUnknown = true;
@@ -481,6 +487,7 @@ function renderNbDropdown(q) {
       }
       updateZoneDisplay(val);
       closeNbDropdown();
+      updateSummary();
     });
   });
 }
@@ -515,16 +522,15 @@ function showZoneDetectedCard(zoneKey) {
   const z = ZONES[zoneKey];
   if (!z) { card.style.display = 'none'; return; }
   card.style.display = 'flex';
+  const fromLabel = window.fctI18n ? window.fctI18n.t('hero_price_from') : 'À partir de';
   card.innerHTML = `
     <div class="zone-detected-icon"><i class="fa-solid fa-map-pin"></i></div>
     <div class="zone-detected-info">
       <div class="zone-detected-label">${z.label}</div>
       <div class="zone-detected-prices">
-        <span class="zd-price"><i class="fas fa-car"></i> Économique : <strong>${z.basic.toLocaleString('fr-FR')} FCFA</strong></span>
-        <span class="zd-price"><i class="fas fa-van-shuttle"></i> Premium : <strong>${z.premium.toLocaleString('fr-FR')} FCFA</strong></span>
-        <span class="zd-price"><i class="fas fa-car-side"></i> Business : <strong>${z.business.toLocaleString('fr-FR')} FCFA</strong></span>
+        <span class="zd-price zd-price-main"><i class="fas fa-tag"></i> ${fromLabel} <strong>${z.basic.toLocaleString('fr-FR')} FCFA</strong></span>
       </div>
-      <div class="zone-detected-note"><i class="fas fa-check-circle"></i> Prix fixe, tout inclus — aucun supplément caché</div>
+      <div class="zone-detected-note"><i class="fas fa-check-circle"></i> Prix fixe, tout inclus — aucun supplément caché. Le tarif final dépend du véhicule choisi.</div>
     </div>`;
 }
 
@@ -1072,23 +1078,28 @@ window.addEventListener('DOMContentLoaded', () => {
   if (nbInput) {
     nbInput.addEventListener('input', () => {
       const val = nbInput.value.trim();
+      bookingState.neighborhood = val; // live update for sidebar
       const match = detectZoneFromNeighborhood(val);
       if (match) {
         bookingState.zone = match.zone;
         showZoneDetectedCard(match.zone);
       } else {
+        bookingState.zone = '';
         const card = document.getElementById('zone-detected');
         if (card) card.style.display = 'none';
       }
+      updateSummary();
     });
     // Also fire on change (datalist selection)
     nbInput.addEventListener('change', () => {
       const val = nbInput.value.trim();
+      bookingState.neighborhood = val;
       const match = detectZoneFromNeighborhood(val);
       if (match) {
         bookingState.zone = match.zone;
         showZoneDetectedCard(match.zone);
       }
+      updateSummary();
     });
   }
 
@@ -1101,6 +1112,7 @@ window.addEventListener('DOMContentLoaded', () => {
         switchMethod('neighborhood');
         if (nbInput) {
           nbInput.value = data.neighborhood;
+          bookingState.neighborhood = data.neighborhood;
           const match = detectZoneFromNeighborhood(data.neighborhood);
           if (match) { bookingState.zone = match.zone; showZoneDetectedCard(match.zone); }
         }
