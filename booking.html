@@ -112,25 +112,14 @@
               </div>
             </div>
 
-            <!-- Method toggle -->
-            <div class="pickup-method-toggle">
-              <button type="button" class="method-btn active" data-method="neighborhood">
-                <i class="fa-solid fa-map-pin"></i> <span data-i18n="method_nb">Par quartier</span>
-              </button>
-              <button type="button" class="method-btn" data-method="address">
-                <i class="fa-solid fa-location-dot"></i> <span data-i18n="method_addr">Par adresse précise</span>
-              </button>
-            </div>
-
-            <!-- Neighborhood search (shown by default) -->
-            <div id="neighborhood-field" class="form-group">
-              <label for="trip-neighborhood" id="neighborhood-label"><i class="fas fa-map-marker-alt"></i> <span data-i18n="nb_label">Votre quartier de départ</span> <span style="color:var(--error)">*</span></label>
+            <!-- Unified location search -->
+            <div id="unified-location-field" class="form-group">
+              <label for="trip-location" id="location-label"><i class="fas fa-map-marker-alt"></i> <span data-i18n="nb_label">Votre point de départ</span> <span style="color:var(--error)">*</span></label>
               <div class="nb-autocomplete-wrap" id="nb-autocomplete-wrap">
                 <input
                   type="text"
-                  id="trip-neighborhood"
-                  data-i18n-ph="nb_ph"
-                  placeholder="Ex: Cocody Riviera 2, Angré, Yopougon..."
+                  id="trip-location"
+                  placeholder="Quartier, adresse, lieu… Ex: Cocody Riviera 2"
                   autocomplete="off"
                   aria-required="true"
                   aria-autocomplete="list"
@@ -141,44 +130,24 @@
                 <div id="nb-dropdown" class="nb-dropdown" role="listbox" style="display:none;"></div>
               </div>
               <div id="zone-detected" class="zone-detected-card" style="display:none" aria-live="polite"></div>
-              <!-- Unknown neighborhood message -->
+              <!-- Shown when location doesn't match a known neighborhood -->
               <div id="unknown-nb-notice" style="display:none;margin-top:12px;padding:14px 16px;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.25);border-radius:10px;">
                 <div style="display:flex;gap:10px;align-items:flex-start;">
                   <i class="fas fa-map-pin" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
-                  <div>
-                    <strong style="color:var(--gold);display:block;margin-bottom:4px;" data-i18n="unknown_nb_title">Quartier non répertorié — pas d'inquiétude !</strong>
-                    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin:0;">
-                      <span data-i18n="unknown_nb_body">Votre quartier ne fait pas encore partie de notre base, mais vous pouvez continuer votre réservation.</span>
-                      <strong style="color:var(--white);" data-i18n="unknown_nb_team">Nos conseillers vous recontacteront dans moins de 5 minutes</strong>
-                      <span data-i18n="unknown_nb_channels">pour vous proposer la meilleure offre et confirmer le tarif. Vous serez contacté sur WhatsApp, par email ou directement par téléphone.</span>
+                  <div style="width:100%">
+                    <strong style="color:var(--gold);display:block;margin-bottom:4px;">Zone approximative</strong>
+                    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin:0 0 10px;">
+                      Adresse acceptée — sélectionnez votre zone pour obtenir un devis. Nos conseillers confirmeront le tarif exact dans moins de 5 minutes.
                     </p>
+                    <select id="trip-zone-manual" aria-label="Zone approximative">
+                      <option value="" data-i18n="zone_approx_ph">— Sélectionnez votre zone —</option>
+                      <option value="zone1" data-i18n="zone_approx_1">Zone 1 — Plateau, Cocody, Marcory (dès 15 000 FCFA)</option>
+                      <option value="zone2" data-i18n="zone_approx_2">Zone 2 — Yopougon, Abobo, Koumassi (dès 20 000 FCFA)</option>
+                      <option value="zone3" data-i18n="zone_approx_3">Zone 3 — Bingerville, Anyama, Abatta (dès 18 000 FCFA)</option>
+                      <option value="zone4" data-i18n="zone_approx_4">Zone 4 — Grand-Bassam, Dabou, Assinie (dès 35 000 FCFA)</option>
+                    </select>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- Address input (hidden by default) -->
-            <div id="address-field" class="form-group" style="display:none">
-              <label for="trip-address" id="address-label"><i class="fas fa-home"></i> <span data-i18n="addr_label">Adresse complète de départ</span> <span style="color:var(--error)">*</span></label>
-              <input type="text" id="trip-address" data-i18n-ph="addr_ph" placeholder="Ex: Rue des Jardins, Cocody Riviera 2" autocomplete="street-address" />
-              <p class="form-hint">
-                <i class="fa-solid fa-circle-info"></i>
-                <span data-i18n="addr_no_addr_q">Pas d'adresse précise ?</span>
-                <button type="button" class="link-btn" onclick="switchMethod('neighborhood')" data-i18n="addr_no_addr_link">Utilisez la recherche par quartier</button>
-                <span data-i18n="addr_no_addr_end">— le tarif sera identique.</span>
-              </p>
-              <!-- Manual zone selector for address method -->
-              <div class="form-group" style="margin-top:12px">
-                <label for="trip-zone-manual">
-                  <span data-i18n="zone_approx_lbl">Votre zone approximative</span> <span class="badge-optional" data-i18n="zone_approx_badge">pour le devis</span>
-                </label>
-                <select id="trip-zone-manual" aria-label="Zone approximative">
-                  <option value="" data-i18n="zone_approx_ph">— Sélectionnez votre zone —</option>
-                  <option value="zone1" data-i18n="zone_approx_1">Zone 1 — Plateau, Cocody, Marcory (dès 15 000 FCFA)</option>
-                  <option value="zone2" data-i18n="zone_approx_2">Zone 2 — Yopougon, Abobo, Koumassi (dès 20 000 FCFA)</option>
-                  <option value="zone3" data-i18n="zone_approx_3">Zone 3 — Bingerville, Anyama, Abatta (dès 18 000 FCFA)</option>
-                  <option value="zone4" data-i18n="zone_approx_4">Zone 4 — Grand-Bassam, Dabou, Assinie (dès 35 000 FCFA)</option>
-                </select>
               </div>
             </div>
 

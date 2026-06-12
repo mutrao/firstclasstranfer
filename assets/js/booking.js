@@ -375,7 +375,7 @@ let nbDropdownOpen = false;
 let nbHighlightIdx = -1;
 
 function initNeighborhoodAutocomplete() {
-  const input = document.getElementById('trip-neighborhood');
+  const input = document.getElementById('trip-location');
   const dropdown = document.getElementById('nb-dropdown');
   if (!input || !dropdown) return;
 
@@ -436,7 +436,7 @@ function updateNbHighlight(items) {
 
 function renderNbDropdown(q) {
   const dropdown = document.getElementById('nb-dropdown');
-  const input = document.getElementById('trip-neighborhood');
+  const input = document.getElementById('trip-location');
   if (!dropdown) return;
 
   const normalized = normalizeStr(q);
@@ -510,7 +510,7 @@ function updateZoneDisplay(q) {
 
 function closeNbDropdown() {
   const dropdown = document.getElementById('nb-dropdown');
-  const input = document.getElementById('trip-neighborhood');
+  const input = document.getElementById('trip-location');
   if (dropdown) { dropdown.style.display = 'none'; }
   if (input) input.setAttribute('aria-expanded', 'false');
   nbDropdownOpen = false;
@@ -546,8 +546,7 @@ function switchDirection(dir) {
   });
 
   const banner = document.getElementById('arrival-info-banner');
-  const neighborhoodLabel = document.getElementById('neighborhood-label');
-  const addressLabel = document.getElementById('address-label');
+  const locationLabel = document.getElementById('location-label');
   const destinationLabel = document.getElementById('destination-label');
   const originFixedGroup = document.getElementById('origin-fixed-group');
   const destinationGroup = document.querySelector('#trip-destination')?.closest('.form-group');
@@ -565,9 +564,7 @@ function switchDirection(dir) {
     if (originFixedGroup) originFixedGroup.style.display = 'block';
     if (destinationGroup) destinationGroup.style.display = 'none';
 
-    // Update labels for neighborhood/address = destination
-    if (neighborhoodLabel) neighborhoodLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre quartier / adresse de destination <span style="color:var(--error)">*</span>';
-    if (addressLabel) addressLabel.innerHTML = '<i class="fas fa-home"></i> Adresse complète de destination <span style="color:var(--error)">*</span>';
+    if (locationLabel) locationLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre destination <span style="color:var(--error)">*</span>';
 
     // Update date/time labels
     if (tripDateLabel) tripDateLabel.innerHTML = '<i class="fas fa-calendar"></i> Date d\'atterrissage <span style="color:var(--error)">*</span>';
@@ -585,9 +582,7 @@ function switchDirection(dir) {
     if (originFixedGroup) originFixedGroup.style.display = 'none';
     if (destinationGroup) destinationGroup.style.display = 'block';
 
-    // Restore departure labels
-    if (neighborhoodLabel) neighborhoodLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre quartier de départ <span style="color:var(--error)">*</span>';
-    if (addressLabel) addressLabel.innerHTML = '<i class="fas fa-home"></i> Adresse complète de départ <span style="color:var(--error)">*</span>';
+    if (locationLabel) locationLabel.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre point de départ <span style="color:var(--error)">*</span>';
 
     // Restore date/time labels
     if (tripDateLabel) tripDateLabel.innerHTML = '<i class="fas fa-calendar"></i> Date de départ <span style="color:var(--error)">*</span>';
@@ -606,28 +601,14 @@ function switchDirection(dir) {
 window.switchDirection = switchDirection;
 
 // =============================================
-// METHOD TOGGLE
+// METHOD TOGGLE (unified — auto-detected from input)
 // =============================================
 function switchMethod(method) {
+  // No-op: method is now auto-detected from the unified input value
   bookingState.pickupMethod = method;
-
-  $$('.method-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.method === method);
-  });
-
-  const neighborhoodField = document.getElementById('neighborhood-field');
-  const addressField = document.getElementById('address-field');
-
-  if (method === 'neighborhood') {
-    if (neighborhoodField) neighborhoodField.style.display = 'block';
-    if (addressField) addressField.style.display = 'none';
-  } else {
-    if (neighborhoodField) neighborhoodField.style.display = 'none';
-    if (addressField) addressField.style.display = 'block';
-  }
 }
 
-// Expose globally for inline onclick
+// Expose globally for legacy compatibility
 window.switchMethod = switchMethod;
 
 // =============================================
@@ -636,19 +617,18 @@ window.switchMethod = switchMethod;
 function onNext1() {
   if (!validateStep1()) return;
 
-  if (bookingState.pickupMethod === 'neighborhood') {
-    bookingState.neighborhood = $('#trip-neighborhood')?.value?.trim() || '';
-    const match = detectZoneFromNeighborhood(bookingState.neighborhood);
-    if (match) {
-      bookingState.zone = match.zone;
-      bookingState.neighborhoodUnknown = false;
-    } else {
-      bookingState.zone = 'unknown';
-      bookingState.neighborhoodUnknown = true;
-    }
+  const locationVal = $('#trip-location')?.value?.trim() || '';
+  const match = detectZoneFromNeighborhood(locationVal);
+  if (match) {
+    bookingState.pickupMethod = 'neighborhood';
+    bookingState.neighborhood = locationVal;
+    bookingState.zone = match.zone;
+    bookingState.neighborhoodUnknown = false;
   } else {
-    bookingState.address = $('#trip-address')?.value?.trim() || '';
+    bookingState.pickupMethod = 'address';
+    bookingState.address = locationVal;
     bookingState.zone = $('#trip-zone-manual')?.value || '';
+    bookingState.neighborhoodUnknown = true;
   }
 
   bookingState.date       = $('#trip-date')?.value || '';
@@ -669,34 +649,22 @@ function validateStep1() {
 
   clearError(date); clearError(time); clearError(pax);
 
-  if (bookingState.pickupMethod === 'neighborhood') {
-    const nbInput = $('#trip-neighborhood');
-    clearError(nbInput);
-    const val = nbInput?.value?.trim();
-    if (!val) {
-      showError(nbInput, 'Veuillez indiquer votre quartier de départ.');
-      valid = false;
-    } else {
-      const match = detectZoneFromNeighborhood(val);
-      if (!match) {
-        // Unknown neighborhood — allow to proceed, will be confirmed by admin
-        bookingState.neighborhoodUnknown = true;
-        bookingState.zone = 'unknown';
-      } else {
-        bookingState.neighborhoodUnknown = false;
-      }
-    }
+  const locInput = $('#trip-location');
+  const zoneManual = $('#trip-zone-manual');
+  clearError(locInput);
+  const locVal = locInput?.value?.trim();
+  if (!locVal) {
+    showError(locInput, 'Veuillez indiquer votre point de départ.');
+    valid = false;
   } else {
-    const addrInput = $('#trip-address');
-    const zoneManual = $('#trip-zone-manual');
-    clearError(addrInput); clearError(zoneManual);
-    if (!addrInput?.value?.trim()) {
-      showError(addrInput, 'Veuillez entrer votre adresse de départ.');
-      valid = false;
-    }
-    if (!zoneManual?.value) {
-      showError(zoneManual, 'Veuillez sélectionner votre zone approximative.');
-      valid = false;
+    const match = detectZoneFromNeighborhood(locVal);
+    if (!match) {
+      // Free address — require manual zone selection
+      if (zoneManual) clearError(zoneManual);
+      if (!zoneManual?.value) {
+        showError(zoneManual, 'Veuillez sélectionner votre zone approximative.');
+        valid = false;
+      }
     }
   }
 
@@ -1106,13 +1074,8 @@ window.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => switchDirection(btn.dataset.direction));
   });
 
-  // Method toggle buttons
-  $$('.method-btn').forEach(btn => {
-    btn.addEventListener('click', () => switchMethod(btn.dataset.method));
-  });
-
-  // Neighborhood input → live zone detection
-  const nbInput = document.getElementById('trip-neighborhood');
+  // Unified location input → live zone detection
+  const nbInput = document.getElementById('trip-location');
   if (nbInput) {
     nbInput.addEventListener('input', () => {
       const val = nbInput.value.trim();
@@ -1147,19 +1110,20 @@ window.addEventListener('DOMContentLoaded', () => {
     try {
       const data = JSON.parse(init);
       if (data.neighborhood) {
-        switchMethod('neighborhood');
         if (nbInput) {
           nbInput.value = data.neighborhood;
           bookingState.neighborhood = data.neighborhood;
           const match = detectZoneFromNeighborhood(data.neighborhood);
-          if (match) { bookingState.zone = match.zone; showZoneDetectedCard(match.zone); }
+          if (match) {
+            bookingState.pickupMethod = 'neighborhood';
+            bookingState.zone = match.zone;
+            showZoneDetectedCard(match.zone);
+          }
         }
       } else if (data.zone) {
-        // Legacy zone-based pre-fill: switch to address method and set manual zone
-        switchMethod('address');
         const zoneManual = document.getElementById('trip-zone-manual');
-        if (zoneManual) zoneManual.value = data.zone;
-        bookingState.zone = data.zone;
+        if (zoneManual) { zoneManual.value = data.zone; bookingState.zone = data.zone; }
+        document.getElementById('unknown-nb-notice').style.display = 'block';
       }
       if ($('#trip-date') && data.date)         { $('#trip-date').value = data.date; bookingState.date = data.date; }
       if ($('#trip-time') && data.time)         { $('#trip-time').value = data.time; bookingState.time = data.time; }

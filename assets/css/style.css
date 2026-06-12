@@ -2343,48 +2343,13 @@ input[type="time"] {
   box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
 }
 
+
 /* =========================================
-   PICKUP METHOD TOGGLE
+   UNKNOWN NOTICE ZONE SELECT
    ========================================= */
-.pickup-method-toggle {
-  display: flex;
-  gap: 0;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px;
-  padding: 4px;
-  margin-bottom: 20px;
+#unknown-nb-notice select {
   width: 100%;
-}
-
-.method-btn {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-radius: 7px;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-}
-
-.method-btn.active {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--navy);
-  box-shadow: 0 2px 12px rgba(201, 168, 76, 0.35);
-}
-
-.method-btn:not(.active):hover {
-  color: var(--gold);
-  background: rgba(201, 168, 76, 0.08);
+  margin-top: 4px;
 }
 
 /* =========================================
