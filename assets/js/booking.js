@@ -144,6 +144,111 @@ const NEIGHBORHOODS = {
 };
 
 // =============================================
+// PLACES (hôtels, cliniques, centres commerciaux, ambassades, lieux)
+// =============================================
+const PLACES = {
+  // ---- HÔTELS ZONE 1 ----
+  'sofitel abidjan hotel ivoire': { display: 'Sofitel Abidjan Hotel Ivoire', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'hotel ivoire': { display: 'Sofitel Abidjan Hotel Ivoire', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'pullman abidjan': { display: 'Pullman Abidjan', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'hotel tiama': { display: 'Hôtel Tiama', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'tiama': { display: 'Hôtel Tiama', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'radisson blu abidjan': { display: 'Radisson Blu Abidjan Plateau', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'radisson blu': { display: 'Radisson Blu Abidjan Plateau', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'novotel abidjan': { display: 'Novotel Abidjan', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'novotel': { display: 'Novotel Abidjan', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'ibis abidjan plateau': { display: 'ibis Abidjan Plateau', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'ibis plateau': { display: 'ibis Abidjan Plateau', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'ibis styles abidjan': { display: 'ibis Styles Abidjan Marcory', zone: 'zone1', commune: 'Marcory', type: 'hotel', typeLabel: 'Hôtel' },
+  'seen hotel': { display: 'Seen Hotel Abidjan', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'seen hotel abidjan': { display: 'Seen Hotel Abidjan', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'heden golf hotel': { display: 'Heden Golf Hôtel', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'heden golf': { display: 'Heden Golf Hôtel', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'azalai hotel': { display: 'Azalaï Hôtel Abidjan', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'azalaï': { display: 'Azalaï Hôtel Abidjan', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'golden tulip le diplomate': { display: 'Golden Tulip Le Diplomate', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'le diplomate': { display: 'Golden Tulip Le Diplomate', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'palm club hotel': { display: 'Palm Club Hôtel', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'best western abidjan': { display: 'Best Western Plus Abidjan', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'hotel du district': { display: 'Hôtel du District', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'du district': { display: 'Hôtel du District', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'hotel les ambassadeurs': { display: 'Hôtel les Ambassadeurs', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'les ambassadeurs': { display: 'Hôtel les Ambassadeurs', zone: 'zone1', commune: 'Plateau', type: 'hotel', typeLabel: 'Hôtel' },
+  'pacific hotel': { display: 'Pacific Hôtel', zone: 'zone1', commune: 'Treichville', type: 'hotel', typeLabel: 'Hôtel' },
+  'hotel belle cote': { display: 'Hôtel Belle Côte', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'belle cote': { display: 'Hôtel Belle Côte', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'forum golf hotel': { display: 'Forum Golf Hôtel', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'forum golf': { display: 'Forum Golf Hôtel', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  'residence les bouquets': { display: 'Résidence les Bouquets', zone: 'zone1', commune: 'Cocody', type: 'hotel', typeLabel: 'Hôtel' },
+  // ---- HÔTELS ZONE 2 ----
+  'hotel cosmos': { display: 'Hôtel Cosmos', zone: 'zone2', commune: 'Yopougon', type: 'hotel', typeLabel: 'Hôtel' },
+  'ivotel': { display: 'Ivotel', zone: 'zone2', commune: 'Yopougon', type: 'hotel', typeLabel: 'Hôtel' },
+  // ---- HÔTELS ZONE 3 ----
+  'hotel du lac bingerville': { display: 'Hôtel du Lac Bingerville', zone: 'zone3', commune: 'Bingerville', type: 'hotel', typeLabel: 'Hôtel' },
+  // ---- HÔTELS ZONE 4 ----
+  'palm beach hotel assinie': { display: 'Palm Beach Hôtel Assinie', zone: 'zone4', commune: 'Assinie', type: 'hotel', typeLabel: 'Hôtel' },
+  'ecolodge assinie': { display: 'Ecolodge Assinie', zone: 'zone4', commune: 'Assinie', type: 'hotel', typeLabel: 'Hôtel' },
+  'hotel les flots bassam': { display: 'Hôtel les Flots Grand-Bassam', zone: 'zone4', commune: 'Grand-Bassam', type: 'hotel', typeLabel: 'Hôtel' },
+  'les flots bassam': { display: 'Hôtel les Flots Grand-Bassam', zone: 'zone4', commune: 'Grand-Bassam', type: 'hotel', typeLabel: 'Hôtel' },
+  'holiday inn bassam': { display: 'Holiday Inn Resort Grand-Bassam', zone: 'zone4', commune: 'Grand-Bassam', type: 'hotel', typeLabel: 'Hôtel' },
+  // ---- CLINIQUES / HÔPITAUX ----
+  'chu de cocody': { display: 'CHU de Cocody', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Hôpital' },
+  'chu cocody': { display: 'CHU de Cocody', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Hôpital' },
+  'pisam': { display: 'PISAM (Polyclinique Sainte-Anne-Marie)', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Clinique' },
+  'polyclinique sainte anne marie': { display: 'PISAM (Polyclinique Sainte-Anne-Marie)', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Clinique' },
+  'clinique biassey': { display: 'Clinique Biassey', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Clinique' },
+  'biassey': { display: 'Clinique Biassey', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Clinique' },
+  'chu de treichville': { display: 'CHU de Treichville', zone: 'zone1', commune: 'Treichville', type: 'hospital', typeLabel: 'Hôpital' },
+  'chu treichville': { display: 'CHU de Treichville', zone: 'zone1', commune: 'Treichville', type: 'hospital', typeLabel: 'Hôpital' },
+  'clinique les deux plateaux': { display: 'Clinique des 2 Plateaux', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Clinique' },
+  'clinique 2 plateaux': { display: 'Clinique des 2 Plateaux', zone: 'zone1', commune: 'Cocody', type: 'hospital', typeLabel: 'Clinique' },
+  'chu de yopougon': { display: 'CHU de Yopougon', zone: 'zone2', commune: 'Yopougon', type: 'hospital', typeLabel: 'Hôpital' },
+  'chu yopougon': { display: 'CHU de Yopougon', zone: 'zone2', commune: 'Yopougon', type: 'hospital', typeLabel: 'Hôpital' },
+  // ---- CENTRES COMMERCIAUX ----
+  'cap sud': { display: 'Cap Sud (Marcory)', zone: 'zone1', commune: 'Marcory', type: 'shopping', typeLabel: 'Centre commercial' },
+  'sococe': { display: 'Sococé Marcory', zone: 'zone1', commune: 'Marcory', type: 'shopping', typeLabel: 'Centre commercial' },
+  'sococé': { display: 'Sococé Marcory', zone: 'zone1', commune: 'Marcory', type: 'shopping', typeLabel: 'Centre commercial' },
+  'mall of abidjan': { display: 'Mall of Abidjan', zone: 'zone1', commune: 'Marcory', type: 'shopping', typeLabel: 'Centre commercial' },
+  'playce marcory': { display: 'Playce Marcory', zone: 'zone1', commune: 'Marcory', type: 'shopping', typeLabel: 'Centre commercial' },
+  'playce adjame': { display: 'Playce Adjamé', zone: 'zone1', commune: 'Adjamé', type: 'shopping', typeLabel: 'Centre commercial' },
+  'playce adjamé': { display: 'Playce Adjamé', zone: 'zone1', commune: 'Adjamé', type: 'shopping', typeLabel: 'Centre commercial' },
+  'cap nord': { display: 'Cap Nord (Adjamé)', zone: 'zone1', commune: 'Adjamé', type: 'shopping', typeLabel: 'Centre commercial' },
+  'cosmos yopougon': { display: 'Cosmos Yopougon', zone: 'zone2', commune: 'Yopougon', type: 'shopping', typeLabel: 'Centre commercial' },
+  // ---- LIEUX EMBLÉMATIQUES ----
+  'palais de la culture': { display: 'Palais de la Culture', zone: 'zone1', commune: 'Treichville', type: 'landmark', typeLabel: 'Lieu' },
+  'stade felix houphouet boigny': { display: 'Stade Félix Houphouët-Boigny', zone: 'zone1', commune: 'Treichville', type: 'landmark', typeLabel: 'Stade' },
+  'stade fhb': { display: 'Stade Félix Houphouët-Boigny', zone: 'zone1', commune: 'Treichville', type: 'landmark', typeLabel: 'Stade' },
+  'stade robert champroux': { display: 'Stade Robert Champroux', zone: 'zone1', commune: 'Marcory', type: 'landmark', typeLabel: 'Stade' },
+  'stade de la paix': { display: 'Stade de la Paix (Bouaké)', zone: 'zone4', commune: 'Hors Abidjan', type: 'landmark', typeLabel: 'Stade' },
+  'palais presidentiel': { display: 'Palais Présidentiel', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'assemblee nationale': { display: 'Assemblée Nationale', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'assemblée nationale': { display: 'Assemblée Nationale', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'bceao abidjan': { display: 'Tour BCEAO', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'tour bceao': { display: 'Tour BCEAO', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'cite administrative': { display: 'Cité Administrative', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'cité administrative': { display: 'Cité Administrative', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'pont charles de gaulle': { display: 'Pont Charles-de-Gaulle', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'pont de gaulle': { display: 'Pont Charles-de-Gaulle', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'pont houphouet boigny': { display: 'Pont Félix Houphouët-Boigny', zone: 'zone1', commune: 'Plateau', type: 'landmark', typeLabel: 'Lieu' },
+  'gare routiere adjame': { display: 'Gare Routière d\'Adjamé', zone: 'zone1', commune: 'Adjamé', type: 'landmark', typeLabel: 'Lieu' },
+  'gare routière adjamé': { display: 'Gare Routière d\'Adjamé', zone: 'zone1', commune: 'Adjamé', type: 'landmark', typeLabel: 'Lieu' },
+  'port autonome abidjan': { display: 'Port Autonome d\'Abidjan', zone: 'zone1', commune: 'Treichville', type: 'landmark', typeLabel: 'Lieu' },
+  'universite felix houphouet boigny': { display: 'Université FHB', zone: 'zone1', commune: 'Cocody', type: 'landmark', typeLabel: 'Université' },
+  'universite de cocody': { display: 'Université FHB', zone: 'zone1', commune: 'Cocody', type: 'landmark', typeLabel: 'Université' },
+  'inphb': { display: 'INPHB Yamoussoukro', zone: 'zone4', commune: 'Hors Abidjan', type: 'landmark', typeLabel: 'Université' },
+  // ---- AMBASSADES / CONSULATS ----
+  'ambassade de france': { display: 'Ambassade de France', zone: 'zone1', commune: 'Cocody', type: 'embassy', typeLabel: 'Ambassade' },
+  'ambassade des etats unis': { display: 'Ambassade des États-Unis', zone: 'zone1', commune: 'Cocody', type: 'embassy', typeLabel: 'Ambassade' },
+  'ambassade usa': { display: 'Ambassade des États-Unis', zone: 'zone1', commune: 'Cocody', type: 'embassy', typeLabel: 'Ambassade' },
+  'ambassade du maroc': { display: 'Ambassade du Maroc', zone: 'zone1', commune: 'Cocody', type: 'embassy', typeLabel: 'Ambassade' },
+  'ambassade du nigeria': { display: 'Ambassade du Nigeria', zone: 'zone1', commune: 'Cocody', type: 'embassy', typeLabel: 'Ambassade' },
+  // ---- AÉROPORT ----
+  'aeroport fhb': { display: 'Aéroport FHB Abidjan', zone: 'zone1', commune: 'Port-Bouët', type: 'landmark', typeLabel: 'Aéroport' },
+  'aéroport fhb': { display: 'Aéroport FHB Abidjan', zone: 'zone1', commune: 'Port-Bouët', type: 'landmark', typeLabel: 'Aéroport' },
+  'aeroport international': { display: 'Aéroport FHB Abidjan', zone: 'zone1', commune: 'Port-Bouët', type: 'landmark', typeLabel: 'Aéroport' },
+};
+
+// =============================================
 // ZONES DATA
 // =============================================
 const ZONES = {
@@ -346,10 +451,16 @@ function normalizeStr(str) {
 function detectZoneFromNeighborhood(input) {
   if (!input) return null;
   const normalized = normalizeStr(input);
-  // Direct key lookup
+  // Check neighborhoods first (direct key)
   if (NEIGHBORHOODS[normalized]) return NEIGHBORHOODS[normalized];
-  // Partial match — find first entry whose key contains input or input contains key
+  // Check places (direct key)
+  if (PLACES[normalized]) return PLACES[normalized];
+  // Partial match in neighborhoods
   for (const [key, val] of Object.entries(NEIGHBORHOODS)) {
+    if (normalized.includes(key) || key.includes(normalized)) return val;
+  }
+  // Partial match in places
+  for (const [key, val] of Object.entries(PLACES)) {
     if (normalized.includes(key) || key.includes(normalized)) return val;
   }
   return null;
@@ -358,13 +469,22 @@ function detectZoneFromNeighborhood(input) {
 // ---- CUSTOM NEIGHBORHOOD AUTOCOMPLETE ----
 const NB_ALL_ENTRIES = (() => {
   const seen = new Set();
-  return Object.entries(NEIGHBORHOODS).reduce((arr, [key, val]) => {
+  const arr = [];
+  // Neighborhoods first
+  for (const [, val] of Object.entries(NEIGHBORHOODS)) {
     if (!seen.has(val.display)) {
       seen.add(val.display);
-      arr.push({ display: val.display, zone: val.zone, commune: val.commune });
+      arr.push({ display: val.display, zone: val.zone, commune: val.commune, type: 'neighborhood', typeLabel: '' });
     }
-    return arr;
-  }, []).sort((a, b) => a.display.localeCompare(b.display, 'fr'));
+  }
+  // Places (hotels, landmarks, etc.)
+  for (const [, val] of Object.entries(PLACES)) {
+    if (!seen.has(val.display)) {
+      seen.add(val.display);
+      arr.push({ display: val.display, zone: val.zone, commune: val.commune, type: val.type, typeLabel: val.typeLabel });
+    }
+  }
+  return arr.sort((a, b) => a.display.localeCompare(b.display, 'fr'));
 })();
 
 function populateDatalist() {
@@ -447,17 +567,31 @@ function renderNbDropdown(q) {
     results = NB_ALL_ENTRIES.filter(e => {
       const n = normalizeStr(e.display);
       const c = normalizeStr(e.commune);
-      return n.includes(normalized) || normalized.includes(n) || c.includes(normalized);
+      const t = normalizeStr(e.typeLabel || '');
+      return n.includes(normalized) || normalized.includes(n) || c.includes(normalized) || t.includes(normalized);
     }).slice(0, 40);
   }
 
   const zoneNames = { zone1: 'Zone 1', zone2: 'Zone 2', zone3: 'Zone 3', zone4: 'Zone 4' };
+  const typeIcons = {
+    neighborhood: 'fa-map-pin',
+    hotel: 'fa-hotel',
+    hospital: 'fa-hospital',
+    shopping: 'fa-bag-shopping',
+    landmark: 'fa-landmark',
+    embassy: 'fa-flag',
+  };
 
-  let html = results.map((e, i) => `
+  let html = results.map(e => {
+    const icon = typeIcons[e.type] || 'fa-map-pin';
+    const badge = e.typeLabel ? `<span class="nb-type-badge nb-type-${e.type}">${e.typeLabel}</span>` : '';
+    const sub = e.commune && e.commune !== e.display ? `<small style="color:#8892a4;margin-left:6px;">— ${e.commune}</small>` : '';
+    return `
     <div class="nb-option" role="option" data-value="${e.display}" data-zone="${e.zone}" tabindex="-1">
-      <span>${highlightMatch(e.display, q)}${e.commune !== e.display ? `<small style="color:#8892a4;margin-left:6px;">— ${e.commune}</small>` : ''}</span>
-      <span class="nb-zone-tag">${zoneNames[e.zone] || e.zone}</span>
-    </div>`).join('');
+      <span class="nb-option-left"><i class="fas ${icon} nb-type-icon"></i>${highlightMatch(e.display, q)}${sub}</span>
+      <span class="nb-option-right">${badge}<span class="nb-zone-tag">${zoneNames[e.zone] || e.zone}</span></span>
+    </div>`;
+  }).join('');
 
   if (q && results.length === 0) {
     html = `<div class="nb-no-results">Aucun résultat pour "<strong>${q}</strong>"</div>`;
@@ -465,7 +599,7 @@ function renderNbDropdown(q) {
 
   if (q) {
     html += `<div class="nb-option nb-add-new" role="option" data-value="${q}" data-zone="unknown" tabindex="-1">
-      <span><i class="fas fa-plus-circle"></i>Utiliser "<strong>${q}</strong>" (quartier non répertorié)</span>
+      <span class="nb-option-left"><i class="fas fa-location-arrow nb-type-icon"></i>Utiliser "<strong>${q}</strong>" comme adresse</span>
     </div>`;
   }
 

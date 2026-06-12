@@ -3188,12 +3188,45 @@ select {
   padding: 2px 8px;
   flex-shrink: 0;
 }
+.nb-option-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+.nb-option-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.nb-type-icon {
+  font-size: 0.8rem;
+  color: #8892a4;
+  flex-shrink: 0;
+  width: 14px;
+  text-align: center;
+}
+.nb-type-badge {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.nb-type-hotel    { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.3); }
+.nb-type-hospital { background: rgba(80,180,120,0.15); color: #50b478; border: 1px solid rgba(80,180,120,0.3); }
+.nb-type-shopping { background: rgba(100,160,240,0.15); color: #64a0f0; border: 1px solid rgba(100,160,240,0.3); }
+.nb-type-landmark { background: rgba(200,120,80,0.15); color: #c87850; border: 1px solid rgba(200,120,80,0.3); }
+.nb-type-embassy  { background: rgba(160,100,200,0.15); color: #a064c8; border: 1px solid rgba(160,100,200,0.3); }
 .nb-option.nb-add-new {
   color: var(--gold, #c9a84c);
   font-weight: 600;
   font-style: italic;
 }
-.nb-option.nb-add-new i { margin-right: 6px; }
 .nb-no-results {
   padding: 10px 14px;
   font-size: 0.85rem;
