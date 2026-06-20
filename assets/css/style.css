@@ -3359,3 +3359,92 @@ select {
 @media (max-width: 380px) {
   .included-grid { grid-template-columns: 1fr; }
 }
+
+/* =========================================
+   CORPORATE / BUSINESS TRAVEL SECTION
+   ========================================= */
+.corporate {
+  padding: var(--section-py) 0;
+  background: var(--navy);
+}
+.corporate-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+}
+.corporate-intro .section-title {
+  text-align: left;
+  margin-top: 10px;
+}
+.corp-line {
+  margin-left: 0;
+}
+.corporate-desc {
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin: 18px 0 24px;
+}
+.corporate-features {
+  list-style: none;
+  display: grid;
+  gap: 13px;
+  padding: 0;
+  margin: 0;
+}
+.corporate-features li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+.corporate-features i {
+  color: var(--gold);
+  width: 22px;
+  text-align: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.corporate-cta-card {
+  padding: 32px;
+  text-align: center;
+}
+.corp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.76rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.corporate-cta-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+.corporate-cta-card > p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.corp-note {
+  margin-top: 16px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.corp-note i {
+  color: var(--gold);
+  margin-right: 4px;
+}
+@media (max-width: 860px) {
+  .corporate-grid { grid-template-columns: 1fr; gap: 32px; }
+}
