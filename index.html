@@ -97,6 +97,7 @@
         <li><a href="#services" data-i18n="nav_services">Services</a></li>
         <li><a href="#fleet" data-i18n="nav_fleet">Flotte</a></li>
         <li><a href="#pricing" data-i18n="nav_pricing">Tarifs</a></li>
+        <li><a href="#entreprises" data-i18n="nav_corporate">Entreprises</a></li>
         <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
       </ul>
 
@@ -121,6 +122,7 @@
     <a href="#services" data-i18n="nav_services">Services</a>
     <a href="#fleet" data-i18n="nav_fleet">Flotte</a>
     <a href="#pricing" data-i18n="nav_pricing">Tarifs</a>
+    <a href="#entreprises" data-i18n="nav_corporate">Entreprises</a>
     <a href="#faq" data-i18n="nav_faq">FAQ</a>
     <a href="booking.html" class="btn btn-primary" data-i18n="nav_book_now">Réserver Maintenant</a>
     <div class="i18n-switcher-mobile" id="i18n-switcher-mobile-index"></div>
@@ -371,6 +373,10 @@
               loading="lazy"
               class="fleet-photo"
             />
+            <div class="license-plate fleet-plate" aria-hidden="true">
+              <span class="lp-band"><span class="lp-flag"></span>CI</span>
+              <span class="lp-text">First Class Transfer</span>
+            </div>
           </div>
           <h3>Économique</h3>
           <p class="fleet-tagline" data-i18n="fleet_eco_tagline">Idéal pour un voyage solo ou en duo</p>
@@ -400,6 +406,10 @@
               class="fleet-photo"
               style="object-position: center 70%;"
             />
+            <div class="license-plate fleet-plate" aria-hidden="true">
+              <span class="lp-band"><span class="lp-flag"></span>CI</span>
+              <span class="lp-text">First Class Transfer</span>
+            </div>
           </div>
           <h3>Premium</h3>
           <p class="fleet-tagline" data-i18n="fleet_premium_tagline">Le choix idéal pour familles et groupes</p>
@@ -429,6 +439,10 @@
               loading="lazy"
               class="fleet-photo"
             />
+            <div class="license-plate fleet-plate" aria-hidden="true">
+              <span class="lp-band"><span class="lp-flag"></span>CI</span>
+              <span class="lp-text">First Class Transfer</span>
+            </div>
           </div>
           <h3>Business</h3>
           <p class="fleet-tagline" data-i18n="fleet_business_tagline">Pour les déplacements professionnels exigeants</p>
@@ -537,55 +551,6 @@
       </div>
 
       <div class="animate-on-scroll">
-        <table class="pricing-table" role="table" aria-label="Tableau des tarifs par zone">
-          <thead>
-            <tr>
-              <th scope="col" data-i18n="pr_col_zone">Zone</th>
-              <th scope="col"><i class="fas fa-car"></i> Économique<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)" data-i18n="pr_eco_desc">Corolla · 1–2 pax · 4 val. taille M</small></th>
-              <th scope="col"><i class="fas fa-van-shuttle"></i> Premium ⭐<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)" data-i18n="pr_premium_desc">Van · 6 pax · 8 val. M/L</small></th>
-              <th scope="col"><i class="fas fa-car-side"></i> Business<br><small style="font-weight:400;font-size:0.75rem;color:var(--text-muted)" data-i18n="pr_business_desc">Mercedes · 1–2 pax · 2 valises</small></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="zone-name">Zone 1</div>
-                <div class="zone-areas" data-i18n="pr_zone1_areas">Plateau · Cocody · Riviera · Angré · Marcory · Treichville · Port-Bouët · Adjamé</div>
-              </td>
-              <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="20000">20 000 FCFA</td>
-              <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="25000">25 000 FCFA</td>
-              <td class="price-cell" data-label="🚙 Business" data-price-fcfa="45000">45 000 FCFA</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="zone-name">Zone 2</div>
-                <div class="zone-areas" data-i18n="pr_zone2_areas">Yopougon · Abobo · Koumassi · Attécoubé</div>
-              </td>
-              <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="25000">25 000 FCFA</td>
-              <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="32000">32 000 FCFA</td>
-              <td class="price-cell" data-label="🚙 Business" data-price-fcfa="55000">55 000 FCFA</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="zone-name">Zone 3</div>
-                <div class="zone-areas" data-i18n="pr_zone3_areas">Bingerville · Anyama · Songon · Abatta · PK 20 · PK 22</div>
-              </td>
-              <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="22000">22 000 FCFA</td>
-              <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="28000">28 000 FCFA</td>
-              <td class="price-cell" data-label="🚙 Business" data-price-fcfa="50000">50 000 FCFA</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="zone-name">Zone 4</div>
-                <div class="zone-areas" data-i18n="pr_zone4_areas">Grand-Bassam · Dabou · Assinie · Jacqueville · Bonoua · Azaguié · Alépé</div>
-              </td>
-              <td class="price-cell" data-label="🚗 Économique" data-price-fcfa="45000">45 000 FCFA</td>
-              <td class="price-cell" data-label="🚐 Premium" data-price-fcfa="55000">55 000 FCFA</td>
-              <td class="price-cell" data-label="🚙 Business" data-price-fcfa="80000">80 000 FCFA</td>
-            </tr>
-          </tbody>
-        </table>
-
         <!-- Included / Supplements grid -->
         <div class="pricing-extras-grid">
           <!-- What's included -->
@@ -619,6 +584,42 @@
           <i class="fas fa-calendar-check"></i>
           <span data-i18n="pr_book_btn">Réserver au Meilleur Tarif</span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CORPORATE / BUSINESS TRAVEL =================== -->
+  <section class="corporate" id="entreprises" aria-labelledby="corp-title">
+    <div class="container">
+      <div class="corporate-grid animate-on-scroll">
+
+        <div class="corporate-intro">
+          <span class="section-label" data-i18n="corp_label">Entreprises &amp; Groupes</span>
+          <h2 class="section-title" id="corp-title" data-i18n-html="corp_title">Déplacements <em class="gold">d'entreprise</em> sur mesure</h2>
+          <div class="gold-line corp-line"></div>
+          <p class="corporate-desc" data-i18n="corp_desc">Transport de votre personnel, accueil de vos clients VIP, navettes pour séminaires et événements — chaque besoin professionnel mérite une offre dédiée, avec facturation entreprise et chauffeurs attitrés.</p>
+          <ul class="corporate-features">
+            <li><i class="fas fa-users"></i> <span data-i18n="corp_feat1">Navettes &amp; transferts pour le personnel</span></li>
+            <li><i class="fas fa-user-tie"></i> <span data-i18n="corp_feat2">Accueil VIP de vos clients &amp; partenaires</span></li>
+            <li><i class="fas fa-calendar-day"></i> <span data-i18n="corp_feat3">Séminaires, congrès &amp; événements</span></li>
+            <li><i class="fas fa-file-invoice"></i> <span data-i18n="corp_feat4">Facturation entreprise &amp; compte dédié</span></li>
+            <li><i class="fas fa-user-shield"></i> <span data-i18n="corp_feat5">Chauffeurs attitrés &amp; discrétion garantie</span></li>
+          </ul>
+        </div>
+
+        <div class="corporate-cta-card glass-card">
+          <div class="corp-badge"><i class="fas fa-bolt"></i> <span data-i18n="corp_promise">Réponse en moins d'une minute</span></div>
+          <h3 data-i18n="corp_card_title">Devis personnalisé</h3>
+          <p data-i18n="corp_card_sub">Décrivez votre besoin : un conseiller dédié vous recontacte immédiatement avec une offre adaptée.</p>
+          <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" data-whatsapp="Bonjour First Class Transfer, je représente une entreprise et je souhaite un devis personnalisé pour des déplacements de personnel / clients. Mon besoin : ">
+            <i class="fab fa-whatsapp"></i> <span data-i18n="corp_cta_wa">Devis sur WhatsApp</span>
+          </button>
+          <a class="btn btn-outline" style="width:100%;justify-content:center;margin-top:12px;" href="mailto:contact@firstclasstransfer.ci?subject=Demande%20de%20devis%20entreprise&body=Bonjour%2C%0A%0AJe%20souhaite%20un%20devis%20personnalis%C3%A9%20pour%20des%20d%C3%A9placements%20d%27entreprise.%0A%0ASoci%C3%A9t%C3%A9%20%3A%0ANombre%20de%20passagers%20%3A%0ATrajet(s)%20%3A%0ADates%20%2F%20fr%C3%A9quence%20%3A%0A%0AMerci.">
+            <i class="fas fa-envelope"></i> <span data-i18n="corp_cta_email">Devis par email</span>
+          </a>
+          <p class="corp-note"><i class="fas fa-headset"></i> <span data-i18n="corp_note">Conseiller dédié disponible 7j/7 · Confidentialité assurée</span></p>
+        </div>
+
       </div>
     </div>
   </section>
