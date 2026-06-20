@@ -367,18 +367,10 @@
         <div class="fleet-card glass-card animate-on-scroll animate-delay-1">
           <div class="fleet-photo-wrap">
             <div class="fleet-badge">Économique</div>
-            <img
-              src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=700&q=80"
-              alt="Hyundai i20 noir — offre Économique First Class Transfer"
-              loading="lazy"
-              class="fleet-photo"
-            />
-            <div class="license-plate fleet-plate" aria-hidden="true">
-              <span class="lp-band"><span class="lp-flag"></span>CI</span>
-              <span class="lp-text">First Class Transfer</span>
-            </div>
+            <div class="fleet-vehicle" data-vehicle-art="eco"></div>
           </div>
           <h3>Économique</h3>
+          <div class="fleet-model"><i class="fas fa-star-of-life"></i> Mercedes-Benz Classe A</div>
           <p class="fleet-tagline" data-i18n="fleet_eco_tagline">Idéal pour un voyage solo ou en duo</p>
           <ul class="fleet-features">
             <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_eco_feat1"><strong>1–2 passagers max</strong></span></li>
@@ -399,19 +391,10 @@
         <div class="fleet-card glass-card featured animate-on-scroll animate-delay-2">
           <div class="fleet-photo-wrap">
             <div class="fleet-badge" data-i18n="fleet_popular">⭐ Le Plus Populaire</div>
-            <img
-              src="https://img.leboncoin.fr/api/v1/lbcpb1/images/d9/4c/0e/d94c0e624e51c3136153d92f99536a78b66e298a.jpg?rule=classified-1200x800-webp"
-              alt="Van 6 places Premium noir — First Class Transfer Abidjan"
-              loading="lazy"
-              class="fleet-photo"
-              style="object-position: center 70%;"
-            />
-            <div class="license-plate fleet-plate" aria-hidden="true">
-              <span class="lp-band"><span class="lp-flag"></span>CI</span>
-              <span class="lp-text">First Class Transfer</span>
-            </div>
+            <div class="fleet-vehicle" data-vehicle-art="van"></div>
           </div>
           <h3>Premium</h3>
+          <div class="fleet-model"><i class="fas fa-star-of-life"></i> Mercedes-Benz Classe V</div>
           <p class="fleet-tagline" data-i18n="fleet_premium_tagline">Le choix idéal pour familles et groupes</p>
           <ul class="fleet-features">
             <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_premium_feat1"><strong>Jusqu'à 6 passagers</strong></span></li>
@@ -433,18 +416,10 @@
         <div class="fleet-card glass-card animate-on-scroll animate-delay-3">
           <div class="fleet-photo-wrap">
             <div class="fleet-badge">Business</div>
-            <img
-              src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=700&q=80"
-              alt="BMW i7 noire — offre Business First Class Transfer"
-              loading="lazy"
-              class="fleet-photo"
-            />
-            <div class="license-plate fleet-plate" aria-hidden="true">
-              <span class="lp-band"><span class="lp-flag"></span>CI</span>
-              <span class="lp-text">First Class Transfer</span>
-            </div>
+            <div class="fleet-vehicle" data-vehicle-art="exec"></div>
           </div>
           <h3>Business</h3>
+          <div class="fleet-model"><i class="fas fa-star-of-life"></i> Mercedes-Benz Classe E</div>
           <p class="fleet-tagline" data-i18n="fleet_business_tagline">Pour les déplacements professionnels exigeants</p>
           <ul class="fleet-features">
             <li><i class="fas fa-check"></i> <span data-i18n-html="fleet_business_feat1"><strong>1–2 passagers</strong></span></li>
@@ -874,5 +849,7 @@
   <script src="assets/js/i18n.js"></script>
   <!-- Main JS -->
   <script src="assets/js/main.js"></script>
+  <!-- Fleet vehicle artwork (black Mercedes + integrated plate) -->
+  <script src="assets/js/fleet-vehicles.js"></script>
 </body>
 </html>

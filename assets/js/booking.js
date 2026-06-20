@@ -305,9 +305,9 @@ function updateSummary() {
 
 function getVehicleLabel(v) {
   switch (v) {
-    case 'basic':    return 'Économique (Corolla / i20)';
+    case 'basic':    return 'Économique (Mercedes-Benz Classe A)';
     case 'premium':  return 'Premium (Mercedes-Benz Classe V 300d XL)';
-    case 'business': return 'Business (Mercedes / BMW)';
+    case 'business': return 'Business (Mercedes-Benz Classe E)';
     default:         return '';
   }
 }
@@ -763,7 +763,7 @@ function renderVehicleOptions() {
     {
       id: 'basic',
       label: 'Économique',
-      model: 'Toyota Corolla / Hyundai i20',
+      model: 'Mercedes-Benz Classe A',
       icon: 'fa-car',
       capacity: '1–2 passagers · 2 valises max',
       desc: 'Idéal pour un voyageur solo ou un couple léger',
@@ -782,7 +782,7 @@ function renderVehicleOptions() {
     {
       id: 'business',
       label: 'Business',
-      model: 'Mercedes Classe E / BMW Série 5',
+      model: 'Mercedes-Benz Classe E',
       icon: 'fa-car-side',
       capacity: '1–2 passagers · 2 valises',
       desc: 'Berline luxe — idéal pour appels & réunions en route',
